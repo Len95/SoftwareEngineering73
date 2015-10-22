@@ -1,5 +1,10 @@
 package se_ex01;
 
 public class GUIConsole { 
-	//Len Williamson 
+	
+	public GUIConsole() {
+		// leave as default?!
+	}
+	
+	
 }
