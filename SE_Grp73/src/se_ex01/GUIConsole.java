@@ -61,12 +61,8 @@ public class GUIConsole {
 	 * @return
 	 */
 	public boolean move(boolean conditon, Player player, int wall) {
-		
-		if (conditon == true) {
-			System.out.println("Player " + player.getName() + " it's your turn");
-			return true;
-		} else
-			return false;
+		//TODO
+		return false;
 	}
 
 }
