@@ -14,10 +14,6 @@ public class Player {
 		this.score = score;
 	}
 	
-	/*
-	 * ü ß ä
-	 */
-	
 	public String getName() {
 		return name;
 	}
