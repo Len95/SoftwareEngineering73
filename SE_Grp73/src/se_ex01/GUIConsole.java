@@ -61,7 +61,7 @@ public class GUIConsole {
 	 * @return
 	 */
 	public boolean move(boolean conditon, Player player, int wall) {
-		//TODO
+		//TODO Len's task
 		return false;
 	}
 
