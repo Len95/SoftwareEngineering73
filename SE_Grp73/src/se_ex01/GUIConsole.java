@@ -10,6 +10,8 @@ public class GUIConsole {
 	int numberOfMoves = 0;
 	String wall;
 	String[][] map;
+	int width;
+	int height;
 
 	public GUIConsole() {
 		// leave as default?!
@@ -46,10 +48,10 @@ public class GUIConsole {
 	 * @return
 	 */
 	public boolean mapDimension() {
-		int width = 1;
-		int height = 1;
+		width = 1;
+		height = 1;
 
-		while (!(width >= 2 && width % 2 == 0 && height >= 2 && height % 2 == 0)) {
+		while (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
 			System.out.print("Please enter the width, even integer greater than 1: ");
 			width = s.nextInt();
 			System.out.print("Please enter the height, even integer greater than 1: ");
@@ -76,7 +78,32 @@ public class GUIConsole {
 	 * @return
 	 */
 	public String[][] initializeMap() {
-		return null;
+		int enumerate = 0;
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (i % 2 == 0 && j % 2 == 0) {
+					map[i][j] = "*";
+				} else {
+					if (i % 2 == 0 && j % 2 != 0) {
+						map[i][j] = String.valueOf(enumerate);
+						enumerate++;
+					} else {
+						if (i % 2 != 0 && j % 2 == 0) {
+							map[i][j] = String.valueOf(enumerate);
+							enumerate++;
+						} else {
+							if (i % 2 != 0 && j % 2 != 0) {
+								map[i][j] = "*";
+							} else {
+								System.err.println("GUIConsole - Method: initializeMap()");
+								System.err.println("This two messages shouldn't appear!!");
+							}
+						}
+					}
+				}
+			}
+		}
+		return map;
 	}
 	
 	/**
