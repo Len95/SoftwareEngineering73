@@ -15,10 +15,7 @@ public class Player {
 	}
 	
 	/*
-	 * Brauchen wir eine initScore(int score) Methode o.ä. um die Punkte um Wert x zu erhöhen 
-	 * wie es im solution_73 PDF für die Klasse Player festgehalten wurde? 
-	 * 
-	 * Meiner Meinung nach nicht, da setScore vollkommen ausreichend ist
+	 * Ã¼ ÃŸ Ã¤
 	 */
 	
 	public String getName() {
@@ -35,6 +32,11 @@ public class Player {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+	
+	public void increasePointsBy(int pointsToIncreaseBy){
+		this.score += pointsToIncreaseBy;
+		
 	}
 	
 }
