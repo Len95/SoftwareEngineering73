@@ -5,9 +5,11 @@ import java.util.Scanner;
 public class GUIConsole {
 	Player player = new Player(0);
 	Scanner s = new Scanner(System.in);
-	DotsNBoxesEngine map;
-	String winner;
+	DotsNBoxesEngine gameEngine;
+	Player winner;
 	int numberOfMoves = 0;
+	String wall;
+	String[][] map;
 
 	public GUIConsole() {
 		// leave as default?!
@@ -39,6 +41,10 @@ public class GUIConsole {
 		return true;
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	public boolean mapDimension() {
 		int width = 1;
 		int height = 1;
@@ -49,20 +55,41 @@ public class GUIConsole {
 			System.out.print("Please enter the height, even integer greater than 1: ");
 			height = s.nextInt();
 		}
-		map = new DotsNBoxesEngine(width, height);
+		map = new String[width][height];
 		return true;
 	}
 
 	/**
+	 * The player gives an integer input to remove a wall
 	 * 
-	 * @param conditon
-	 * @param player
-	 * @param wall
+	 * @return The wall number
+	 */
+	public int move(Player player) {
+		System.out.print(player.getName() + ": Please enter a number of a wall: ");
+		int input = s.nextInt();
+		
+		return input;
+	}
+	
+	/**
+	 * Initialize 
 	 * @return
 	 */
-	public boolean move(boolean conditon, Player player, int wall) {
-		//TODO Len's task
-		return false;
+	public String[][] initializeMap() {
+		return null;
 	}
+	
+	/**
+	 * Update after the map was modified and print on console
+	 * @param newMap
+	 */
+	public void updateMap(String[][] newMap) {
+		
+	}
+	
+	public void endOfGame() {
+		//winner etc. wird ausgegeben 
+	}
+	
 
 }
