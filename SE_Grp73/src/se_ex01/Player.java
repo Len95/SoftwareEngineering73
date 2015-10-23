@@ -9,11 +9,10 @@ public class Player {
 	 * @param name the name of the player 
 	 * @param score the score of the player during the game, initialize with 0
 	 */
-	public Player(String name, int score) {
-		this.name = name;
+	public Player(int score) {
 		this.score = score;
 	}
-	
+
 	public String getName() {
 		return name;
 	}
