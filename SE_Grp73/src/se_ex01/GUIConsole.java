@@ -74,8 +74,8 @@ public class GUIConsole {
 	}
 	
 	/**
-	 * Initialize 
-	 * @return
+	 * Initializes an empty two dimensional string array 
+	 * @return The map with the correct entries 
 	 */
 	public String[][] initializeMap() {
 		int enumerate = 0;
@@ -114,8 +114,13 @@ public class GUIConsole {
 		
 	}
 	
+	/**
+	 * Prints the gamestats onto the console, the winner's name and the winner's score
+	 */
 	public void endOfGame() {
-		//winner etc. wird ausgegeben 
+		System.out.println("The WINNER is: " + winner.getName());
+		System.out.println("The score of the WINNER is: " + winner.getScore());
+		System.out.println("The total amount of player rounds " + this.numberOfMoves);
 	}
 	
 
