@@ -17,9 +17,4 @@ public class DotsNBoxesEngine {
 		} else
 			System.err.println("Wrong scaling of the map");
 	}
-	
-	
-	// asdasd 
-	// adfjofjao
-	
 }
