@@ -29,7 +29,7 @@ public class Player {
 		this.score = score;
 	}
 	
-	public void increasePointsBy(int pointsToIncreaseBy){
+	public void increaseScoreBy(int pointsToIncreaseBy){
 		this.score += pointsToIncreaseBy;
 		
 	}
