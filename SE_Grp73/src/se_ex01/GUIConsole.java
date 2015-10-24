@@ -53,15 +53,15 @@ public class GUIConsole {
 	public boolean mapDimension() {
 		width = 1;
 		height = 1;
-		
-		System.out.print("Please enter the width, uneven integer greater than 1: ");
-		width = s.nextInt();
-		System.out.print("Please enter the height, uneven integer greater than 1: ");
-		height = s.nextInt();
-		
-//		while (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0))
-		
-		map = new String[height][width];
+
+
+		while (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
+			System.out.print("Please enter the width, uneven integer greater than 1: ");
+			width = s.nextInt();
+			System.out.print("Please enter the height, uneven integer greater than 1: ");
+			height = s.nextInt();
+		}
+		map = new String[width][height];
 		return true;
 	}
 
@@ -86,8 +86,8 @@ public class GUIConsole {
 	// TODO: Kommentare schreiben 
 	public String[][] initializeMap() {
 		int enumerate = 0;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
 					map[i][j] = "*";
 				} else if (i % 2 == 0 && j % 2 != 0) {
