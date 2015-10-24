@@ -3,6 +3,7 @@ package se_ex01;
 import java.util.Scanner;
 
 public class GUIConsole {
+	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	Player player = new Player(0);
 	Scanner s = new Scanner(System.in);
 	DotsNBoxesEngine gameEngine;
@@ -48,20 +49,25 @@ public class GUIConsole {
 
 	/**
 	 * 
-	 * @return true if the player entered 
+	 * @return true if the player entered
 	 */
 	public boolean mapDimension() {
 		width = 1;
 		height = 1;
 
+		System.out.print("Please enter the width, uneven integer greater than 1: ");
+		width = s.nextInt();
+		System.out.print("Please enter the height, uneven integer greater than 1: ");
+		height = s.nextInt();
 
-		while (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
+		while (!engine.checkFieldDimension(width, height)) {
 			System.out.print("Please enter the width, uneven integer greater than 1: ");
 			width = s.nextInt();
 			System.out.print("Please enter the height, uneven integer greater than 1: ");
 			height = s.nextInt();
 		}
-		map = new String[width][height];
+		map = new String[height][width];
+		initializeMap();
 		return true;
 	}
 
@@ -82,12 +88,12 @@ public class GUIConsole {
 	 * 
 	 * @return The map with the correct entries
 	 */
-	
-	// TODO: Kommentare schreiben 
+
+	// TODO: Kommentare schreiben
 	public String[][] initializeMap() {
 		int enumerate = 0;
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
 					map[i][j] = "*";
 				} else if (i % 2 == 0 && j % 2 != 0) {
@@ -102,6 +108,7 @@ public class GUIConsole {
 					System.err.println("GUIConsole - Method: initializeMap()");
 			}
 		}
+		updateMap(map);
 		return map;
 	}
 
@@ -112,34 +119,29 @@ public class GUIConsole {
 	 *            The modified map from DotsNBoxesEngine if a move was
 	 *            successful
 	 */
-	
-	// TODO: Kommentare schreiben + else if verschönern 
+
+	// TODO: Kommentare schreiben + else if verschönern
 	public void updateMap(String[][] newMap) {
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfIntegerDigits(map[height][width]) == -1 || amountOfIntegerDigits(map[height][width]) == 1) {
+				if (amountOfDigits(map[height][width]) == 1) {
 					if (width < this.width - 1) {
 						System.out.print("  " + map[height][width] + "  ");
-					} else {
+					} else
 						System.out.println("  " + map[height][width] + "  ");
-					}
-				} else {
-					if (amountOfIntegerDigits(map[height][width]) == 2) {
-						if (width < this.width - 1) {
-							System.out.print(" " + map[height][width] + "  ");
-						} else {
-							System.out.println(" " + map[height][width] + "  ");
-						}
-					} else {
-						if (amountOfIntegerDigits(map[height][width]) == 3) {
-							if (width < this.width - 1) {
-								System.out.print(" " + map[height][width] + " ");
-							} else {
-								System.out.println(" " + map[height][width] + " ");
-							}
-						}
-					}
+
+				} else if (amountOfDigits(map[height][width]) == 2) {
+					if (width < this.width - 1) {
+						System.out.print(" " + map[height][width] + "  ");
+					} else
+						System.out.println(" " + map[height][width] + "  ");
+
+				} else if (amountOfDigits(map[height][width]) == 3) {
+					if (width < this.width - 1) {
+						System.out.print(" " + map[height][width] + " ");
+					} else
+						System.out.println(" " + map[height][width] + " ");
 				}
 			}
 		}
@@ -155,14 +157,10 @@ public class GUIConsole {
 	 * @return -1 if it is not an integer otherwise it returns the amount of
 	 *         digits
 	 */
-	private int amountOfIntegerDigits(String string) {
+	private int amountOfDigits(String string) {
 		int digits = 0;
-		if (string.equals("*") || string.equals("|") || string.equals("-") || string.equals(" ")) {
-			return -1;
-		} else {
-			for (int i = 0; i < string.length(); i++) {
-				digits++;
-			}
+		for (int i = 0; i < string.length(); i++) {
+			digits++;
 		}
 		return digits;
 	}

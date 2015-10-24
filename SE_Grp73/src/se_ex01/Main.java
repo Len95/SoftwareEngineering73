@@ -11,7 +11,7 @@ public class Main {
 //		guiConsole.enterNumberOfPlayers();
 //		guiConsole.enterPlayerName();
 		guiConsole.mapDimension();
-		guiConsole.updateMap(guiConsole.initializeMap());
+//		guiConsole.updateMap(guiConsole.initializeMap());
 		
 		// jetzt müsste noch ein move kommen oder ähnliches, damit gespielt werden kann 
 	}
