@@ -135,6 +135,8 @@ public class DotsNBoxesEngine {
 		}
 		return false;
 	}
+	
+	
 
 	/**
 	 * assigns the name of the current player to the completed Box
@@ -173,7 +175,7 @@ public class DotsNBoxesEngine {
 
 	public void executeTurn() {
 
-		replaceNumber();
+		//replaceNumber();
 		updateBoxWithName();
 		if (gameEnded()) {
 
