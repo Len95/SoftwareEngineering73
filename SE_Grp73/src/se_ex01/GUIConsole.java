@@ -12,7 +12,7 @@ public class GUIConsole {
 	String[][] map;
 	int width;
 	int height;
-	String numberOfPlayers;
+	int numberOfPlayers;
 
 	public GUIConsole() {
 		// leave as default?!
@@ -25,13 +25,13 @@ public class GUIConsole {
 	 */
 	public boolean enterPlayerName() {
 		int counter = 1;
-		while (counter <= Integer.parseInt(numberOfPlayers)) {
-			System.out.print("Plyer " + counter + " please enter your Name");
+		while (counter <= numberOfPlayers) {
+			System.out.print("Plyer " + counter + " please enter your Name: ");
 			String name = s.next();
 			player.setName(name);
-			return true;
+			counter++;
 		}
-		return false;
+		return true;
 	}
 
 	/**
@@ -40,12 +40,9 @@ public class GUIConsole {
 	 * @return True if the number of players are entered
 	 */
 	public boolean enterNumberOfPlayers() {
-		numberOfPlayers = s.next();
-		Integer input = Integer.parseInt(numberOfPlayers);
-		while (!(input instanceof Integer)) {
-			System.out.println("0 is invalid, please enter an integer greater than 0");
-			numberOfPlayers = s.next();
-		}
+		System.out.print("Please enter a number of player: " );
+		String input = s.next();
+		numberOfPlayers = Integer.parseInt(input);
 		return true;
 	}
 
