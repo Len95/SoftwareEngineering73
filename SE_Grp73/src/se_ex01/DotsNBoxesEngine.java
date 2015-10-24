@@ -2,16 +2,12 @@ package se_ex01;
 
 public class DotsNBoxesEngine {
 
-	int xCoordinateOfFoundNumber = -1;
-	int yCoordinateOfFoundNumber = -1;
-	int yCoordinateOfEmptyBox = -1;
-	int xCoordinateOfEmptyBox = -1;
+	
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
 	Player player = new Player(null, 0);
-	
-	
+
 	public DotsNBoxesEngine() {
 
 	}
@@ -19,10 +15,12 @@ public class DotsNBoxesEngine {
 	public Player currentPlayer() {
 		return player.playerList.get(calculatePlayerID(playerID));
 	}
-	
+
 	/**
 	 * Calculates the playerID whose turn is to play
-	 * @param moveNumber The total number of moves that are played
+	 * 
+	 * @param moveNumber
+	 *            The total number of moves that are played
 	 * @return playerID
 	 */
 	private int calculatePlayerID(int ID) {
@@ -31,30 +29,26 @@ public class DotsNBoxesEngine {
 			playerID = 1;
 		}
 		for (int i = 1; i <= numberOfPlayers; i++) {
-			if ( ID % (numberOfPlayers + 1) == i) {
+			if (ID % (numberOfPlayers + 1) == i) {
 				currentPlayer = i;
 			}
 		}
 		return currentPlayer;
 	}
 
-	
-	
 	/**
 	 * Checks if the number entered by the player actually exists on the map.
 	 * 
 	 * @return True if it does. Else False.
 	 */
 
-	// turnsPlayed has to be in a method that only gets called once
 	public boolean validMove(Player currentPlayer, int fieldNumber, String[][] map, int width, int height) {
 
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
 
 				if (map[j][i] == (Integer.toString(fieldNumber))) {
-
-					turnsPlayed++;
+					
 					return true;
 				}
 			}
@@ -129,18 +123,20 @@ public class DotsNBoxesEngine {
 
 		return false;
 	}
-	
-	/**
 
+	/**
+	 * 
 	 * Checks if the field dimension is correct
-	 * @param width Width of the field
-	 * @param height Height of the field
+	 * 
+	 * @param width
+	 *            Width of the field
+	 * @param height
+	 *            Height of the field
 	 * @param map
 	 * @return True a box was just completed
-*/
+	 */
 
-
-	public boolean completedBoxNew(String[][] map, int width, int height) {
+	public boolean completedBox(String[][] map, int width, int height) {
 
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
@@ -211,25 +207,22 @@ public class DotsNBoxesEngine {
 	 * @param width
 	 * @param height
 	 */
-	
+
 	public void updateBoxWithName(String[][] map, Player currentPlayer, int yCoordinateOfCompletedBox,
 			int xCoordinateOfCompletedBox, int width, int height) {
 
-		if (completedBoxNew(map, width, height)) {
+		if (completedBox(map, width, height)) {
 			map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = "p" + calculatePlayerID(playerID);
 
+			currentPlayer.increaseScoreBy(1);
 		}
 	}
-
-	
 
 	/**
 	 * checks if the game ended using a counter.
 	 * 
 	 * @return True if the game ended. Else False
 	 */
-
-
 
 	public boolean checkFieldDimension(int width, int height) {
 		if (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
@@ -238,34 +231,39 @@ public class DotsNBoxesEngine {
 		} else
 			return true;
 	}
+
+	public Player returnWinner() {
+		Player bestPlayer = new Player(null, 0);
+
+		for (int i = 0; i <= player.playerList.size(); i++) {
+
+			Player currentP = player.playerList.get(i);
+
+			if (bestPlayer.getScore() < currentP.getScore()) {
+
+				bestPlayer = currentP;
+
+			}
+
+		}
+
+		return bestPlayer;
+
+	}
 	
 	
-//	public boolean gameEnded() {
-//		if (turnsPlayed == ((console.width * console.height) / 2)) {
-//			return true;
-//		} else {
-//
-//			return false;
-//		}
-//	}
+	public boolean gameEnded(int width, int height) {
 
-	/**
-	 * execute the actual turn using all methods above
-	 * 
-	 */
+		turnsPlayed++;
+		
+		if (turnsPlayed == ((width * height) / 2)) {
 
-//	public void executeTurn() {
-//
-//		// replaceNumber();
-//		updateBoxWithName();
-//		if (gameEnded()) {
-//
-//			// victory Message
-//		}
-//
-//		else if (!completedBox()) {
-//
-//			// switch player ,, else do nothing
-//		}
-//	}
+			return true;
+		}
+
+		return false;
+	}
+	
+
+	
 }
