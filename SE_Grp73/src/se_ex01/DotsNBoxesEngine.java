@@ -175,7 +175,7 @@ public class DotsNBoxesEngine {
 
 	public void executeTurn() {
 
-		//replaceNumber();
+//		replaceNumber();
 		updateBoxWithName();
 		if (gameEnded()) {
 
