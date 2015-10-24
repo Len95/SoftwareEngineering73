@@ -47,11 +47,13 @@ public class DotsNBoxesEngine {
 	 * @param map
 	 * @param width
 	 * @param height
-	 * @return returns the coordinates of the Number in the Map as an array. The Y coordinate is at the first position
-	 * in the array while the X coordinate is at the second position
+	 * @return returns the coordinates of the Number in the Map as an array. The
+	 *         Y coordinate is at the first position in the array while the X
+	 *         coordinate is at the second position
 	 */
-	
-	public int[] getCoordinatesOfNumberInMap(Player currentPlayer, int fieldNumber, String[][] map, int width, int height) {
+
+	public int[] getCoordinatesOfNumberInMap(Player currentPlayer, int fieldNumber, String[][] map, int width,
+			int height) {
 
 		int[] coordinatesOfFieldNumber = new int[2];
 
@@ -105,85 +107,97 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
-	 * checks for all possible completed Box around the Field that was just
-	 * changed by the player. assigns the coordinates of the empty field inside
-	 * of the completed Box to xCoordinateOfEmptyBox and yCoordinateOfEmptyBox.
 	 * 
-	 * @return True if a completed Box was found, else False.
+	 * @param map
+	 * @param yCoordinateOfFoundNumber
+	 * @param xCoordinateOfFoundNumber
+	 * @param width
+	 * @param height
+	 * @return True if there is a Box that was just completed.
 	 */
 
-	// parameter
-	public boolean completedBox() {
-		if (currentMap[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] == "-") {
-			if (yCoordinateOfFoundNumber < 1) {
-				if ((currentMap[yCoordinateOfFoundNumber + 2][xCoordinateOfFoundNumber] == "-")
-						&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber + 1] == "|")
-						&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber - 1] == "|")) {
+	public boolean completedBoxNew(String[][] map, int width, int height) {
 
-					yCoordinateOfEmptyBox = xCoordinateOfFoundNumber;
-					xCoordinateOfEmptyBox = yCoordinateOfFoundNumber + 1;
-					return true;
-				} else if (yCoordinateOfFoundNumber == console.height - 1) {
-					if ((currentMap[yCoordinateOfFoundNumber - 2][xCoordinateOfFoundNumber] == "-")
-							&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber + 1] == "|")
-							&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber - 1] == "|")) {
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
 
-						yCoordinateOfEmptyBox = xCoordinateOfFoundNumber;
-						xCoordinateOfEmptyBox = yCoordinateOfFoundNumber - 1;
-					}
-				} else {
-					if ((currentMap[yCoordinateOfFoundNumber - 2][xCoordinateOfFoundNumber] == "-")
-							&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber + 1] == "|")
-							&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber - 1] == "|")) {
+				if (map[j][i] == " ") {
 
-						yCoordinateOfEmptyBox = xCoordinateOfFoundNumber;
-						xCoordinateOfEmptyBox = yCoordinateOfFoundNumber - 1;
+					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
+							&& (map[j][i - 1] == "|")) {
+
 						return true;
-					} else if ((currentMap[yCoordinateOfFoundNumber + 2][xCoordinateOfFoundNumber] == "-")
-							&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber + 1] == "|")
-							&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber - 1] == "|")) {
 
-						yCoordinateOfEmptyBox = xCoordinateOfFoundNumber;
-						xCoordinateOfEmptyBox = yCoordinateOfFoundNumber + 1;
-						return true;
 					}
+
 				}
+
 			}
-		} else if (currentMap[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] == "|") {
 
-			if ((currentMap[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber - 2] == "|")
-					&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber - 1] == "-")
-					&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber - 1] == "-")) {
-
-				yCoordinateOfEmptyBox = xCoordinateOfFoundNumber - 1;
-				xCoordinateOfEmptyBox = yCoordinateOfFoundNumber;
-				return true;
-			} else if ((currentMap[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber + 2] == "|")
-					&& (currentMap[yCoordinateOfFoundNumber + 1][xCoordinateOfFoundNumber + 1] == "-")
-					&& (currentMap[yCoordinateOfFoundNumber - 1][xCoordinateOfFoundNumber + 1] == "-")) {
-
-				yCoordinateOfEmptyBox = xCoordinateOfFoundNumber + 1;
-				xCoordinateOfEmptyBox = yCoordinateOfFoundNumber;
-				return true;
-			}
 		}
 		return false;
+
 	}
 
 	/**
-	 * assigns the name of the current player to the completed Box
 	 * 
+	 * @param map
+	 * @param currentPlayer
+	 * @param yCoordinateOfFoundNumber
+	 * @param xCoordinateOfFoundNumber
+	 * @param width
+	 * @param height
+	 * @return : returns the coordinates of the completed Box(if it exists) as
+	 *         an Integer Array. The first position in the array is the
+	 *         Y-Coordinate the second position is the X-Coordinate.
 	 */
 
-	public void updateBoxWithName() {
+	public int[] getCoordinatesOfCompletedBox(String[][] map, int width, int height) {
 
-		// not the whole name just p1 or p2
+		int[] coordinatesOfCompletedBox = new int[2];
+		for (int j = 0; j < height; j++) {
+			for (int i = 0; i < width; i++) {
 
-		if (completedBox()) {
-			console.player.increaseScoreBy(1);
-			currentMap[xCoordinateOfEmptyBox][yCoordinateOfEmptyBox] = console.player.getName();
+				if (map[j][i] == " ") {
+
+					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
+							&& (map[j][i - 1] == "|")) {
+
+						coordinatesOfCompletedBox[0] = j;
+						coordinatesOfCompletedBox[1] = i;
+
+					}
+
+				}
+
+			}
+
+		}
+
+		return coordinatesOfCompletedBox;
+	}
+
+	/**
+	 * Enters the Name of the current player in the completed Box.
+	 * 
+	 * @param map
+	 * @param currentPlayer
+	 * @param yCoordinateOfCompletedBox
+	 * @param xCoordinateOfCompletedBox
+	 * @param width
+	 * @param height
+	 */
+	
+	public void updateBoxWithName(String[][] map, Player currentPlayer, int yCoordinateOfCompletedBox,
+			int xCoordinateOfCompletedBox, int width, int height) {
+
+		if (completedBoxNew(map, width, height)) {
+		//	map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = 
+
 		}
 	}
+
+	
 
 	/**
 	 * checks if the game ended using a counter.

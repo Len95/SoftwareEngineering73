@@ -61,7 +61,7 @@ public class GUIConsole {
 			System.out.print("Please enter the height, uneven integer greater than 1: ");
 			height = s.nextInt();
 		}
-		map = new String[width][height];
+		map = new String[height][width];
 		return true;
 	}
 
@@ -86,8 +86,8 @@ public class GUIConsole {
 	// TODO: Kommentare schreiben 
 	public String[][] initializeMap() {
 		int enumerate = 0;
-		for (int i = 0; i < width; i++) {
-			for (int j = 0; j < height; j++) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
 					map[i][j] = "*";
 				} else if (i % 2 == 0 && j % 2 != 0) {
