@@ -3,16 +3,15 @@ package se_ex01;
 import java.util.Scanner;
 
 public class GUIConsole {
-	Player player = new Player(0);
+	DotsNBoxesEngine engine = new DotsNBoxesEngine();
+	Player player = new Player(null, 0);
 	Scanner s = new Scanner(System.in);
 	DotsNBoxesEngine gameEngine;
 	Player winner;
-	int numberOfMoves = 0;
 	String wall;
 	String[][] map;
 	int width;
 	int height;
-	int numberOfPlayers;
 
 	public GUIConsole() {
 		// leave as default?!
@@ -25,14 +24,29 @@ public class GUIConsole {
 	 */
 	public boolean enterPlayerName() {
 		int counter = 1;
-		while (counter <= numberOfPlayers) {
-			System.out.print("Plyer " + counter + " please enter your Name: ");
+		while (counter <= engine.numberOfPlayers) {
+			System.out.print("Player " + counter + " please enter your Name: ");
 			String name = s.next();
-			player.setName(name);
+			player.playerList.put(counter, new Player(name, 0));
+			
 			counter++;
 		}
 		return true;
 	}
+	
+	/**
+	 * The player gives an integer input to remove a wall
+	 * 
+	 * @return The wall number
+	 */
+	public int move(Player player) {
+//		numberOfMoves++;
+//		System.out.print(player.playerList.get(calculatePlayerID(playerID)) + ": Please enter a number of a wall: ");
+		int input = s.nextInt();
+
+		return input;
+	}
+	
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
@@ -42,48 +56,46 @@ public class GUIConsole {
 	public boolean enterNumberOfPlayers() {
 		System.out.print("Please enter a number of player: ");
 		String input = s.next();
-		numberOfPlayers = Integer.parseInt(input);
+		engine.numberOfPlayers = Integer.parseInt(input);
 		return true;
 	}
 
 	/**
 	 * 
-	 * @return true if the player entered 
+	 * @return true if the player entered
 	 */
 	public boolean mapDimension() {
 		width = 1;
 		height = 1;
 
+		System.out.print("Please enter the width, uneven integer greater than 1: ");
+		width = s.nextInt();
+		System.out.print("Please enter the height, uneven integer greater than 1: ");
+		height = s.nextInt();
 
-		while (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
+		while (!engine.checkFieldDimension(width, height)) {
 			System.out.print("Please enter the width, uneven integer greater than 1: ");
 			width = s.nextInt();
 			System.out.print("Please enter the height, uneven integer greater than 1: ");
 			height = s.nextInt();
 		}
+<<<<<<< HEAD
 		map = new String[height][width];
+=======
+		map = new String[height][width];
+		initializeMap();
+>>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73
 		return true;
 	}
 
-	/**
-	 * The player gives an integer input to remove a wall
-	 * 
-	 * @return The wall number
-	 */
-	public int move(Player player) {
-		System.out.print(player.getName() + ": Please enter a number of a wall: ");
-		int input = s.nextInt();
-
-		return input;
-	}
-
+	
 	/**
 	 * Initializes an empty two dimensional string array
 	 * 
 	 * @return The map with the correct entries
 	 */
-	
-	// TODO: Kommentare schreiben 
+
+	// TODO: Kommentare schreiben
 	public String[][] initializeMap() {
 		int enumerate = 0;
 		for (int i = 0; i < height; i++) {
@@ -102,6 +114,7 @@ public class GUIConsole {
 					System.err.println("GUIConsole - Method: initializeMap()");
 			}
 		}
+		updateMap(map);
 		return map;
 	}
 
@@ -112,37 +125,33 @@ public class GUIConsole {
 	 *            The modified map from DotsNBoxesEngine if a move was
 	 *            successful
 	 */
-	
-	// TODO: Kommentare schreiben + else if verschönern 
+
+	// TODO: Kommentare schreiben + else if verschönern
 	public void updateMap(String[][] newMap) {
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfIntegerDigits(map[height][width]) == -1 || amountOfIntegerDigits(map[height][width]) == 1) {
+				if (amountOfDigits(map[height][width]) == 1) {
 					if (width < this.width - 1) {
 						System.out.print("  " + map[height][width] + "  ");
-					} else {
+					} else
 						System.out.println("  " + map[height][width] + "  ");
-					}
-				} else {
-					if (amountOfIntegerDigits(map[height][width]) == 2) {
-						if (width < this.width - 1) {
-							System.out.print(" " + map[height][width] + "  ");
-						} else {
-							System.out.println(" " + map[height][width] + "  ");
-						}
-					} else {
-						if (amountOfIntegerDigits(map[height][width]) == 3) {
-							if (width < this.width - 1) {
-								System.out.print(" " + map[height][width] + " ");
-							} else {
-								System.out.println(" " + map[height][width] + " ");
-							}
-						}
-					}
+
+				} else if (amountOfDigits(map[height][width]) == 2) {
+					if (width < this.width - 1) {
+						System.out.print(" " + map[height][width] + "  ");
+					} else
+						System.out.println(" " + map[height][width] + "  ");
+
+				} else if (amountOfDigits(map[height][width]) == 3) {
+					if (width < this.width - 1) {
+						System.out.print(" " + map[height][width] + " ");
+					} else
+						System.out.println(" " + map[height][width] + " ");
 				}
 			}
 		}
+		
 	}
 
 	/**
@@ -155,14 +164,10 @@ public class GUIConsole {
 	 * @return -1 if it is not an integer otherwise it returns the amount of
 	 *         digits
 	 */
-	private int amountOfIntegerDigits(String string) {
+	private int amountOfDigits(String string) {
 		int digits = 0;
-		if (string.equals("*") || string.equals("|") || string.equals("-") || string.equals(" ")) {
-			return -1;
-		} else {
-			for (int i = 0; i < string.length(); i++) {
-				digits++;
-			}
+		for (int i = 0; i < string.length(); i++) {
+			digits++;
 		}
 		return digits;
 	}
@@ -174,7 +179,6 @@ public class GUIConsole {
 	public void endOfGame() {
 		System.out.println("The WINNER is: " + winner.getName());
 		System.out.println("The score of the WINNER is: " + winner.getScore());
-		System.out.println("The total amount of player rounds " + this.numberOfMoves);
 	}
 
 }
