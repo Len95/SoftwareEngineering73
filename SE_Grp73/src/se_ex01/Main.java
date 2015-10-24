@@ -7,8 +7,8 @@ public class Main {
 		System.out.println("---------------------------------------------------------");
 		System.out.println("A NEW GAME STARTS: HAVE FUN! :)");
 		System.out.println("---------------------------------------------------------");
-		guiConsole.enterNumberOfPlayers();
-		guiConsole.enterPlayerName();
+//		guiConsole.enterNumberOfPlayers();
+//		guiConsole.enterPlayerName();
 		guiConsole.mapDimension();
 		guiConsole.updateMap(guiConsole.initializeMap());
 		
