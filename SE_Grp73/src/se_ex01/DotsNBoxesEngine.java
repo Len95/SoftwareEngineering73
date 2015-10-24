@@ -22,7 +22,7 @@ public class DotsNBoxesEngine {
 	 * @return True if it does. Else False.
 	 */
 
-
+	// turnsPlayed has to be in a method that only gets called once
 	public boolean validMove(Player currentPlayer, int fieldNumber, String[][] map, int width, int height) {
 
 		for (int j = 0; j < height; j++) {
@@ -30,8 +30,6 @@ public class DotsNBoxesEngine {
 
 				if (map[j][i] == (Integer.toString(fieldNumber))) {
 
-					xCoordinateOfFoundNumber = i;
-					yCoordinateOfFoundNumber = j;
 					turnsPlayed++;
 					return true;
 				}
@@ -42,11 +40,47 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
+	 * 
+	 * 
+	 * @param currentPlayer
+	 * @param fieldNumber
+	 * @param map
+	 * @param width
+	 * @param height
+	 * @return returns the coordinates of the Number in the Map as an array. The Y coordinate is at the first position
+	 * in the array while the X coordinate is at the second position
+	 */
+	
+	public int[] getCoordinatesOfNumberInMap(Player currentPlayer, int fieldNumber, String[][] map, int width, int height) {
+
+		int[] coordinatesOfFieldNumber = new int[2];
+
+		if (validMove(currentPlayer, fieldNumber, map, width, height)) {
+
+			for (int j = 0; j < height; j++) {
+				for (int i = 0; i < width; i++) {
+
+					if (map[j][i] == (Integer.toString(fieldNumber))) {
+
+						coordinatesOfFieldNumber[0] = j;
+						coordinatesOfFieldNumber[1] = i;
+					}
+				}
+			}
+
+		}
+
+		return coordinatesOfFieldNumber;
+
+	}
+
+	/**
 	 * replaces the Number entered by the player with either "-" or "|"
 	 * depending on its position.
 	 */
-	
-	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int width, int height, String[][] map) {
+
+	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int width, int height, String[][] map,
+			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
 		if (validMove(currentPlayer, fieldNumber, map, width, height)) {
 
@@ -135,8 +169,6 @@ public class DotsNBoxesEngine {
 		}
 		return false;
 	}
-	
-	
 
 	/**
 	 * assigns the name of the current player to the completed Box
@@ -175,7 +207,7 @@ public class DotsNBoxesEngine {
 
 	public void executeTurn() {
 
-//		replaceNumber();
+		// replaceNumber();
 		updateBoxWithName();
 		if (gameEnded()) {
 
