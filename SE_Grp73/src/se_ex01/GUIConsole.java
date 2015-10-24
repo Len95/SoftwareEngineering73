@@ -4,16 +4,14 @@ import java.util.Scanner;
 
 public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
-	Player player = new Player(0);
+	Player player = new Player(null, 0);
 	Scanner s = new Scanner(System.in);
 	DotsNBoxesEngine gameEngine;
 	Player winner;
-	int numberOfMoves = 0;
 	String wall;
 	String[][] map;
 	int width;
 	int height;
-	int numberOfPlayers;
 
 	public GUIConsole() {
 		// leave as default?!
@@ -26,14 +24,29 @@ public class GUIConsole {
 	 */
 	public boolean enterPlayerName() {
 		int counter = 1;
-		while (counter <= numberOfPlayers) {
-			System.out.print("Plyer " + counter + " please enter your Name: ");
+		while (counter <= engine.numberOfPlayers) {
+			System.out.print("Player " + counter + " please enter your Name: ");
 			String name = s.next();
-			player.setName(name);
+			player.playerList.put(counter, new Player(name, 0));
+			
 			counter++;
 		}
 		return true;
 	}
+	
+	/**
+	 * The player gives an integer input to remove a wall
+	 * 
+	 * @return The wall number
+	 */
+	public int move(Player player) {
+//		numberOfMoves++;
+//		System.out.print(player.playerList.get(calculatePlayerID(playerID)) + ": Please enter a number of a wall: ");
+		int input = s.nextInt();
+
+		return input;
+	}
+	
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
@@ -43,7 +56,7 @@ public class GUIConsole {
 	public boolean enterNumberOfPlayers() {
 		System.out.print("Please enter a number of player: ");
 		String input = s.next();
-		numberOfPlayers = Integer.parseInt(input);
+		engine.numberOfPlayers = Integer.parseInt(input);
 		return true;
 	}
 
@@ -71,18 +84,7 @@ public class GUIConsole {
 		return true;
 	}
 
-	/**
-	 * The player gives an integer input to remove a wall
-	 * 
-	 * @return The wall number
-	 */
-	public int move(Player player) {
-		System.out.print(player.getName() + ": Please enter a number of a wall: ");
-		int input = s.nextInt();
-
-		return input;
-	}
-
+	
 	/**
 	 * Initializes an empty two dimensional string array
 	 * 
@@ -145,6 +147,7 @@ public class GUIConsole {
 				}
 			}
 		}
+		
 	}
 
 	/**
@@ -172,7 +175,6 @@ public class GUIConsole {
 	public void endOfGame() {
 		System.out.println("The WINNER is: " + winner.getName());
 		System.out.println("The score of the WINNER is: " + winner.getScore());
-		System.out.println("The total amount of player rounds " + this.numberOfMoves);
 	}
 
 }

@@ -1,16 +1,20 @@
 package se_ex01;
 
+import java.util.HashMap;
+
 public class Player {
 	String name;
 	int score;
+	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 	
 	/**
 	 * Player who plays the game
 	 * @param name the name of the player 
 	 * @param score the score of the player during the game, initialize with 0
 	 */
-	public Player(int score) {
+	public Player(String name, int score) {
 		this.score = score;
+		this.name = name;
 	}
 
 	public String getName() {
