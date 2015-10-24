@@ -152,7 +152,7 @@ public class GUIConsole {
 				}
 			}
 		}
-		if (true) {
+		if (engine.gameEnded(width, height)) {
 			endOfGame();
 		} else 
 			move();
@@ -181,7 +181,7 @@ public class GUIConsole {
 	 * winner's score
 	 */
 	public void endOfGame() {
-		System.out.println("The WINNER is: ");
+		System.out.println("The WINNER is: " + engine.returnWinner().getName());
 		
 	}
 
