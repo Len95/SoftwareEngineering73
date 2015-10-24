@@ -79,12 +79,8 @@ public class GUIConsole {
 			System.out.print("Please enter the height, uneven integer greater than 1: ");
 			height = s.nextInt();
 		}
-<<<<<<< HEAD
-		map = new String[height][width];
-=======
 		map = new String[height][width];
 		initializeMap();
->>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73
 		return true;
 	}
 

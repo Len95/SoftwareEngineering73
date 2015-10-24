@@ -17,7 +17,7 @@ public class DotsNBoxesEngine {
 	}
 
 	public Player currentPlayer() {
-		return null;
+		return player.playerList.get(calculatePlayerID(playerID));
 	}
 	
 	/**
