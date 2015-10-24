@@ -42,7 +42,7 @@ public class DotsNBoxesEngine {
 	 * @return True if it does. Else False.
 	 */
 
-	public boolean validMove(Player currentPlayer, int fieldNumber, String[][] map, int width, int height) {
+	public boolean validMove(int fieldNumber, String[][] map, int width, int height) {
 
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
@@ -75,7 +75,7 @@ public class DotsNBoxesEngine {
 
 		int[] coordinatesOfFieldNumber = new int[2];
 
-		if (validMove(currentPlayer, fieldNumber, map, width, height)) {
+		if (validMove(fieldNumber, map, width, height)) {
 
 			for (int j = 0; j < height; j++) {
 				for (int i = 0; i < width; i++) {
@@ -102,7 +102,7 @@ public class DotsNBoxesEngine {
 	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int width, int height, String[][] map,
 			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
-		if (validMove(currentPlayer, fieldNumber, map, width, height)) {
+		if (validMove(fieldNumber, map, width, height)) {
 
 			if ((fieldNumber % width) == 0) {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
