@@ -40,7 +40,7 @@ public class GUIConsole {
 	 * @return True if the number of players are entered
 	 */
 	public boolean enterNumberOfPlayers() {
-		System.out.print("Please enter a number of player: " );
+		System.out.print("Please enter a number of player: ");
 		String input = s.next();
 		numberOfPlayers = Integer.parseInt(input);
 		return true;
@@ -81,30 +81,25 @@ public class GUIConsole {
 	 * 
 	 * @return The map with the correct entries
 	 */
+	
+	// TODO: Kommentare schreiben 
 	public String[][] initializeMap() {
 		int enumerate = 0;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
 					map[i][j] = "*";
-				} else {
-					if (i % 2 == 0 && j % 2 != 0) {
-						map[i][j] = String.valueOf(enumerate);
-						enumerate++;
-					} else {
-						if (i % 2 != 0 && j % 2 == 0) {
-							map[i][j] = String.valueOf(enumerate);
-							enumerate++;
-						} else {
-							if (i % 2 != 0 && j % 2 != 0) {
-								map[i][j] = " ";
-							} else {
-								System.err.println("GUIConsole - Method: initializeMap()");
-								System.err.println("This two messages shouldn't appear!!");
-							}
-						}
-					}
-				}
+				} else if (i % 2 == 0 && j % 2 != 0) {
+					map[i][j] = String.valueOf(enumerate);
+					enumerate++;
+				} else if (i % 2 != 0 && j % 2 == 0) {
+					map[i][j] = String.valueOf(enumerate);
+					enumerate++;
+				} else if (i % 2 != 0 && j % 2 != 0) {
+					map[i][j] = " ";
+				} else
+					System.err.println("GUIConsole - Method: initializeMap()");
+				System.err.println("This two messages shouldn't appear!!");
 			}
 		}
 		return map;
@@ -117,6 +112,8 @@ public class GUIConsole {
 	 *            The modified map from DotsNBoxesEngine if a move was
 	 *            successful
 	 */
+	
+	// TODO: Kommentare schreiben + else if verschönern 
 	public void updateMap(String[][] newMap) {
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
@@ -133,7 +130,7 @@ public class GUIConsole {
 							System.out.print(" " + map[height][width] + "  ");
 						} else {
 							System.out.println(" " + map[height][width] + "  ");
-						} 
+						}
 					} else {
 						if (amountOfIntegerDigits(map[height][width]) == 3) {
 							if (width < this.width - 1) {
@@ -143,7 +140,7 @@ public class GUIConsole {
 							}
 						}
 					}
-				} 
+				}
 			}
 		}
 	}
