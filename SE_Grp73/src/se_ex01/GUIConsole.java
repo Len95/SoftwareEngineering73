@@ -41,14 +41,14 @@ public class GUIConsole {
 		int id = engine.calculatePlayerID(engine.playerID);
 		Player currentPlayer = player.playerList.get(id);
 
-		System.out.print("Player " + "(" + id + "): " + currentPlayer.getName() + "please enter a wall number: ");
+		System.out.print("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number: ");
 		int input = scanner.nextInt();
 
 		// TODO: Conflict with x, y coords
 		int[] coords = engine.getCoordinatesOfNumberInMap(currentPlayer, input, map, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
-
+		
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
 			updateMap(map);
 		} else
@@ -98,7 +98,7 @@ public class GUIConsole {
 
 	// TODO: Kommentare schreiben
 	public String[][] initializeMap() {
-		int enumerate = 0;
+		int enumerate = 1;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 				if (i % 2 == 0 && j % 2 == 0) {
