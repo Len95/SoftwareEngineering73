@@ -25,7 +25,7 @@ public class DotsNBoxesEngine {
 	 * @param moveNumber The total number of moves that are played
 	 * @return playerID
 	 */
-	private int calculatePlayerID(int ID) {
+	public int calculatePlayerID(int ID) {
 		int currentPlayer = -1;
 		if (playerID > numberOfPlayers) {
 			playerID = 1;
@@ -249,23 +249,4 @@ public class DotsNBoxesEngine {
 //		}
 //	}
 
-	/**
-	 * execute the actual turn using all methods above
-	 * 
-	 */
-
-//	public void executeTurn() {
-//
-//		// replaceNumber();
-//		updateBoxWithName();
-//		if (gameEnded()) {
-//
-//			// victory Message
-//		}
-//
-//		else if (!completedBox()) {
-//
-//			// switch player ,, else do nothing
-//		}
-//	}
 }

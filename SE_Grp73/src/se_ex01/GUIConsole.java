@@ -5,9 +5,8 @@ import java.util.Scanner;
 public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	Player player = new Player(null, 0);
-	Scanner s = new Scanner(System.in);
+	Scanner scanner = new Scanner(System.in);
 	DotsNBoxesEngine gameEngine;
-	Player winner;
 	String wall;
 	String[][] map;
 	int width;
@@ -22,69 +21,75 @@ public class GUIConsole {
 	 * 
 	 * @return True if the name is entered
 	 */
-	public boolean enterPlayerName() {
+	public void enterPlayerName() {
 		int counter = 1;
 		while (counter <= engine.numberOfPlayers) {
 			System.out.print("Player " + counter + " please enter your Name: ");
-			String name = s.next();
+			String name = scanner.next();
 			player.playerList.put(counter, new Player(name, 0));
-			
 			counter++;
 		}
-		return true;
+		mapDimension();
 	}
-	
+
 	/**
 	 * The player gives an integer input to remove a wall
 	 * 
 	 * @return The wall number
 	 */
-	public int move(Player player) {
-//		numberOfMoves++;
-//		System.out.print(player.playerList.get(calculatePlayerID(playerID)) + ": Please enter a number of a wall: ");
-		int input = s.nextInt();
+	public void move() {
+		int id = engine.calculatePlayerID(engine.playerID);
+		Player currentPlayer = player.playerList.get(id);
 
-		return input;
+		System.out.print("Player " + "(" + id + "): " + currentPlayer.getName() + "please enter a wall number: ");
+		int input = scanner.nextInt();
+
+		// TODO: Conflict with x, y coords
+		int[] coords = engine.getCoordinatesOfNumberInMap(currentPlayer, input, map, width, height);
+		int xCoord = coords[1];
+		int yCoord = coords[0];
+
+		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
+			updateMap(map);
+		} else
+			move();
 	}
-	
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
 	 * 
 	 * @return True if the number of players are entered
 	 */
-	public boolean enterNumberOfPlayers() {
+	public void enterNumberOfPlayers() {
 		System.out.print("Please enter a number of player: ");
-		String input = s.next();
+		String input = scanner.next();
 		engine.numberOfPlayers = Integer.parseInt(input);
-		return true;
+		enterPlayerName();
 	}
 
 	/**
 	 * 
 	 * @return true if the player entered
 	 */
-	public boolean mapDimension() {
+	public void mapDimension() {
 		width = 1;
 		height = 1;
 
 		System.out.print("Please enter the width, uneven integer greater than 1: ");
-		width = s.nextInt();
+		width = scanner.nextInt();
 		System.out.print("Please enter the height, uneven integer greater than 1: ");
-		height = s.nextInt();
+		height = scanner.nextInt();
 
 		while (!engine.checkFieldDimension(width, height)) {
 			System.out.print("Please enter the width, uneven integer greater than 1: ");
-			width = s.nextInt();
+			width = scanner.nextInt();
 			System.out.print("Please enter the height, uneven integer greater than 1: ");
-			height = s.nextInt();
+			height = scanner.nextInt();
 		}
 		map = new String[height][width];
 		initializeMap();
-		return true;
 	}
 
-	
 	/**
 	 * Initializes an empty two dimensional string array
 	 * 
@@ -147,7 +152,10 @@ public class GUIConsole {
 				}
 			}
 		}
-		
+		if (true) {
+			endOfGame();
+		} else 
+			move();
 	}
 
 	/**
@@ -173,8 +181,8 @@ public class GUIConsole {
 	 * winner's score
 	 */
 	public void endOfGame() {
-		System.out.println("The WINNER is: " + winner.getName());
-		System.out.println("The score of the WINNER is: " + winner.getScore());
+		System.out.println("The WINNER is: ");
+		
 	}
 
 }
