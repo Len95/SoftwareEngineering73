@@ -2,7 +2,6 @@ package se_ex01;
 
 public class DotsNBoxesEngine {
 
-	
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
@@ -13,7 +12,17 @@ public class DotsNBoxesEngine {
 	}
 
 	public Player currentPlayer() {
-		return player.playerList.get(calculatePlayerID(playerID));
+		Player currentPlayer = player.playerList.get(currentPlayerID());
+		return currentPlayer;
+	}
+	
+	public int currentPlayerID() {
+		return calculatePlayerID(playerID);
+	}
+	
+	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier ausgelagert wird)
+	public void storePlayerName(int counter, String name) {
+		player.playerList.put(counter, new Player(name, 0));
 	}
 
 	/**
@@ -23,14 +32,16 @@ public class DotsNBoxesEngine {
 	 *            The total number of moves that are played
 	 * @return playerID
 	 */
-	public int calculatePlayerID(int ID) {
+	protected int calculatePlayerID(int ID) {
+		System.out.println("ID INPUT ENGINE: " + ID);
 		int currentPlayer = -1;
 		if (playerID > numberOfPlayers) {
 			playerID = 1;
 		}
 		for (int i = 1; i <= numberOfPlayers; i++) {
-			if (ID % (numberOfPlayers + 1) == i) {
+			if ((ID % (numberOfPlayers + 1)) == i) {
 				currentPlayer = i;
+				break;
 			}
 		}
 		return currentPlayer;
@@ -42,25 +53,20 @@ public class DotsNBoxesEngine {
 	 * @return True if it does. Else False.
 	 */
 
-	public boolean validMove(int fieldNumber, String[][] map, int width, int height) {
-
-		for (int j = 0; j < height; j++) {
-			for (int i = 0; i < width; i++) {
-
-				if (map[j][i] == (Integer.toString(fieldNumber))) {
-					
+	private boolean validMove(int fieldNumber, String[][] map, int width, int height) {
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (map[i][j].equals(Integer.toString(fieldNumber))) {
 					return true;
 				}
 			}
 		}
-
 		return false;
 	}
 
 	/**
 	 * 
 	 * 
-	 * @param currentPlayer
 	 * @param fieldNumber
 	 * @param map
 	 * @param width
@@ -70,28 +76,23 @@ public class DotsNBoxesEngine {
 	 *         coordinate is at the second position
 	 */
 
-	public int[] getCoordinatesOfNumberInMap(Player currentPlayer, int fieldNumber, String[][] map, int width,
-			int height) {
+	public int[] getCoordinatesOfNumberInMap(int fieldNumber, String[][] map, int width, int height) {
 
 		int[] coordinatesOfFieldNumber = new int[2];
-
 		if (validMove(fieldNumber, map, width, height)) {
-
+			System.out.println("valid");
 			for (int j = 0; j < height; j++) {
 				for (int i = 0; i < width; i++) {
-
-					if (map[j][i] == (Integer.toString(fieldNumber))) {
+					if (map[j][i].equals(Integer.toString(fieldNumber))) {
 
 						coordinatesOfFieldNumber[0] = j;
 						coordinatesOfFieldNumber[1] = i;
+						return coordinatesOfFieldNumber;
 					}
 				}
 			}
-
 		}
-
 		return coordinatesOfFieldNumber;
-
 	}
 
 	/**
@@ -103,7 +104,7 @@ public class DotsNBoxesEngine {
 			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
 		if (validMove(fieldNumber, map, width, height)) {
-
+			++playerID;
 			if ((fieldNumber % width) == 0) {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
 				return true;
@@ -145,7 +146,7 @@ public class DotsNBoxesEngine {
 
 					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
 							&& (map[j][i - 1] == "|")) {
-
+						--playerID;
 						return true;
 
 					}
@@ -250,12 +251,11 @@ public class DotsNBoxesEngine {
 		return bestPlayer;
 
 	}
-	
 
 	public boolean gameEnded(int width, int height) {
 
 		turnsPlayed++;
-		
+
 		if (turnsPlayed == ((width * height) / 2)) {
 
 			return true;

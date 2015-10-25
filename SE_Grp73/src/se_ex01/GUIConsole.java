@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
-	Player player = new Player(null, 0);
+	// Player player = new Player(null, 0);
 	Scanner scanner = new Scanner(System.in);
 	DotsNBoxesEngine gameEngine;
 	String wall;
@@ -21,12 +21,13 @@ public class GUIConsole {
 	 * 
 	 * @return True if the name is entered
 	 */
+	// TODO: Prüfen auslagern in die engine
 	public void enterPlayerName() {
 		int counter = 1;
 		while (counter <= engine.numberOfPlayers) {
 			System.out.print("Player " + counter + " please enter your Name: ");
 			String name = scanner.next();
-			player.playerList.put(counter, new Player(name, 0));
+			engine.storePlayerName(counter, name);
 			counter++;
 		}
 		mapDimension();
@@ -38,28 +39,54 @@ public class GUIConsole {
 	 * @return The wall number
 	 */
 	public void move() {
-		int id = engine.calculatePlayerID(engine.playerID);
-		Player currentPlayer = player.playerList.get(id);
+		Player currentPlayer = engine.currentPlayer();
+		int id = engine.currentPlayerID();
 
-		System.out.print("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number: ");
+		//
+		// System.out.println("ID " + id);
+		// System.out.println("Name: " + currentPlayer.getName());
+		//
+		//
+		// System.out.print("Player " + "(" + id + "): " +
+		// currentPlayer.getName() + " please enter a wall number: ");
 		int input = scanner.nextInt();
 
-		// TODO: Conflict with x, y coords
-		int[] coords = engine.getCoordinatesOfNumberInMap(currentPlayer, input, map, width, height);
+		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
-		
+
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
-			updateMap(map);
+			if (engine.completedBox(map, width, height)) {
+				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
+				int xComplete = coordsComplete[1];
+				int yComplete = coordsComplete[0];
+				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
+				updateMap(map);
+			} else 
+				updateMap(map);
 		} else
 			move();
 	}
+	
+	
+//	
+//	if (engine.completedBox(map, width, height)) {
+//		int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
+//		int xComplete = coordsComplete[1];
+//		int yComplete = coordsComplete[0];
+//		if (engine.replaceNumber(currentPlayer, input, width, height, map, yComplete, xComplete)) {
+//			updateMap(map);
+//	
+//	
+	
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
 	 * 
 	 * @return True if the number of players are entered
 	 */
+	// TODO: Inputs in der Engine checken und erst dann dem Attribut
+	// numberOfPlayers übergeben
 	public void enterNumberOfPlayers() {
 		System.out.print("Please enter a number of player: ");
 		String input = scanner.next();
@@ -71,6 +98,7 @@ public class GUIConsole {
 	 * 
 	 * @return true if the player entered
 	 */
+	// TODO Inputs in der Engine checken
 	public void mapDimension() {
 		width = 1;
 		height = 1;
@@ -129,6 +157,7 @@ public class GUIConsole {
 
 	// TODO: Kommentare schreiben + else if verschönern
 	public void updateMap(String[][] newMap) {
+		
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
@@ -152,9 +181,9 @@ public class GUIConsole {
 				}
 			}
 		}
-		if (engine.gameEnded(width, height)) {
-			endOfGame();
-		} else 
+//		if (engine.gameEnded(width, height)) {
+//			endOfGame();
+//		} else
 			move();
 	}
 
@@ -182,7 +211,7 @@ public class GUIConsole {
 	 */
 	public void endOfGame() {
 		System.out.println("The WINNER is: " + engine.returnWinner().getName());
-		
+
 	}
 
 }
