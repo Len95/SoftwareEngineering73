@@ -5,7 +5,7 @@ public class DotsNBoxesEngine {
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
-	Player player = new Player(null, 0);
+	Player player = new Player("default", 0);
 
 	public DotsNBoxesEngine() {
 
@@ -13,15 +13,16 @@ public class DotsNBoxesEngine {
 
 	public Player currentPlayer() {
 		Player currentPlayer = player.playerList.get(currentPlayerID());
+		System.out.println(currentPlayer + " <- IN ENGINE CURRENT PLAYER");
 		return currentPlayer;
 	}
 	
-	public int currentPlayerID() {
+	public Integer currentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
 	
 	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier ausgelagert wird)
-	public void storePlayerName(int counter, String name) {
+	public void storePlayerName(Integer counter, String name) {
 		player.playerList.put(counter, new Player(name, 0));
 	}
 
@@ -32,18 +33,22 @@ public class DotsNBoxesEngine {
 	 *            The total number of moves that are played
 	 * @return playerID
 	 */
-	protected int calculatePlayerID(int ID) {
+	protected Integer calculatePlayerID(int ID) {
 		System.out.println("ID INPUT ENGINE: " + ID);
-		int currentPlayer = -1;
+		Integer currentPlayer = -1;
 		if (playerID > numberOfPlayers) {
 			playerID = 1;
+			System.out.println("SET player ID to one " + playerID);
 		}
 		for (int i = 1; i <= numberOfPlayers; i++) {
+			System.out.println("FOR Schleife " + i);
 			if ((ID % (numberOfPlayers + 1)) == i) {
-				currentPlayer = i;
+				currentPlayer = Integer.valueOf(i);
 				break;
-			}
+			} else
+				continue;
 		}
+		System.out.println("CALCULATED PLAYER ID: " + currentPlayer);
 		return currentPlayer;
 	}
 
@@ -104,19 +109,21 @@ public class DotsNBoxesEngine {
 			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
 		if (validMove(fieldNumber, map, width, height)) {
-			++playerID;
 			if ((fieldNumber % width) == 0) {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
+				++playerID;
 				return true;
 			}
 
 			else if (map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber + 1] == "*") {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "-";
+				++playerID;
 				return true;
 			}
 
 			else {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
+				++playerID;
 				return true;
 			}
 

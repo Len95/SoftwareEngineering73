@@ -22,8 +22,8 @@ public class GUIConsole {
 	 */
 	// TODO: Prüfen auslagern in die engine
 	public void enterPlayerName() {
-		int counter = 1;
-		while (counter <= engine.numberOfPlayers) {
+		Integer counter = 1;
+		while (counter <= Integer.valueOf(engine.numberOfPlayers)) {
 			System.out.print("Player " + counter + " please enter your Name: ");
 			String name = scanner.next();
 			engine.storePlayerName(counter, name);
@@ -39,15 +39,16 @@ public class GUIConsole {
 	 */
 	public void move() {
 		Player currentPlayer = engine.currentPlayer();
-		int id = engine.currentPlayerID();
+		Integer id = engine.currentPlayerID();
 
-//		
-//		 System.out.println("ID " + id);
-//		 System.out.println("Name: " + currentPlayer.getName());
-//		
-//		
-//		 System.out.print("Player " + "(" + id + "): " +
-//		 currentPlayer.getName() + " please enter a wall number: ");
+		
+		 System.out.println("ID " + id);
+		 System.out.println("CURRENT PLAYER: " + currentPlayer);
+		 System.out.println("Name: " + currentPlayer.getName());
+		
+		
+		 System.out.print("Player " + "(" + id + "): " +
+		 currentPlayer.getName() + " please enter a wall number: ");
 		int input = scanner.nextInt();
 
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
@@ -66,18 +67,6 @@ public class GUIConsole {
 		} else
 			move();
 	}
-	
-	
-//	
-//	if (engine.completedBox(map, width, height)) {
-//		int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
-//		int xComplete = coordsComplete[1];
-//		int yComplete = coordsComplete[0];
-//		if (engine.replaceNumber(currentPlayer, input, width, height, map, yComplete, xComplete)) {
-//			updateMap(map);
-//	
-//	
-	
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
@@ -181,8 +170,7 @@ public class GUIConsole {
 			}
 		}
 		if (engine.gameEnded(width, height)) {
-			System.out.println("GAME ENDED ------------------------------- GAME ENDED");
-//			endOfGame();
+			endOfGame();
 		} else
 			move();
 	}
@@ -210,6 +198,7 @@ public class GUIConsole {
 	 * winner's score
 	 */
 	public void endOfGame() {
+		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
 		System.out.println("The WINNER is: " + engine.returnWinner().getName());
 
 	}
