@@ -5,7 +5,6 @@ import java.util.Scanner;
 public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	// Player player = new Player(null, 0);
-	Scanner scanner = new Scanner(System.in);
 	String wall;
 	String[][] map;
 	int width;
@@ -23,9 +22,8 @@ public class GUIConsole {
 	// TODO: Prüfen auslagern in die engine
 	public void enterPlayerName() {
 		Integer counter = 1;
-		while (counter <= Integer.valueOf(engine.numberOfPlayers)) {
-			System.out.print("Player " + counter + " please enter your Name: ");
-			String name = scanner.next();
+		while (counter <= engine.numberOfPlayers) {
+			String name = getString("Player " + counter + " please enter your Name");
 			engine.storePlayerName(counter, name);
 			counter++;
 		}
@@ -41,42 +39,38 @@ public class GUIConsole {
 		Player currentPlayer = engine.currentPlayer();
 		Integer id = engine.currentPlayerID();
 
-		
-//		 System.out.println("ID " + id);
-//		 System.out.println("CURRENT PLAYER: " + currentPlayer);
-//		 System.out.println("Name: " + currentPlayer.getName());
-//		
-		
-		 System.out.print("Player " + "(" + id + "): " +
-		 currentPlayer.getName() + " please enter a wall number: ");
-		int input = scanner.nextInt();
+		// System.out.println("ID " + id);
+		// System.out.println("CURRENT PLAYER: " + currentPlayer);
+		// System.out.println("Name: " + currentPlayer.getName());
+		//
+
+		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
 
-		
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
 			if (engine.completedBox(map, width, height)) {
 				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
 				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
-				
-				// check for another completed Box..since one move can complete 2 boxes at the same time and update the map again
-			    
-				
+
+				// check for another completed Box..since one move can complete
+				// 2 boxes at the same time and update the map again
+
 				if (engine.completedBox(map, width, height)) {
 					int[] coordsComplete2 = engine.getCoordinatesOfCompletedBox(map, width, height);
 					int xComplete2 = coordsComplete2[1];
 					int yComplete2 = coordsComplete2[0];
 					engine.updateBoxWithName(map, currentPlayer, yComplete2, xComplete2, width, height);
 				}
-				
+
 				updateMap(map);
-			} else 
+			} else
 				engine.increasePlayerIdByOne();
-				updateMap(map);
+			updateMap(map);
 		} else
 			move();
 	}
@@ -89,9 +83,12 @@ public class GUIConsole {
 	// TODO: Inputs in der Engine checken und erst dann dem Attribut
 	// numberOfPlayers übergeben
 	public void enterNumberOfPlayers() {
-		System.out.print("Please enter a number of player: ");
-		String input = scanner.next();
-		engine.numberOfPlayers = Integer.parseInt(input);
+		int input = -1;
+
+		while (input < 2) {
+			input = getNumber("Please enter a number (>= 2) of player");
+		}
+		engine.numberOfPlayers = input;
 		enterPlayerName();
 	}
 
@@ -101,19 +98,12 @@ public class GUIConsole {
 	 */
 	// TODO Inputs in der Engine checken
 	public void mapDimension() {
-		width = 1;
-		height = 1;
-
-		System.out.print("Please enter the width, uneven integer greater than 1: ");
-		width = scanner.nextInt();
-		System.out.print("Please enter the height, uneven integer greater than 1: ");
-		height = scanner.nextInt();
+		width = -1;
+		height = -1;
 
 		while (!engine.checkFieldDimension(width, height)) {
-			System.out.print("Please enter the width, uneven integer greater than 1: ");
-			width = scanner.nextInt();
-			System.out.print("Please enter the height, uneven integer greater than 1: ");
-			height = scanner.nextInt();
+			width = getNumber("Please enter the width, uneven integer greater than 1");
+			height = getNumber("Please enter the height, uneven integer greater than 1");
 		}
 		map = new String[height][width];
 		initializeMap();
@@ -158,7 +148,7 @@ public class GUIConsole {
 
 	// TODO: Kommentare schreiben + else if verschönern
 	public void updateMap(String[][] newMap) {
-		
+
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
@@ -204,6 +194,49 @@ public class GUIConsole {
 			digits++;
 		}
 		return digits;
+	}
+
+	/**
+	 * 
+	 * Prompts the user with message to enter a integer
+	 * 
+	 * Stolen from
+	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
+	 * inputs-correct-type
+	 * 
+	 * @param prompt
+	 *            The message the user is prompted with
+	 * @return The number, the user entered
+	 */
+	public static int getNumber(String prompt) {
+		while (true) {
+			String input = getString(prompt);
+			try {
+				return Integer.parseInt(input);
+			} catch (NumberFormatException ne) {
+				System.out.println("\tPlease enter a positive whole number.");
+			}
+		}
+	}
+
+	/**
+	 * 
+	 * Prompts the user with message to enter a string
+	 * 
+	 * Stolen from
+	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
+	 * inputs-correct-type
+	 * 
+	 * @param prompt
+	 *            The message the user is prompted with
+	 * @return The string, the user entered
+	 */
+	public static String getString(String prompt) {
+		System.out.print("\t" + prompt + ": ");
+		Scanner sc = new Scanner(System.in);
+		String input = sc.nextLine();
+		sc.close();
+		return input;
 	}
 
 	/**
