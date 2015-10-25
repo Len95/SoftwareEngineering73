@@ -27,7 +27,7 @@ public class GUIConsole {
 			engine.storePlayerName(counter, name);
 			counter++;
 		}
-		mapDimension();
+		enterMapDimension();
 	}
 
 	/**
@@ -36,8 +36,8 @@ public class GUIConsole {
 	 * @return The wall number
 	 */
 	public void move() {
-		Player currentPlayer = engine.currentPlayer();
-		Integer id = engine.currentPlayerID();
+		Player currentPlayer = engine.getCurrentPlayer();
+		Integer id = engine.getCurrentPlayerID();
 
 		// System.out.println("ID " + id);
 		// System.out.println("CURRENT PLAYER: " + currentPlayer);
@@ -67,10 +67,10 @@ public class GUIConsole {
 					engine.updateBoxWithName(map, currentPlayer, yComplete2, xComplete2, width, height);
 				}
 
-				updateMap(map);
+				displayMap(map);
 			} else
 				engine.increasePlayerIdByOne();
-			updateMap(map);
+			displayMap(map);
 		} else
 			move();
 	}
@@ -97,7 +97,7 @@ public class GUIConsole {
 	 * @return true if the player entered
 	 */
 	// TODO Inputs in der Engine checken
-	public void mapDimension() {
+	public void enterMapDimension() {
 		width = -1;
 		height = -1;
 
@@ -134,7 +134,7 @@ public class GUIConsole {
 					System.err.println("GUIConsole - Method: initializeMap()");
 			}
 		}
-		updateMap(map);
+		displayMap(map);
 		return map;
 	}
 
@@ -147,7 +147,7 @@ public class GUIConsole {
 	 */
 
 	// TODO: Kommentare schreiben + else if verschönern
-	public void updateMap(String[][] newMap) {
+	public void displayMap(String[][] newMap) {
 
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
