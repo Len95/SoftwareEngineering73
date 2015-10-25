@@ -254,13 +254,11 @@ public class DotsNBoxesEngine {
 
 	public boolean gameEnded(int width, int height) {
 
-		turnsPlayed++;
-
 		if (turnsPlayed == ((width * height) / 2)) {
 
 			return true;
 		}
-
+		turnsPlayed++;
 		return false;
 	}
 }

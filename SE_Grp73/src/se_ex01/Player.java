@@ -18,7 +18,7 @@ public class Player {
 	}
 
 	public String getName() {
-		return name;
+		return this.name;
 	}
 
 	public void setName(String name) {
@@ -26,7 +26,7 @@ public class Player {
 	}
 
 	public int getScore() {
-		return score;
+		return this.score;
 	}
 
 	public void setScore(int score) {

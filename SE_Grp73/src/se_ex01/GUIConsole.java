@@ -6,7 +6,6 @@ public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	// Player player = new Player(null, 0);
 	Scanner scanner = new Scanner(System.in);
-	DotsNBoxesEngine gameEngine;
 	String wall;
 	String[][] map;
 	int width;
@@ -42,13 +41,13 @@ public class GUIConsole {
 		Player currentPlayer = engine.currentPlayer();
 		int id = engine.currentPlayerID();
 
-		//
-		// System.out.println("ID " + id);
-		// System.out.println("Name: " + currentPlayer.getName());
-		//
-		//
-		// System.out.print("Player " + "(" + id + "): " +
-		// currentPlayer.getName() + " please enter a wall number: ");
+//		
+//		 System.out.println("ID " + id);
+//		 System.out.println("Name: " + currentPlayer.getName());
+//		
+//		
+//		 System.out.print("Player " + "(" + id + "): " +
+//		 currentPlayer.getName() + " please enter a wall number: ");
 		int input = scanner.nextInt();
 
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
@@ -181,9 +180,10 @@ public class GUIConsole {
 				}
 			}
 		}
-//		if (engine.gameEnded(width, height)) {
+		if (engine.gameEnded(width, height)) {
+			System.out.println("GAME ENDED ------------------------------- GAME ENDED");
 //			endOfGame();
-//		} else
+		} else
 			move();
 	}
 
