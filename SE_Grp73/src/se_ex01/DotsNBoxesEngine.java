@@ -11,8 +11,8 @@ public class DotsNBoxesEngine {
 
 	}
 
-	public Player currentPlayer() {
-		Player currentPlayer = player.playerList.get(currentPlayerID());
+	public Player getCurrentPlayer() {
+		Player currentPlayer = player.playerList.get(getCurrentPlayerID());
 		System.out.println(currentPlayer + " <- IN ENGINE CURRENT PLAYER");
 		return currentPlayer;
 	}
@@ -23,7 +23,7 @@ public class DotsNBoxesEngine {
 
 	}
 
-	public Integer currentPlayerID() {
+	public Integer getCurrentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
 
