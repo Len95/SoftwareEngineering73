@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GUIConsole {
@@ -10,8 +11,11 @@ public class GUIConsole {
 	int width;
 	int height;
 
+	Scanner sc;
+
 	public GUIConsole() {
 		// leave as default?!
+		sc = new Scanner(System.in);
 	}
 
 	/**
@@ -208,7 +212,7 @@ public class GUIConsole {
 	 *            The message the user is prompted with
 	 * @return The number, the user entered
 	 */
-	public static int getNumber(String prompt) {
+	public int getNumber(String prompt) {
 		while (true) {
 			String input = getString(prompt);
 			try {
@@ -231,12 +235,22 @@ public class GUIConsole {
 	 *            The message the user is prompted with
 	 * @return The string, the user entered
 	 */
-	public static String getString(String prompt) {
-		System.out.print("\t" + prompt + ": ");
-		Scanner sc = new Scanner(System.in);
-		String input = sc.nextLine();
-		sc.close();
-		return input;
+	public String getString(String prompt) {
+
+		String input = "";
+		while (true) {
+
+			System.out.print("\t" + prompt + ": ");
+
+			if (sc.hasNextLine()) {
+				input = sc.nextLine();
+			}
+			
+			if (input != null && !input.isEmpty()) {
+				return input;
+			}
+		}
+
 	}
 
 	/**
