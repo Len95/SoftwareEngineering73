@@ -16,12 +16,19 @@ public class DotsNBoxesEngine {
 		System.out.println(currentPlayer + " <- IN ENGINE CURRENT PLAYER");
 		return currentPlayer;
 	}
+
 	
+	public void increasePlayerIdByOne() {
+		playerID++;
+
+	}
+
 	public Integer currentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
-	
-	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier ausgelagert wird)
+
+	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier
+	// ausgelagert wird)
 	public void storePlayerName(Integer counter, String name) {
 		player.playerList.put(counter, new Player(name, 0));
 	}
@@ -36,22 +43,30 @@ public class DotsNBoxesEngine {
 	protected Integer calculatePlayerID(int ID) {
 		System.out.println("ID INPUT ENGINE: " + ID);
 		Integer currentPlayer = -1;
+
 		if (playerID > numberOfPlayers) {
 			playerID = 1;
 			System.out.println("SET player ID to one " + playerID);
+
+			currentPlayer = playerID;
+			return currentPlayer;
 		}
-		for (int i = 1; i <= numberOfPlayers; i++) {
-			System.out.println("FOR Schleife " + i);
-			if ((ID % (numberOfPlayers + 1)) == i) {
-				currentPlayer = Integer.valueOf(i);
-				break;
-			} else
-				continue;
+
+		else {
+			for (int i = 1; i <= numberOfPlayers; i++) {
+				System.out.println("FOR Schleife " + i);
+				if ((ID % (numberOfPlayers + 1)) == i) {
+					currentPlayer = Integer.valueOf(i);
+					break;
+				} else
+					continue;
+			}
 		}
 		System.out.println("CALCULATED PLAYER ID: " + currentPlayer);
 		return currentPlayer;
 	}
 
+	
 	/**
 	 * Checks if the number entered by the player actually exists on the map.
 	 * 
@@ -111,19 +126,19 @@ public class DotsNBoxesEngine {
 		if (validMove(fieldNumber, map, width, height)) {
 			if ((fieldNumber % width) == 0) {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
-				++playerID;
+
 				return true;
 			}
 
 			else if (map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber + 1] == "*") {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "-";
-				++playerID;
+
 				return true;
 			}
 
 			else {
 				map[yCoordinateOfFoundNumber][xCoordinateOfFoundNumber] = "|";
-				++playerID;
+
 				return true;
 			}
 
@@ -153,7 +168,7 @@ public class DotsNBoxesEngine {
 
 					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
 							&& (map[j][i - 1] == "|")) {
-						--playerID;
+
 						return true;
 
 					}

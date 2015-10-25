@@ -42,10 +42,10 @@ public class GUIConsole {
 		Integer id = engine.currentPlayerID();
 
 		
-		 System.out.println("ID " + id);
-		 System.out.println("CURRENT PLAYER: " + currentPlayer);
-		 System.out.println("Name: " + currentPlayer.getName());
-		
+//		 System.out.println("ID " + id);
+//		 System.out.println("CURRENT PLAYER: " + currentPlayer);
+//		 System.out.println("Name: " + currentPlayer.getName());
+//		
 		
 		 System.out.print("Player " + "(" + id + "): " +
 		 currentPlayer.getName() + " please enter a wall number: ");
@@ -55,14 +55,27 @@ public class GUIConsole {
 		int xCoord = coords[1];
 		int yCoord = coords[0];
 
+		
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
 			if (engine.completedBox(map, width, height)) {
 				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
 				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
+				
+				// check for another completed Box..since one move can complete 2 boxes at the same time and update the map again
+			    
+				
+				if (engine.completedBox(map, width, height)) {
+					int[] coordsComplete2 = engine.getCoordinatesOfCompletedBox(map, width, height);
+					int xComplete2 = coordsComplete2[1];
+					int yComplete2 = coordsComplete2[0];
+					engine.updateBoxWithName(map, currentPlayer, yComplete2, xComplete2, width, height);
+				}
+				
 				updateMap(map);
 			} else 
+				engine.increasePlayerIdByOne();
 				updateMap(map);
 		} else
 			move();
