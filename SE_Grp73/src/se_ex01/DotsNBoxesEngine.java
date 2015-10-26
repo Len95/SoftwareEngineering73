@@ -1,18 +1,21 @@
 package se_ex01;
 
+import java.util.HashMap;
+
 public class DotsNBoxesEngine {
 
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
 	Player player = new Player("default", 0);
+	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 
 	public DotsNBoxesEngine() {
 
 	}
 
 	public Player getCurrentPlayer() {
-		Player currentPlayer = player.playerList.get(getCurrentPlayerID());
+		Player currentPlayer = playerList.get(getCurrentPlayerID());
 		System.out.println(currentPlayer + " <- IN ENGINE CURRENT PLAYER");
 		return currentPlayer;
 	}
@@ -30,7 +33,7 @@ public class DotsNBoxesEngine {
 	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier
 	// ausgelagert wird)
 	public void storePlayerName(Integer counter, String name) {
-		player.playerList.put(counter, new Player(name, 0));
+		playerList.put(counter, new Player(name, 0));
 	}
 
 	/**
@@ -258,9 +261,9 @@ public class DotsNBoxesEngine {
 	public Player returnWinner() {
 		Player bestPlayer = new Player("default", 0);
 
-		for (int i = 0; i <= numberOfPlayers; i++) {
+		for (int i = 1; i <= numberOfPlayers; i++) {
 			
-			Player currentP = player.playerList.get(i);
+			Player currentP = playerList.get(i);
 			System.out.println("CURRENT PLAYER: " + currentP);
 			if (player.getScore() < currentP.getScore()) {
 
