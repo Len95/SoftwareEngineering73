@@ -256,13 +256,13 @@ public class DotsNBoxesEngine {
 	}
 
 	public Player returnWinner() {
-		Player bestPlayer = new Player(null, 0);
+		Player bestPlayer = new Player("default", 0);
 
-		for (int i = 0; i <= player.playerList.size(); i++) {
-
+		for (int i = 0; i <= numberOfPlayers; i++) {
+			
 			Player currentP = player.playerList.get(i);
-
-			if (bestPlayer.getScore() < currentP.getScore()) {
+			System.out.println("CURRENT PLAYER: " + currentP);
+			if (player.getScore() < currentP.getScore()) {
 
 				bestPlayer = currentP;
 
