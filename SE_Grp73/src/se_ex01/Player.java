@@ -5,7 +5,6 @@ import java.util.HashMap;
 public class Player {
 	String name;
 	int score;
-//	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 	
 	/**
 	 * Player who plays the game

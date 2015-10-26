@@ -5,12 +5,10 @@ import java.util.Scanner;
 
 public class GUIConsole {
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
-	// Player player = new Player(null, 0);
 	String wall;
 	String[][] map;
 	int width;
 	int height;
-
 	Scanner sc;
 
 	public GUIConsole() {
@@ -42,11 +40,6 @@ public class GUIConsole {
 	public void move() {
 		Player currentPlayer = engine.getCurrentPlayer();
 		Integer id = engine.getCurrentPlayerID();
-
-		// System.out.println("ID " + id);
-		// System.out.println("CURRENT PLAYER: " + currentPlayer);
-		// System.out.println("Name: " + currentPlayer.getName());
-		//
 
 		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 

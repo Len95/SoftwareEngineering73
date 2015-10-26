@@ -16,7 +16,6 @@ public class DotsNBoxesEngine {
 
 	public Player getCurrentPlayer() {
 		Player currentPlayer = playerList.get(getCurrentPlayerID());
-		System.out.println(currentPlayer + " <- IN ENGINE CURRENT PLAYER");
 		return currentPlayer;
 	}
 
@@ -44,12 +43,10 @@ public class DotsNBoxesEngine {
 	 * @return playerID
 	 */
 	protected Integer calculatePlayerID(int ID) {
-		System.out.println("ID INPUT ENGINE: " + ID);
 		Integer currentPlayer = -1;
 
 		if (playerID > numberOfPlayers) {
 			playerID = 1;
-			System.out.println("SET player ID to one " + playerID);
 
 			currentPlayer = playerID;
 			return currentPlayer;
@@ -57,7 +54,6 @@ public class DotsNBoxesEngine {
 
 		else {
 			for (int i = 1; i <= numberOfPlayers; i++) {
-				System.out.println("FOR Schleife " + i);
 				if ((ID % (numberOfPlayers + 1)) == i) {
 					currentPlayer = Integer.valueOf(i);
 					break;
@@ -65,7 +61,6 @@ public class DotsNBoxesEngine {
 					continue;
 			}
 		}
-		System.out.println("CALCULATED PLAYER ID: " + currentPlayer);
 		return currentPlayer;
 	}
 
@@ -103,7 +98,6 @@ public class DotsNBoxesEngine {
 
 		int[] coordinatesOfFieldNumber = new int[2];
 		if (validMove(fieldNumber, map, width, height)) {
-			System.out.println("valid");
 			for (int j = 0; j < height; j++) {
 				for (int i = 0; i < width; i++) {
 					if (map[j][i].equals(Integer.toString(fieldNumber))) {
@@ -264,7 +258,6 @@ public class DotsNBoxesEngine {
 		for (int i = 1; i <= numberOfPlayers; i++) {
 			
 			Player currentP = playerList.get(i);
-			System.out.println("CURRENT PLAYER: " + currentP);
 			if (player.getScore() < currentP.getScore()) {
 
 				bestPlayer = currentP;
