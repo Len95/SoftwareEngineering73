@@ -1,6 +1,7 @@
 package se_ex01;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 
 public class DotsNBoxesEngine {
 
@@ -252,13 +253,13 @@ public class DotsNBoxesEngine {
 			return true;
 	}
 
-	public Player returnWinner() {
+	public LinkedList<Player> returnWinnerList() {
 		Player bestPlayer = new Player("default", 0);
 
 		for (int i = 1; i <= numberOfPlayers; i++) {
 			
 			Player currentP = playerList.get(i);
-			if (player.getScore() < currentP.getScore()) {
+			if (bestPlayer.getScore() < currentP.getScore()) {
 
 				bestPlayer = currentP;
 
@@ -266,8 +267,19 @@ public class DotsNBoxesEngine {
 
 		}
 
-		return bestPlayer;
+		return getBestPlayerList(bestPlayer);
 
+	}
+	
+	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {
+		LinkedList<Player> winnerList = new LinkedList<Player>();
+		for (int i = 1; i <= numberOfPlayers; i++) {
+			Player currentP = playerList.get(i);
+			if (bestPlayer.getScore() == currentP.getScore()) {
+				winnerList.add(currentP);
+			}
+		}
+		return winnerList;
 	}
 
 	public boolean gameEnded(int width, int height) {

@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.LinkedList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -252,7 +253,11 @@ public class GUIConsole {
 	 */
 	public void endOfGame() {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
-		System.out.println("The WINNER is: " + engine.returnWinner().getName());
+		LinkedList<Player> winners = engine.returnWinnerList();
+		
+		for (Player p : winners) {
+			System.out.println("Winner is " + p.getName());
+		}
 
 	}
 
