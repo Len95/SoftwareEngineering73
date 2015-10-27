@@ -392,6 +392,9 @@ public class DotsNBoxesEngine {
 		}
 	}
 
+	/**
+	 * prints a message to the console when there is a draw
+	 */
 	public void printDrawMessage() {
 		LinkedList<Player> drawedPlayers = returnWinnerList();
 
