@@ -13,7 +13,6 @@ public class GUIConsole {
 	Scanner sc;
 
 	public GUIConsole() {
-		// leave as default?!
 		sc = new Scanner(System.in);
 	}
 
@@ -43,6 +42,8 @@ public class GUIConsole {
 
 		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 
+		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
+		// input 
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
@@ -65,9 +66,10 @@ public class GUIConsole {
 				}
 
 				displayMap(map);
-			} else
+			} else {
 				engine.increasePlayerIdByOne();
-			displayMap(map);
+				displayMap(map);
+			}
 		} else
 			move();
 	}
@@ -106,7 +108,7 @@ public class GUIConsole {
 			width = engine.calculateArrayWidth(ArrayWidth);
 			height = engine.calculateArrayHeight(ArrayHeight);
 		}
-		
+
 		map = new String[height][width];
 		initializeMap();
 	}
@@ -243,7 +245,7 @@ public class GUIConsole {
 			if (sc.hasNextLine()) {
 				input = sc.nextLine();
 			}
-			
+
 			if (input != null && !input.isEmpty()) {
 				return input;
 			}
@@ -258,7 +260,7 @@ public class GUIConsole {
 	public void endOfGame() {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
 		LinkedList<Player> winners = engine.returnWinnerList();
-		
+
 		for (Player p : winners) {
 			System.out.println("Winner is " + p.getName());
 		}
