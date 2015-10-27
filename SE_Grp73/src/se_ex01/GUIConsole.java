@@ -40,6 +40,8 @@ public class GUIConsole {
 		Player currentPlayer = engine.getCurrentPlayer();
 		Integer id = engine.getCurrentPlayerID();
 
+		engine.getGameStats();
+		
 		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
