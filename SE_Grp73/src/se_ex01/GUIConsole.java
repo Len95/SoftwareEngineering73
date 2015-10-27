@@ -56,7 +56,7 @@ public class GUIConsole {
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
 				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
-
+ 
 				// check for another completed Box..since one move can complete
 				// 2 boxes at the same time and update the map again
 
