@@ -3,8 +3,10 @@ package se_ex01;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-public class DotsNBoxesEngine {
 
+
+public class DotsNBoxesEngine {
+ 
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
@@ -277,6 +279,21 @@ public class DotsNBoxesEngine {
 
 		return getBestPlayerList(bestPlayer);
 
+	}
+	
+	public void getGameStats(){
+		
+		System.out.println("This is round no. : " + turnsPlayed);
+		
+		for (int i = 1; i <= numberOfPlayers; i++) {
+
+			Player currentP = playerList.get(i);
+			System.out.println(currentP.getName() + ", your current score is: " + currentP.getScore());
+
+		}
+		
+		
+		
 	}
 	
 	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {

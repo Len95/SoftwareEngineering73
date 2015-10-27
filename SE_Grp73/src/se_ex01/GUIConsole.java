@@ -36,6 +36,8 @@ public class GUIConsole {
 		Player currentPlayer = engine.getCurrentPlayer();
 		Integer id = engine.getCurrentPlayerID();
 
+		engine.getGameStats();
+		
 		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
@@ -51,7 +53,7 @@ public class GUIConsole {
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
 				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
-
+ 
 				// check for another completed Box..since one move can complete
 				// 2 boxes at the same time and update the map again
 
