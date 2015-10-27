@@ -5,7 +5,7 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GUIConsole {
-	
+
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	String wall;
 	String[][] map;

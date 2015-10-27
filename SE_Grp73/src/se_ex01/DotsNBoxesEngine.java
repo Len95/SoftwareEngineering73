@@ -19,8 +19,9 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
+	 * Returns the current player
 	 * 
-	 * @return returns the current player
+	 * @return Current player
 	 */
 	public Player getCurrentPlayer() {
 		Player currentPlayer = playerList.get(getCurrentPlayerID());
@@ -28,7 +29,7 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
-	 * increases the player ID by one to switch to the next player
+	 * Increases the player ID by one
 	 */
 	public void increasePlayerIdByOne() {
 		playerID++;
@@ -36,22 +37,33 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
-	 * @return returns the ID of the current player
+	 * Calculates the current player ID
+	 * 
+	 * @return current player ID
 	 */
 	public Integer getCurrentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
 
 	/**
+	 * Calculates the right array height for the given input of field in a
+	 * column
 	 * 
-	 * @param height:
-	 *            the height of the map
-	 * @return
+	 * @param height
+	 *            Columns
+	 * @return Right array dimension for the array height
 	 */
 	public int calculateArrayHeight(int height) {
 		return 3 * height - (height - 1);
 	}
 
+	/**
+	 * Calculates the right array width for the given input of field in a row
+	 * 
+	 * @param width
+	 *            Rows
+	 * @return Right array dimension for the array width
+	 */
 	public int calculateArrayWidth(int width) {
 		return 3 * width - (width - 1);
 	}
@@ -64,6 +76,8 @@ public class DotsNBoxesEngine {
 	 * @param name:
 	 *            name of the player
 	 */
+	// TODO Do the checking in the Engine and add a boolean return statement so
+	// the GUIConsole can work with this method
 	public void storePlayerName(Integer counter, String name) {
 		playerList.put(counter, new Player(name, 0));
 	}
@@ -111,7 +125,6 @@ public class DotsNBoxesEngine {
 	 * @return: True if the number entered by the player actually exists on the
 	 *          map. Else false.
 	 */
-
 	private boolean validMove(int fieldNumber, String[][] map, int width, int height) {
 		// two for-loops to iterate over the whole map
 		for (int i = 0; i < height; i++) {
@@ -139,7 +152,6 @@ public class DotsNBoxesEngine {
 	 *          The Y coordinate is at the first position in the array while the
 	 *          X coordinate is at the second position
 	 */
-
 	public int[] getCoordinatesOfNumberInMap(int fieldNumber, String[][] map, int width, int height) {
 
 		int[] coordinatesOfFieldNumber = new int[2];
@@ -183,7 +195,6 @@ public class DotsNBoxesEngine {
 	 * @return: returns true if the map is changed at the given position. Else
 	 *          false
 	 */
-
 	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int width, int height, String[][] map,
 			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
@@ -220,7 +231,6 @@ public class DotsNBoxesEngine {
 	 * @return: returns true if there is a box that was just completed (closed)
 	 *          by a player. Else false.
 	 */
-
 	public boolean completedBox(String[][] map, int width, int height) {
 
 		for (int j = 0; j < height; j++) {
@@ -259,7 +269,6 @@ public class DotsNBoxesEngine {
 	 *         an Integer Array. The first position in the array is the
 	 *         Y-Coordinate the second position is the X-Coordinate.
 	 */
-
 	public int[] getCoordinatesOfCompletedBox(String[][] map, int width, int height) {
 
 		int[] coordinatesOfCompletedBox = new int[2];
@@ -295,7 +304,6 @@ public class DotsNBoxesEngine {
 	 * @param height:
 	 *            height of the map
 	 */
-
 	public void updateBoxWithName(String[][] map, Player currentPlayer, int yCoordinateOfCompletedBox,
 			int xCoordinateOfCompletedBox, int width, int height) {
 
@@ -307,6 +315,16 @@ public class DotsNBoxesEngine {
 		}
 	}
 
+	/**
+	 * Determines if the entered width and height are correct values to open up
+	 * a game map
+	 * 
+	 * @param width
+	 *            The width of the array
+	 * @param height
+	 *            The height of the array
+	 * @return True if the width and height are correct, else false
+	 */
 	public boolean checkFieldDimension(int width, int height) {
 		if (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0 && (width * height) <= 450)) {
 
@@ -315,40 +333,40 @@ public class DotsNBoxesEngine {
 			return true;
 	}
 
+	/**
+	 * Returns the winner list with the best players
+	 * 
+	 * @return The list with the best players (winner list)
+	 */
 	public LinkedList<Player> returnWinnerList() {
 		Player bestPlayer = new Player("default", 0);
-
 		for (int i = 1; i <= numberOfPlayers; i++) {
-
 			Player currentP = playerList.get(i);
 			if (bestPlayer.getScore() < currentP.getScore()) {
-
 				bestPlayer = currentP;
-
 			}
-
 		}
-
 		return getBestPlayerList(bestPlayer);
-
 	}
 
 	/**
-	 * prints the statistics of the game to the console.
+	 * Prints the statistics of the game to the console.
 	 */
 	public void getGameStats() {
-
 		System.out.println("This is round no. : " + turnsPlayed);
-
 		for (int i = 1; i <= numberOfPlayers; i++) {
-
 			Player currentP = playerList.get(i);
 			System.out.println(currentP.getName() + ", your current score is: " + currentP.getScore());
-
 		}
-
 	}
 
+	/**
+	 * Puts the best player in a list, the list contains at least one player
+	 * 
+	 * @param player
+	 *            A random player of this game
+	 * @return The winner list with the best players
+	 */
 	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {
 		LinkedList<Player> winnerList = new LinkedList<Player>();
 		for (int i = 1; i <= numberOfPlayers; i++) {
@@ -360,10 +378,17 @@ public class DotsNBoxesEngine {
 		return winnerList;
 	}
 
+	/**
+	 * Returns true if there are no numeric walls
+	 * 
+	 * @param width
+	 *            The width of the 2D array
+	 * @param height
+	 *            The height of the 2D array
+	 * @return True if there are no numeric walls -> game ended |// else false
+	 */
 	public boolean gameEnded(int width, int height) {
-
 		if (turnsPlayed == ((width * height) / 2)) {
-
 			return true;
 		}
 		turnsPlayed++;
