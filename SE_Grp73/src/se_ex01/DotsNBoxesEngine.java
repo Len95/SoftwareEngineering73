@@ -379,6 +379,31 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
+	 * 
+	 * @return True if there is a draw. Else false.
+	 */
+	public boolean draw() {
+		LinkedList<Player> drawedPlayers = returnWinnerList();
+
+		if (drawedPlayers.size() > 1) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public void printDrawMessage() {
+		LinkedList<Player> drawedPlayers = returnWinnerList();
+
+		System.out.println("\n" + "There is a draw between the following players: ");
+		for (Player currentP : returnWinnerList()) {
+			System.out.println(currentP.getName());
+		}
+
+		System.out.println("with each of them having a score of " + drawedPlayers.get(0).getScore() + "!");
+	}
+
+	/**
 	 * Returns true if there are no numeric walls
 	 * 
 	 * @param width
@@ -394,4 +419,5 @@ public class DotsNBoxesEngine {
 		turnsPlayed++;
 		return false;
 	}
+
 }

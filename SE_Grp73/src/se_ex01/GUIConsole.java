@@ -259,8 +259,16 @@ public class GUIConsole {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
 		LinkedList<Player> winners = engine.returnWinnerList();
 		engine.getGameStats();
-		for (Player p : winners) {
-			System.out.println("Winner is " + p.getName() + " - Your Score: " + p.getScore());
+
+		if (engine.draw()) {
+			engine.printDrawMessage();
+		}
+
+		else {
+			for (Player p : winners) {
+				System.out.println("\n" + "The Winner is " + p.getName() + " - Your Score: " + p.getScore() + "\n"
+						+ "CONGRATUUUUUU....WAIT FOR IT.....UULATIONS!!!🎉🎉🎉");
+			}
 		}
 	}
 
