@@ -17,7 +17,8 @@ public class GUIConsole {
 	}
 
 	/**
-	 * Prompt for entering a player name, after all names are entered the map dimension needs to be determined 
+	 * Prompt for entering a player name, after all names are entered the map
+	 * dimension needs to be determined
 	 */
 	public void enterPlayerName() {
 		Integer counter = 1;
@@ -30,30 +31,30 @@ public class GUIConsole {
 	}
 
 	/**
-	 * 
+	 * Prompt for entering a wall number to make a move
 	 */
 	public void move() {
 		Player currentPlayer = engine.getCurrentPlayer();
 		Integer id = engine.getCurrentPlayerID();
 
 		engine.getGameStats();
-		
 		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
 
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
-		// input 
+		// input
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
 
-		// If the input is correct replace the field with the correct sign and check if a box is complete
+		// If the input is correct replace the field with the correct sign and
+		// check if a box is complete
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
 			if (engine.completedBox(map, width, height)) {
 				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
 				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
- 
+
 				// check for another completed Box..since one move can complete
 				// 2 boxes at the same time and update the map again
 
@@ -70,17 +71,13 @@ public class GUIConsole {
 				displayMap(map);
 			}
 		} else
-			// Else, enter a correct wall number 
+			// Else, enter a correct wall number
 			move();
 	}
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
-	 * 
-	 * @return True if the number of players are entered
 	 */
-	// TODO: Inputs in der Engine checken und erst dann dem Attribut
-	// numberOfPlayers übergeben
 	public void enterNumberOfPlayers() {
 		int input = -1;
 
@@ -92,7 +89,7 @@ public class GUIConsole {
 	}
 
 	/**
-	 * 
+	 * Prompt for entering a map dimension
 	 */
 	public void enterMapDimension() {
 		width = -1;
@@ -106,31 +103,36 @@ public class GUIConsole {
 			width = engine.calculateArrayWidth(ArrayWidth);
 			height = engine.calculateArrayHeight(ArrayHeight);
 		}
-
 		map = new String[height][width];
 		initializeMap();
 	}
 
 	/**
-	 * Initializes an empty two dimensional string array
+	 * Initializes an empty two dimensional string array with correct wall
+	 * numbers, and *
 	 * 
-	 * @return The map with the correct entries
+	 * @return The correct initialized map
 	 */
-
-	// TODO: Kommentare schreiben
 	public String[][] initializeMap() {
+		// enumerator for the wall numbers
 		int enumerate = 1;
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
-				if (i % 2 == 0 && j % 2 == 0) {
+				if (i % 2 == 0 && j % 2 == 0) { // even line and even column ->
+												// *
 					map[i][j] = "*";
-				} else if (i % 2 == 0 && j % 2 != 0) {
+				} else if (i % 2 == 0 && j % 2 != 0) { // even line and uneven
+														// column -> wall
 					map[i][j] = String.valueOf(enumerate);
 					enumerate++;
-				} else if (i % 2 != 0 && j % 2 == 0) {
+				} else if (i % 2 != 0 && j % 2 == 0) { // uneven line and even
+														// column -> wall
 					map[i][j] = String.valueOf(enumerate);
 					enumerate++;
-				} else if (i % 2 != 0 && j % 2 != 0) {
+				} else if (i % 2 != 0 && j % 2 != 0) { // uneven line and uneven
+														// column -> space for
+														// the player who closed
+														// this field
 					map[i][j] = " ";
 				} else
 					System.err.println("GUIConsole - Method: initializeMap()");
@@ -141,32 +143,37 @@ public class GUIConsole {
 	}
 
 	/**
-	 * Update after the map was modified and print on console
+	 * Prints the map (2D - Array) on the console
 	 * 
 	 * @param newMap
-	 *            The modified map from DotsNBoxesEngine if a move was
-	 *            successful
+	 *            the new map that should be updated
 	 */
-
-	// TODO: Kommentare schreiben + else if verschönern
 	public void displayMap(String[][] newMap) {
 
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfDigits(map[height][width]) == 1) {
-					if (width < this.width - 1) {
+				if (amountOfDigits(map[height][width]) == 1) { // format for
+																// one-digit
+																// number
+					if (width < this.width - 1) { // one line
 						System.out.print("  " + map[height][width] + "  ");
-					} else
+					} else // begin the next line
 						System.out.println("  " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 2) {
+				} else if (amountOfDigits(map[height][width]) == 2) { // format
+																		// for
+																		// two-digit
+																		// number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + "  ");
 					} else
 						System.out.println(" " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 3) {
+				} else if (amountOfDigits(map[height][width]) == 3) { // format
+																		// for
+																		// three-digit
+																		// number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + " ");
 					} else
@@ -181,14 +188,11 @@ public class GUIConsole {
 	}
 
 	/**
-	 * Checks if an array field contains an integer and returns the amount of
-	 * digits
+	 * Checks the amount of digits in any string
 	 * 
 	 * @param string
-	 *            The array field to check if it contains an integer and get the
-	 *            amount of digits
-	 * @return -1 if it is not an integer otherwise it returns the amount of
-	 *         digits
+	 *            The string that should be checked
+	 * @return the amount of digits in a string
 	 */
 	private int amountOfDigits(String string) {
 		int digits = 0;
@@ -234,35 +238,29 @@ public class GUIConsole {
 	 * @return The string, the user entered
 	 */
 	public String getString(String prompt) {
-
 		String input = "";
 		while (true) {
-
 			System.out.print("\t" + prompt + ": ");
-
 			if (sc.hasNextLine()) {
 				input = sc.nextLine();
 			}
-
 			if (input != null && !input.isEmpty()) {
 				return input;
 			}
 		}
-
 	}
 
 	/**
-	 * Prints the game statistics onto the console, the winner's name and the
-	 * winner's score
+	 * Prints the game statistics onto the console and the winner or winners
+	 * with their score
 	 */
 	public void endOfGame() {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
 		LinkedList<Player> winners = engine.returnWinnerList();
-
+		engine.getGameStats();
 		for (Player p : winners) {
-			System.out.println("Winner is " + p.getName());
+			System.out.println("Winner is " + p.getName() + " - Your Score: " + p.getScore());
 		}
-
 	}
 
 }

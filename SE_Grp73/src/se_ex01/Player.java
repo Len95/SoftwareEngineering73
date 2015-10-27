@@ -5,11 +5,14 @@ import java.util.HashMap;
 public class Player {
 	String name;
 	int score;
-	
+
 	/**
 	 * Player who plays the game
-	 * @param name the name of the player 
-	 * @param score the score of the player during the game, initialize with 0
+	 * 
+	 * @param name
+	 *            the name of the player
+	 * @param score
+	 *            the score of the player during the game, initialize with 0
 	 */
 	public Player(String name, int score) {
 		this.score = score;
@@ -31,10 +34,16 @@ public class Player {
 	public void setScore(int score) {
 		this.score = score;
 	}
-	
-	public void increaseScoreBy(int pointsToIncreaseBy){
+
+	/**
+	 * Increases the score of a player by any integer value that is passed
+	 * 
+	 * @param pointsToIncreaseBy
+	 *            The points that the player gained by his strategically move
+	 */
+	public void increaseScoreBy(int pointsToIncreaseBy) {
 		this.score += pointsToIncreaseBy;
-		
+
 	}
-	
+
 }
