@@ -22,7 +22,6 @@ public class GUIConsole {
 	 * 
 	 * @return True if the name is entered
 	 */
-	// TODO: Prüfen auslagern in die engine
 	public void enterPlayerName() {
 		Integer counter = 1;
 		while (counter <= engine.numberOfPlayers) {

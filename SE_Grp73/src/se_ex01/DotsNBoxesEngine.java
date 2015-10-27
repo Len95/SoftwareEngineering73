@@ -254,7 +254,7 @@ public class DotsNBoxesEngine {
 	 */
 
 	public boolean checkFieldDimension(int width, int height) {
-		if (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0)) {
+		if (!(width > 2 && width % 2 != 0 && height > 2 && height % 2 != 0 && (width * height) <= 450)) {
 
 			return false;
 		} else
