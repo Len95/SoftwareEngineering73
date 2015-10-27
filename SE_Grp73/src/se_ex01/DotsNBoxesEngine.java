@@ -391,7 +391,7 @@ public class DotsNBoxesEngine {
 			return false;
 		}
 	}
-
+ 
 	/**
 	 * prints a message to the console when there is a draw
 	 */
