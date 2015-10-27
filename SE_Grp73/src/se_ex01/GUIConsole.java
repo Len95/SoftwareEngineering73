@@ -17,9 +17,7 @@ public class GUIConsole {
 	}
 
 	/**
-	 * Prompt to enter the name of the player who is playing
-	 * 
-	 * @return True if the name is entered
+	 * Prompt for entering a player name, after all names are entered the map dimension needs to be determined 
 	 */
 	public void enterPlayerName() {
 		Integer counter = 1;
@@ -32,9 +30,7 @@ public class GUIConsole {
 	}
 
 	/**
-	 * The player gives an integer input to remove a wall
 	 * 
-	 * @return The wall number
 	 */
 	public void move() {
 		Player currentPlayer = engine.getCurrentPlayer();
@@ -48,6 +44,7 @@ public class GUIConsole {
 		int xCoord = coords[1];
 		int yCoord = coords[0];
 
+		// If the input is correct replace the field with the correct sign and check if a box is complete
 		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
 			if (engine.completedBox(map, width, height)) {
 				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
@@ -71,6 +68,7 @@ public class GUIConsole {
 				displayMap(map);
 			}
 		} else
+			// Else, enter a correct wall number 
 			move();
 	}
 
@@ -93,9 +91,7 @@ public class GUIConsole {
 
 	/**
 	 * 
-	 * @return true if the player entered
 	 */
-	// TODO Inputs in der Engine checken
 	public void enterMapDimension() {
 		width = -1;
 		height = -1;
