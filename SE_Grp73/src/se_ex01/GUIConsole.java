@@ -98,11 +98,15 @@ public class GUIConsole {
 	public void enterMapDimension() {
 		width = -1;
 		height = -1;
+		int ArrayWidth, ArrayHeight;
 
 		while (!engine.checkFieldDimension(width, height)) {
-			width = getNumber("Please enter the width, uneven integer greater than 1");
-			height = getNumber("Please enter the height, uneven integer greater than 1");
+			ArrayWidth = getNumber("Please enter the width ");
+			ArrayHeight = getNumber("Please enter the height ");
+			width = engine.calculateArrayWidth(ArrayWidth);
+			height = engine.calculateArrayHeight(ArrayHeight);
 		}
+		
 		map = new String[height][width];
 		initializeMap();
 	}

@@ -29,6 +29,14 @@ public class DotsNBoxesEngine {
 	public Integer getCurrentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
+	
+	public int calculateArrayHeight(int height) {
+		return 3 * height - (height - 1);
+	}
+	
+	public int calculateArrayWidth(int width) {
+		return 3 * width - (width - 1);
+	}
 
 	// TODO Rückgabetyp Boolean machen (sobald das prüfen komplett hier
 	// ausgelagert wird)
