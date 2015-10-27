@@ -3,10 +3,8 @@ package se_ex01;
 import java.util.HashMap;
 import java.util.LinkedList;
 
-
-
 public class DotsNBoxesEngine {
- 
+
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
@@ -22,7 +20,6 @@ public class DotsNBoxesEngine {
 		return currentPlayer;
 	}
 
-	
 	public void increasePlayerIdByOne() {
 		playerID++;
 
@@ -31,11 +28,11 @@ public class DotsNBoxesEngine {
 	public Integer getCurrentPlayerID() {
 		return calculatePlayerID(playerID);
 	}
-	
+
 	public int calculateArrayHeight(int height) {
 		return 3 * height - (height - 1);
 	}
-	
+
 	public int calculateArrayWidth(int width) {
 		return 3 * width - (width - 1);
 	}
@@ -75,7 +72,6 @@ public class DotsNBoxesEngine {
 		return currentPlayer;
 	}
 
-	
 	/**
 	 * Checks if the number entered by the player actually exists on the map.
 	 * 
@@ -171,23 +167,15 @@ public class DotsNBoxesEngine {
 
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
-
 				if (map[j][i] == " ") {
-
 					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
 							&& (map[j][i - 1] == "|")) {
-
 						return true;
-
 					}
-
 				}
-
 			}
-
 		}
 		return false;
-
 	}
 
 	/**
@@ -267,7 +255,7 @@ public class DotsNBoxesEngine {
 		Player bestPlayer = new Player("default", 0);
 
 		for (int i = 1; i <= numberOfPlayers; i++) {
-			
+
 			Player currentP = playerList.get(i);
 			if (bestPlayer.getScore() < currentP.getScore()) {
 
@@ -280,22 +268,20 @@ public class DotsNBoxesEngine {
 		return getBestPlayerList(bestPlayer);
 
 	}
-	
-	public void getGameStats(){
-		
+
+	public void getGameStats() {
+
 		System.out.println("This is round no. : " + turnsPlayed);
-		
+
 		for (int i = 1; i <= numberOfPlayers; i++) {
 
 			Player currentP = playerList.get(i);
 			System.out.println(currentP.getName() + ", your current score is: " + currentP.getScore());
 
 		}
-		
-		
-		
+
 	}
-	
+
 	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {
 		LinkedList<Player> winnerList = new LinkedList<Player>();
 		for (int i = 1; i <= numberOfPlayers; i++) {
