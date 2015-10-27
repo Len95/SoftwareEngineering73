@@ -100,6 +100,7 @@ public class GUIConsole {
 		int ArrayWidth, ArrayHeight;
 
 		while (!engine.checkFieldDimension(width, height)) {
+			System.out.println("\twidth * height <= 450");
 			ArrayWidth = getNumber("Please enter the width ");
 			ArrayHeight = getNumber("Please enter the height ");
 			width = engine.calculateArrayWidth(ArrayWidth);
