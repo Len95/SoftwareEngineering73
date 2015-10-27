@@ -379,6 +379,7 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
+	 * checks if there is a draw between the players or not
 	 * 
 	 * @return True if there is a draw. Else false.
 	 */
@@ -391,7 +392,7 @@ public class DotsNBoxesEngine {
 			return false;
 		}
 	}
- 
+
 	/**
 	 * prints a message to the console when there is a draw
 	 */
