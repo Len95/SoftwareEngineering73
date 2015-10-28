@@ -1,7 +1,6 @@
 package se_ex01;
 
 import java.util.LinkedList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class GUIConsole {

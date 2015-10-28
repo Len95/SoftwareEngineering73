@@ -1,6 +1,5 @@
 package se_ex01;
 
-import java.util.HashMap;
 
 public class Player {
 	String name;
