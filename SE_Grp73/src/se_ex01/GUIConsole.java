@@ -149,7 +149,8 @@ public class GUIConsole {
 				}
 			}
 		}
-		if (engine.gameEnded(width, height)) {
+		// width, height
+		if (engine.gameEnded()) {
 			endOfGame();
 		} else
 			move();

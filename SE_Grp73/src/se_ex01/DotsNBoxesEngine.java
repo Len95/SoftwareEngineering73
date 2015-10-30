@@ -472,7 +472,7 @@ public class DotsNBoxesEngine {
 	 *            The height of the 2D array
 	 * @return True if there are no numeric walls -> game ended |// else false
 	 */
-	public boolean gameEnded(int width, int height) {
+	public boolean gameEnded() {
 		if (turnsPlayed == ((width * height) / 2)) {
 			return true;
 		}
