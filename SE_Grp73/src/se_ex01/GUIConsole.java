@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class GUIConsole {
 
 
-	Menue menu = new Menue();
+	Menu menu = new Menu();
 	ControlUserInputs police = new ControlUserInputs();
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 

@@ -1,6 +1,6 @@
 package se_ex01;
 
-public class Menue {
+public class Menu {
 	private ControlUserInputs police = new ControlUserInputs();
 	private DotsNBoxesEngine engine = new DotsNBoxesEngine();
 
