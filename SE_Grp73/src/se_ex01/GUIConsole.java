@@ -218,7 +218,7 @@ public class GUIConsole {
 		while (true) {
 			String input = getString(prompt);
 			try {
-				return Integer.parseInt(input);
+				return Integer.parseInt(input.trim());
 			} catch (NumberFormatException ne) {
 				System.out.println("\tPlease enter a positive whole number.");
 			}
