@@ -5,9 +5,11 @@ import java.util.LinkedList;
 
 public class DotsNBoxesEngine {
 
-	int height;
-	int width;
+	private int height;
+	private int width;
+	private String[][] map;
 	
+
 	public int getHeight() {
 		return height;
 	}
@@ -23,6 +25,7 @@ public class DotsNBoxesEngine {
 	public void setWidth(int width) {
 		this.width = width;
 	}
+
 	
 	PlayingMode mode;
 	int turnsPlayed = 0;
@@ -31,11 +34,11 @@ public class DotsNBoxesEngine {
 	Player player = new Player("default", 0);
 	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 
+
 	/**
 	 * constructor : might be of value later when the code is extended.
 	 */
 	public DotsNBoxesEngine() {
-
 	}
 
 	/**
@@ -172,7 +175,7 @@ public class DotsNBoxesEngine {
 	 *          The Y coordinate is at the first position in the array while the
 	 *          X coordinate is at the second position
 	 */
-	public int[] getCoordinatesOfNumberInMap(int fieldNumber, String[][] map, int width, int height) {
+	public int[] getCoordinatesOfNumberInMap(int fieldNumber, int width, int height) {
 
 		int[] coordinatesOfFieldNumber = new int[2];
 		if (validMove(fieldNumber, map, width, height)) {
@@ -215,7 +218,7 @@ public class DotsNBoxesEngine {
 	 * @return: returns true if the map is changed at the given position. Else
 	 *          false
 	 */
-	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int width, int height, String[][] map,
+	public boolean replaceNumber(Player currentPlayer, int fieldNumber,
 			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
 
 		if (validMove(fieldNumber, map, width, height)) {
@@ -251,7 +254,7 @@ public class DotsNBoxesEngine {
 	 * @return: returns true if there is a box that was just completed (closed)
 	 *          by a player. Else false.
 	 */
-	public boolean completedBox(String[][] map, int width, int height) {
+	public boolean completedBox() {
 
 		for (int j = 0; j < height; j++) {
 			for (int i = 0; i < width; i++) {
@@ -289,7 +292,7 @@ public class DotsNBoxesEngine {
 	 *         an Integer Array. The first position in the array is the
 	 *         Y-Coordinate the second position is the X-Coordinate.
 	 */
-	public int[] getCoordinatesOfCompletedBox(String[][] map, int width, int height) {
+	public int[] getCoordinatesOfCompletedBox() {
 
 		int[] coordinatesOfCompletedBox = new int[2];
 		for (int j = 0; j < height; j++) {
@@ -307,6 +310,41 @@ public class DotsNBoxesEngine {
 		}
 		return coordinatesOfCompletedBox;
 	}
+	
+	/**
+	 * Initializes an empty two dimensional string array with correct wall
+	 * numbers, and *
+	 * 
+	 * @return The correct initialized map
+	 */
+	public void initializeMap() {
+		map = new String[height][width];
+		// enumerator for the wall numbers
+		int enumerate = 1;
+		for (int i = 0; i < height; i++) {
+			for (int j = 0; j < width; j++) {
+				if (i % 2 == 0 && j % 2 == 0) { // even line and even column ->
+												// *
+					map[i][j] = "*";
+				} else if (i % 2 == 0 && j % 2 != 0) { // even line and uneven
+														// column -> wall
+					map[i][j] = String.valueOf(enumerate);
+					enumerate++;
+				} else if (i % 2 != 0 && j % 2 == 0) { // uneven line and even
+														// column -> wall
+					map[i][j] = String.valueOf(enumerate);
+					enumerate++;
+				} else if (i % 2 != 0 && j % 2 != 0) { // uneven line and uneven
+														// column -> space for
+														// the player who closed
+														// this field
+					map[i][j] = " ";
+				} else
+					System.err.println("GUIConsole - Method: initializeMap()");
+			}
+		}
+	}
+
 
 	/**
 	 * Enters the ID of the current player in the completed Box. e.g. "p1"
@@ -324,10 +362,10 @@ public class DotsNBoxesEngine {
 	 * @param height:
 	 *            height of the map
 	 */
-	public void updateBoxWithName(String[][] map, Player currentPlayer, int yCoordinateOfCompletedBox,
-			int xCoordinateOfCompletedBox, int width, int height) {
+	public void updateBoxWithName(Player currentPlayer, int yCoordinateOfCompletedBox,
+			int xCoordinateOfCompletedBox) {
 
-		if (completedBox(map, width, height)) {
+		if (completedBox()) {
 			map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = "p" + calculatePlayerID(playerID);
 			// assign a "p" + the ID of the current player to the completed box
 			// and increase the score of the current player by 1
@@ -436,12 +474,28 @@ public class DotsNBoxesEngine {
 	 *            The height of the 2D array
 	 * @return True if there are no numeric walls -> game ended |// else false
 	 */
-	public boolean gameEnded(int width, int height) {
+	public boolean gameEnded() {
 		if (turnsPlayed == ((width * height) / 2)) {
 			return true;
 		}
 		turnsPlayed++;
 		return false;
+	}
+
+	public String[][] getMap() {
+		return map;
+	}
+
+	public void setMap(String[][] map) {
+		this.map = map;
+	}
+
+	public int getNumberOfPlayers() {
+		return numberOfPlayers;
+	}
+
+	public void setNumberOfPlayers(int numberOfPlayers) {
+		this.numberOfPlayers = numberOfPlayers;
 	}
 
 }

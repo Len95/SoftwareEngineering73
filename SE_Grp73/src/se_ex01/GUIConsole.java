@@ -5,22 +5,24 @@ import java.util.Scanner;
 
 public class GUIConsole {
 
+
 	Menue menu = new Menue();
 	ControlUserInputs police = new ControlUserInputs();
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
+
 	String wall;
-	String[][] map;
 	int width;
 	int height;
 	Scanner sc;
 
 	public GUIConsole() {
 		sc = new Scanner(System.in);
+		engine = new DotsNBoxesEngine();
 	}
 	
 	public void launch() {
 		menu.promptForTheMenueSettings();
-		
+		// TODO: Finde den Fehler der nullpointer exception nicht.. 
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAI) {
@@ -60,33 +62,33 @@ public class GUIConsole {
 
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
 		// input
-		int[] coords = engine.getCoordinatesOfNumberInMap(input, map, width, height);
+		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
 		int xCoord = coords[1];
 		int yCoord = coords[0];
 
 		// If the input is correct replace the field with the correct sign and
 		// check if a box is complete
-		if (engine.replaceNumber(currentPlayer, input, width, height, map, yCoord, xCoord)) {
-			if (engine.completedBox(map, width, height)) {
-				int[] coordsComplete = engine.getCoordinatesOfCompletedBox(map, width, height);
+		if (engine.replaceNumber(currentPlayer, input, yCoord, xCoord)) {
+			if (engine.completedBox()) {
+				int[] coordsComplete = engine.getCoordinatesOfCompletedBox();
 				int xComplete = coordsComplete[1];
 				int yComplete = coordsComplete[0];
-				engine.updateBoxWithName(map, currentPlayer, yComplete, xComplete, width, height);
+				engine.updateBoxWithName(currentPlayer, yComplete, xComplete);
 
 				// check for another completed Box..since one move can complete
 				// 2 boxes at the same time and update the map again
 
-				if (engine.completedBox(map, width, height)) {
-					int[] coordsComplete2 = engine.getCoordinatesOfCompletedBox(map, width, height);
+				if (engine.completedBox()) {
+					int[] coordsComplete2 = engine.getCoordinatesOfCompletedBox();
 					int xComplete2 = coordsComplete2[1];
 					int yComplete2 = coordsComplete2[0];
-					engine.updateBoxWithName(map, currentPlayer, yComplete2, xComplete2, width, height);
+					engine.updateBoxWithName(currentPlayer, yComplete2, xComplete2);
 				}
 
-				displayMap(map);
+				displayMap();
 			} else {
 				engine.increasePlayerIdByOne();
-				displayMap(map);
+				displayMap();
 			}
 		} else
 			// Else, enter a correct wall number
@@ -102,7 +104,7 @@ public class GUIConsole {
 		while (input < 2) {
 			input = police.getNumber("Please enter a number (>= 2) of player", "\tPlease enter a positive whole number.");
 		}
-		engine.numberOfPlayers = input;
+		engine.setNumberOfPlayers(input);
 		enterPlayerName();
 	}
 
@@ -121,53 +123,21 @@ public class GUIConsole {
 			width = engine.calculateArrayWidth(ArrayWidth);
 			height = engine.calculateArrayHeight(ArrayHeight);
 		}
-		map = new String[height][width];
-		initializeMap();
+		engine.setHeight(height);
+		engine.setWidth(width);
+		engine.initializeMap();
+		displayMap();
 	}
 
-	/**
-	 * Initializes an empty two dimensional string array with correct wall
-	 * numbers, and *
-	 * 
-	 * @return The correct initialized map
-	 */
-	public String[][] initializeMap() {
-		// enumerator for the wall numbers
-		int enumerate = 1;
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-				if (i % 2 == 0 && j % 2 == 0) { // even line and even column ->
-												// *
-					map[i][j] = "*";
-				} else if (i % 2 == 0 && j % 2 != 0) { // even line and uneven
-														// column -> wall
-					map[i][j] = String.valueOf(enumerate);
-					enumerate++;
-				} else if (i % 2 != 0 && j % 2 == 0) { // uneven line and even
-														// column -> wall
-					map[i][j] = String.valueOf(enumerate);
-					enumerate++;
-				} else if (i % 2 != 0 && j % 2 != 0) { // uneven line and uneven
-														// column -> space for
-														// the player who closed
-														// this field
-					map[i][j] = " ";
-				} else
-					System.err.println("GUIConsole - Method: initializeMap()");
-			}
-		}
-		displayMap(map);
-		return map;
-	}
-
+	
 	/**
 	 * Prints the map (2D - Array) on the console
 	 * 
 	 * @param newMap
 	 *            the new map that should be updated
 	 */
-	public void displayMap(String[][] newMap) {
-
+	public void displayMap() {
+		String map[][] = engine.getMap();
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
@@ -199,7 +169,8 @@ public class GUIConsole {
 				}
 			}
 		}
-		if (engine.gameEnded(width, height)) {
+		// width, height
+		if (engine.gameEnded()) {
 			endOfGame();
 		} else
 			move();
@@ -219,7 +190,10 @@ public class GUIConsole {
 		}
 		return digits;
 	}
+
+
 	
+
 	/**
 	 * Prints the game statistics onto the console and the winner or winners
 	 * with their score
@@ -236,7 +210,7 @@ public class GUIConsole {
 		else {
 			for (Player p : winners) {
 				System.out.println("\n" + "The Winner is " + p.getName() + " - Your Score: " + p.getScore() + "\n"
-						+ "CONGRATUUUUUU....WAIT FOR IT.....UULATIONS!!!🎉🎉🎉");
+						+ "CONGRATUUUUUU....WAIT FOR IT.....UULATIONS!!! :)");
 			}
 		}
 	}
