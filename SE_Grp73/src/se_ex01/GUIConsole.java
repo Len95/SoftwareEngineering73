@@ -8,7 +8,7 @@ public class GUIConsole {
 
 	Menu menu = new Menu();
 	ControlUserInputs police = new ControlUserInputs();
-	DotsNBoxesEngine engine = new DotsNBoxesEngine();
+	DotsNBoxesEngine engine;
 
 	String wall;
 	int width;
