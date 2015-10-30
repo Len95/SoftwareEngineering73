@@ -5,6 +5,25 @@ import java.util.LinkedList;
 
 public class DotsNBoxesEngine {
 
+	int height;
+	int width;
+	
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
