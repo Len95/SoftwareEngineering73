@@ -23,7 +23,8 @@ public class DotsNBoxesEngine {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
+	
+	PlayingMode mode;
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;

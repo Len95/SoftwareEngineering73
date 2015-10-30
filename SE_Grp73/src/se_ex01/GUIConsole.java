@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 public class GUIConsole {
 
+	Menue menu = new Menue();
+	ControlUserInputs police = new ControlUserInputs();
 	DotsNBoxesEngine engine = new DotsNBoxesEngine();
 	String wall;
 	String[][] map;
@@ -15,6 +17,22 @@ public class GUIConsole {
 	public GUIConsole() {
 		sc = new Scanner(System.in);
 	}
+	
+	public void launch() {
+		menu.promptForTheMenueSettings();
+		
+		if (engine.mode == PlayingMode.AgainstHumans) {
+			enterNumberOfPlayers();
+		} else if (engine.mode == PlayingMode.AgainstAI) {
+			System.out.println("Against AI feature not yet implementet");
+		} else if (engine.mode == PlayingMode.AISupport) {
+			System.out.println("AI support feature not yet implementet");
+		} else {
+			System.err.println("state of mode in engiene: " + engine.mode);
+			System.out.println("Game runs on default (Abgabe 1)");
+			enterNumberOfPlayers();
+		}
+	}
 
 	/**
 	 * Prompt for entering a player name, after all names are entered the map
@@ -23,7 +41,7 @@ public class GUIConsole {
 	public void enterPlayerName() {
 		Integer counter = 1;
 		while (counter <= engine.numberOfPlayers) {
-			String name = getString("Player " + counter + " please enter your Name");
+			String name = police.getString("Player " + counter + " please enter your Name");
 			engine.storePlayerName(counter, name);
 			counter++;
 		}
@@ -38,7 +56,7 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 
 		engine.getGameStats();
-		int input = getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number");
+		int input = police.getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number", "\tPlease enter a positive whole number.");
 
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
 		// input
@@ -82,7 +100,7 @@ public class GUIConsole {
 		int input = -1;
 
 		while (input < 2) {
-			input = getNumber("Please enter a number (>= 2) of player");
+			input = police.getNumber("Please enter a number (>= 2) of player", "\tPlease enter a positive whole number.");
 		}
 		engine.numberOfPlayers = input;
 		enterPlayerName();
@@ -98,8 +116,8 @@ public class GUIConsole {
 
 		while (!engine.checkFieldDimension(width, height)) {
 			System.out.println("\twidth * height <= 450");
-			ArrayWidth = getNumber("Please enter the width ");
-			ArrayHeight = getNumber("Please enter the height ");
+			ArrayWidth = police.getNumber("Please enter the width ", "\tPlease enter a positive whole number.");
+			ArrayHeight = police.getNumber("Please enter the height ", "\tPlease enter a positive whole number.");
 			width = engine.calculateArrayWidth(ArrayWidth);
 			height = engine.calculateArrayHeight(ArrayHeight);
 		}
@@ -201,55 +219,7 @@ public class GUIConsole {
 		}
 		return digits;
 	}
-
-	/**
-	 * 
-	 * Prompts the user with message to enter a integer
-	 * 
-	 * Stolen from
-	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
-	 * inputs-correct-type
-	 * 
-	 * @param prompt
-	 *            The message the user is prompted with
-	 * @return The number, the user entered
-	 */
-	public int getNumber(String prompt) {
-		while (true) {
-			String input = getString(prompt);
-			try {
-				return Integer.parseInt(input);
-			} catch (NumberFormatException ne) {
-				System.out.println("\tPlease enter a positive whole number.");
-			}
-		}
-	}
-
-	/**
-	 * 
-	 * Prompts the user with message to enter a string
-	 * 
-	 * Stolen from
-	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
-	 * inputs-correct-type
-	 * 
-	 * @param prompt
-	 *            The message the user is prompted with
-	 * @return The string, the user entered
-	 */
-	public String getString(String prompt) {
-		String input = "";
-		while (true) {
-			System.out.print("\t" + prompt + ": ");
-			if (sc.hasNextLine()) {
-				input = sc.nextLine();
-			}
-			if (input != null && !input.isEmpty()) {
-				return input;
-			}
-		}
-	}
-
+	
 	/**
 	 * Prints the game statistics onto the console and the winner or winners
 	 * with their score

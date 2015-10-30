@@ -9,7 +9,7 @@ public class Main {
 		System.out.println("---------------------------------------------------------");
 		// Default start - the game begins with a prompt that sets the number of
 		// players in this game
-		guiConsole.enterNumberOfPlayers();
+		guiConsole.launch();
 	}
 
 	public static void main(String[] args) {
