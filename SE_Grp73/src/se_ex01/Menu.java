@@ -15,8 +15,7 @@ public class Menu {
 		System.out.println("\tMode 2: Game against one human and an AI support");
 		System.out.println("\tMode 3: Game against AI");
 		System.out.println();
-		int input = police.getNumber("Please enter a number between 1 and 3 to choose your mode",
-				"Please enter a number between 1 - 3");
+		int input = -1;
 
 		while (!(1 <= input && input <= 3)) {
 			input = police.getNumber("Please enter a number between 1 and 3 to choose your mode",

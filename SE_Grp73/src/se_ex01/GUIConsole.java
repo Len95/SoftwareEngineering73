@@ -30,8 +30,8 @@ public class GUIConsole {
 		} else if (engine.mode == PlayingMode.AISupport) {
 			System.out.println("AI support feature not yet implementet");
 		} else {
-			System.err.println("state of mode in engiene: " + engine.mode);
-			System.out.println("Game runs on default (Abgabe 1)");
+			System.err.println("GUIConsole line 33 - State of mode in engiene: " + engine.mode);
+			System.out.println("  Game runs on default (Abgabe 1)");
 			enterNumberOfPlayers();
 		}
 	}
