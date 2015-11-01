@@ -1,10 +1,10 @@
 package se_ex01;
 
-import java.util.ArrayList;
+
 
 public class KIRandom extends KI {
 
-	//ArrayList remainingNumbers = new ArrayList();
+	
 
 	public KIRandom(String name, int score) {
 		super(name, score);

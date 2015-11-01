@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class KI extends Player {
 
-	ArrayList remainingNumbers = new ArrayList();
+	protected ArrayList remainingNumbers = new ArrayList();
 
 	public KI(String name, int score) {
 		super(name, score);
