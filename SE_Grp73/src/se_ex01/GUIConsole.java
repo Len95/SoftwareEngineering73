@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 public class GUIConsole {
 
-
 	Menu menu;
 	ControlUserInputs police = new ControlUserInputs();
 	DotsNBoxesEngine engine;
@@ -20,16 +19,16 @@ public class GUIConsole {
 		engine = new DotsNBoxesEngine();
 		menu = new Menu(engine);
 	}
-	
+
 	public void launch() {
 		menu.promptForTheMenueSettings();
-		// TODO: Finde den Fehler der nullpointer exception nicht.. 
+		// TODO: Finde den Fehler der nullpointer exception nicht..
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
 			System.out.println("Against AIMinMax feature not yet implementet");
 		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
-			System.out.println("Against AIRandom feature not yet implementet");
+			enterPlayerName();
 		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 			System.out.println("AIMinMax support feature not yet implementet");
 		} else if (engine.mode == PlayingMode.AIRandomSupport) {
@@ -47,10 +46,24 @@ public class GUIConsole {
 	 */
 	public void enterPlayerName() {
 		Integer counter = 1;
-		while (counter <= engine.numberOfPlayers) {
-			String name = police.getString("Player " + counter + " please enter your Name");
-			engine.storePlayerName(counter, name);
-			counter++;
+
+		if (engine.mode == PlayingMode.AgainstAIRandom) {
+			String name = police.getString(" Please enter your Name");
+			Player playerOne = new Player(name, 0);
+			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
+			engine.setNumberOfPlayers(2);
+			engine.storePlayerName(1, playerOne);
+			engine.storePlayerName(2, artificialIntelligence);
+		
+		}
+
+		else {
+			while (counter <= engine.numberOfPlayers) {
+				String name = police.getString("Player " + counter + " please enter your Name");
+				Player currentP = new Player(name, 0);
+				engine.storePlayerName(counter, currentP);
+				counter++;
+			}
 		}
 		enterMapDimension();
 	}
@@ -61,10 +74,25 @@ public class GUIConsole {
 	public void move() {
 		Player currentPlayer = engine.getCurrentPlayer();
 		Integer id = engine.getCurrentPlayerID();
-
+		int input = -1;
 		engine.getGameStats();
-		int input = police.getNumber("Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number", "\tPlease enter a positive whole number.");
+		System.out.println(currentPlayer.isAI);
+		if (currentPlayer.isAI) {
+			// System.out.println("i am an AI");
+			// input = currentPlayer.getNextMove();
 
+			AI currentAI = (AI) currentPlayer;
+
+			input = currentAI.getNextMove();
+
+		}
+
+		else {
+			// if currentPlayer.isKI --> input = currentPlayer.getNextMove;
+			input = police.getNumber(
+					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",
+					"\tPlease enter a positive whole number.");
+		}
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
 		// input
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
@@ -107,7 +135,8 @@ public class GUIConsole {
 		int input = -1;
 
 		while (input < 2) {
-			input = police.getNumber("Please enter a number (>= 2) of player", "\tPlease enter a positive whole number.");
+			input = police.getNumber("Please enter a number (>= 2) of player",
+					"\tPlease enter a positive whole number.");
 		}
 		engine.setNumberOfPlayers(input);
 		enterPlayerName();
@@ -134,7 +163,6 @@ public class GUIConsole {
 		displayMap();
 	}
 
-	
 	/**
 	 * Prints the map (2D - Array) on the console
 	 * 
@@ -195,9 +223,6 @@ public class GUIConsole {
 		}
 		return digits;
 	}
-
-
-	
 
 	/**
 	 * Prints the game statistics onto the console and the winner or winners

@@ -4,14 +4,12 @@ import java.util.ArrayList;
 
 public abstract class AI extends Player {
 
-	public final boolean isKI = false;
+	public final boolean isAI = true;
 
-	
 	protected DotsNBoxesEngine engine;
 
-
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
-	
+
 	/**
 	 * Gets the number of the wall the KI wants to select
 	 * 
@@ -19,8 +17,6 @@ public abstract class AI extends Player {
 	 * 
 	 * @return the number of the wall the KI wants to move
 	 */
-	public abstract int getNextMove();
-
 
 	public AI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
@@ -47,5 +43,8 @@ public abstract class AI extends Player {
 			}
 		}
 	}
+
+	public abstract int getNextMove();
+	
 
 }

@@ -23,8 +23,10 @@ public class AIRandom extends AI {
 
 	@Override
 	public int getNextMove() {
-		// TODO Auto-generated method stub
-		return 0;
+		int randomPosition = (int) (Math.random() * (remainingNumbers.size()-1));
+		int chosenNumber = remainingNumbers.get(randomPosition);
+		remainingNumbers.remove(chosenNumber);
+		return chosenNumber;
 	}
 
 }

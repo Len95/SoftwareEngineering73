@@ -101,8 +101,9 @@ public class DotsNBoxesEngine {
 	 */
 	// TODO Do the checking in the Engine and add a boolean return statement so
 	// the GUIConsole can work with this method
-	public void storePlayerName(Integer counter, String name) {
-		playerList.put(counter, new Player(name, 0));
+	public void storePlayerName(Integer counter, Player player) {
+	
+		playerList.put(counter, player);
 	}
 
 	/**

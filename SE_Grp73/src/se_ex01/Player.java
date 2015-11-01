@@ -4,7 +4,7 @@ package se_ex01;
 public class Player {
 	public String name;
 	public int score;
-	public final boolean isKI = false;
+	public final boolean isAI = false;
 
 	/**
 	 * Player who plays the game
@@ -19,6 +19,8 @@ public class Player {
 		this.name = name;
 	}
 
+	
+	
 	public String getName() {
 		return this.name;
 	}
@@ -45,5 +47,9 @@ public class Player {
 		this.score += pointsToIncreaseBy;
 
 	}
+
+
+
+	
 
 }
