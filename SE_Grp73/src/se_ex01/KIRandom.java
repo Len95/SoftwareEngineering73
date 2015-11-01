@@ -7,7 +7,7 @@ public class KIRandom extends KI {
 	//ArrayList remainingNumbers = new ArrayList();
 
 	public KIRandom(String name, int score) {
-		super(name, score);
+		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,6 +19,13 @@ public class KIRandom extends KI {
 		remainingNumbers.remove(chosenNumber);
 		return chosenNumber;
 		
+	}
+
+
+	@Override
+	public int getNextMove() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

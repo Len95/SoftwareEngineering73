@@ -26,10 +26,14 @@ public class GUIConsole {
 		// TODO: Finde den Fehler der nullpointer exception nicht.. 
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
-		} else if (engine.mode == PlayingMode.AgainstAI) {
-			System.out.println("Against AI feature not yet implementet");
-		} else if (engine.mode == PlayingMode.AISupport) {
-			System.out.println("AI support feature not yet implementet");
+		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
+			System.out.println("Against AIMinMax feature not yet implementet");
+		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
+			System.out.println("Against AIRandom feature not yet implementet");
+		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
+			System.out.println("AIMinMax support feature not yet implementet");
+		} else if (engine.mode == PlayingMode.AIRandomSupport) {
+			System.out.println("AIRandom support feature not yet implementet");
 		} else {
 			System.err.println("GUIConsole line 33 - State of mode in engiene: " + engine.mode);
 			System.out.println("  Game runs on default (Abgabe 1)");
