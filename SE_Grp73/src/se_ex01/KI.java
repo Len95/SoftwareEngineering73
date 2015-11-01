@@ -3,7 +3,7 @@ package se_ex01;
 import java.util.ArrayList;
 
 public abstract class KI extends Player {
-	
+	public final boolean isKI = false;
 	
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
 
