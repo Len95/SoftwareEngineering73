@@ -11,7 +11,14 @@ public abstract class KI extends Player {
 
 
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
-
+	
+	/**
+	 * Gets the number of the wall the KI wants to select
+	 * 
+	 * (Called by the GUI)
+	 * 
+	 * @return the number of the wall the KI wants to move
+	 */
 	public abstract int getNextMove();
 
 
