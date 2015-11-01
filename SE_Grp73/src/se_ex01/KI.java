@@ -5,11 +5,15 @@ import java.util.ArrayList;
 public abstract class KI extends Player {
 	public final boolean isKI = false;
 	
+	private DotsNBoxesEngine engine;
+	
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
+	
+	public abstract int getNextMove();
 
-	public KI(String name, int score) {
+	public KI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
-		// TODO Auto-generated constructor stub
+		this.engine = engine;
 	}
 
 	public static boolean isNumber(String str) {
