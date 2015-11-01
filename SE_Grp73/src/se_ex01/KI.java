@@ -5,20 +5,14 @@ import java.util.ArrayList;
 public abstract class KI extends Player {
 
 	public final boolean isKI = false;
-	
-<<<<<<< HEAD
 
-=======
 	private DotsNBoxesEngine engine;
 	
->>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73.git
-	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
-<<<<<<< HEAD
 
-=======
-	
+	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
+
 	public abstract int getNextMove();
->>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73.git
+
 
 	public KI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
