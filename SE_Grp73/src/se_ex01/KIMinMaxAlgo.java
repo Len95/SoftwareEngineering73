@@ -2,7 +2,7 @@ package se_ex01;
 
 public class KIMinMaxAlgo extends KI {
 
-	public KIMinMaxAlgo(String name, int score) {
+	public KIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}

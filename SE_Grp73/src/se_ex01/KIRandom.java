@@ -1,12 +1,10 @@
 package se_ex01;
 
-import java.util.ArrayList;
-
 public class KIRandom extends KI {
 
 	//ArrayList remainingNumbers = new ArrayList();
 
-	public KIRandom(String name, int score) {
+	public KIRandom(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}
