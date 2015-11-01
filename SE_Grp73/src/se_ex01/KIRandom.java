@@ -1,13 +1,12 @@
 package se_ex01;
 
 
-
 public class KIRandom extends KI {
 
 	
 
-	public KIRandom(String name, int score) {
-		super(name, score);
+	public KIRandom(String name, int score, DotsNBoxesEngine engine) {
+		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}
 
@@ -19,6 +18,13 @@ public class KIRandom extends KI {
 		remainingNumbers.remove(chosenNumber);
 		return chosenNumber;
 		
+	}
+
+
+	@Override
+	public int getNextMove() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

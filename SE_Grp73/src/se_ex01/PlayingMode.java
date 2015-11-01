@@ -1,5 +1,5 @@
 package se_ex01;
 
 public enum PlayingMode {
-	AgainstHumans, AISupport, AgainstAI
+	AgainstHumans, AIRandomSupport, AIMinMaxSupport, AgainstAIRandom, AgainstAIMinMax
 }

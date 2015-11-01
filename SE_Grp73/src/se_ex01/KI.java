@@ -6,8 +6,9 @@ public abstract class KI extends Player {
 
 	public final boolean isKI = false;
 
-	private DotsNBoxesEngine engine;
 	
+	protected DotsNBoxesEngine engine;
+
 
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
 
