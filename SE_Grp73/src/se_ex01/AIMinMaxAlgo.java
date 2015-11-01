@@ -1,8 +1,8 @@
 package se_ex01;
 
-public class KIMinMaxAlgo extends KI {
+public class AIMinMaxAlgo extends AI {
 
-	public KIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
+	public AIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}

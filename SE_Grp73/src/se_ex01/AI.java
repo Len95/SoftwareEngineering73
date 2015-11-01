@@ -2,7 +2,7 @@ package se_ex01;
 
 import java.util.ArrayList;
 
-public abstract class KI extends Player {
+public abstract class AI extends Player {
 
 	public final boolean isKI = false;
 
@@ -22,7 +22,7 @@ public abstract class KI extends Player {
 	public abstract int getNextMove();
 
 
-	public KI(String name, int score, DotsNBoxesEngine engine) {
+	public AI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
 		this.engine = engine;
 	}

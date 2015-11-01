@@ -1,11 +1,11 @@
 package se_ex01;
 
 
-public class KIRandom extends KI {
+public class AIRandom extends AI {
 
 	
 
-	public KIRandom(String name, int score, DotsNBoxesEngine engine) {
+	public AIRandom(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 		// TODO Auto-generated constructor stub
 	}
