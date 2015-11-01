@@ -2,8 +2,9 @@ package se_ex01;
 
 
 public class Player {
-	String name;
-	int score;
+	public String name;
+	public int score;
+	public final boolean isKI = false;
 
 	/**
 	 * Player who plays the game
