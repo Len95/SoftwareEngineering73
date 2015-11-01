@@ -79,8 +79,26 @@ public class AIMinMaxAlgo extends AI {
 		int points = 0;
 
 		// Option one it is a position where we set |
-
+		
+		/*
+		 * Definitely option one
+		 * 1) width == 0
+		 * 2) width == engine.width 
+		 * 
+		 * 3) Check if map[height][width--] and map[height][width++] equal " " then option one else option two
+		 */
+		
 		// Option two it is a position where we set -
+		
+		/*
+		 * Definitely option two
+		 * 1) height == 0
+		 * 2) height == engine.height
+		 * 
+		 * 3) Check if map[height][width--] and map[height][width++] equal " " then option one else option two
+		 */
+		
+		// -> Hilfsmethode eine für option| (one) \\\/// die andere für option- (two)
 
 		return points;
 	}
