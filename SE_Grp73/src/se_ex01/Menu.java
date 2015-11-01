@@ -2,7 +2,11 @@ package se_ex01;
 
 public class Menu {
 	private ControlUserInputs police = new ControlUserInputs();
-	private DotsNBoxesEngine engine = new DotsNBoxesEngine();
+	private DotsNBoxesEngine engine;
+
+	public Menu(DotsNBoxesEngine engine) {
+		this.engine = engine; 
+	}
 
 	public void promptForTheMenueSettings() {
 		System.out.println();
