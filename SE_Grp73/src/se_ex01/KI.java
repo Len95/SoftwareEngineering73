@@ -6,13 +6,23 @@ public abstract class KI extends Player {
 
 	public final boolean isKI = false;
 	
+<<<<<<< HEAD
 
+=======
+	private DotsNBoxesEngine engine;
+	
+>>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73.git
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
+<<<<<<< HEAD
 
+=======
+	
+	public abstract int getNextMove();
+>>>>>>> branch 'master' of https://github.com/Len95/SoftwareEngineering73.git
 
-	public KI(String name, int score) {
+	public KI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
-		// TODO Auto-generated constructor stub
+		this.engine = engine;
 	}
 
 	public static boolean isNumber(String str) {
