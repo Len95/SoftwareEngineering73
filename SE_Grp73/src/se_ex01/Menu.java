@@ -27,8 +27,8 @@ public class Menu {
 		int input = -1;
 
 		while (!(1 <= input && input <= 5)) {
-			input = police.getNumber("Please enter a number between 1 and 3 to choose your mode",
-					"Please enter a number between 1 - 3");
+			input = police.getNumber("Please enter a number between 1 and 5 to choose your mode",
+					"Please enter a number between 1 - 5");
 		}
 		switch (input) {
 		case 1:
