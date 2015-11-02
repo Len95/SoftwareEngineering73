@@ -22,7 +22,6 @@ public class GUIConsole {
 
 	public void launch() {
 		menu.promptForTheMenueSettings();
-		// TODO: Finde den Fehler der nullpointer exception nicht..
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
@@ -54,6 +53,7 @@ public class GUIConsole {
 			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
+			
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
@@ -61,6 +61,7 @@ public class GUIConsole {
 			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
+			
 		} else {
 			while (counter <= engine.numberOfPlayers) {
 				String name = police.getString("Player " + counter + " please enter your Name");
@@ -83,9 +84,7 @@ public class GUIConsole {
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
 			input = currentAI.getNextMove();
-		}
-
-		else {
+		} else {
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber(
 					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",
