@@ -14,7 +14,7 @@ public class AIMinMaxAlgo extends AI {
 	public AIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 	}
-
+	
 	@Override
 	public int getNextMove() {
 		minMaxAlgo(0, 0, engine.getMap());
