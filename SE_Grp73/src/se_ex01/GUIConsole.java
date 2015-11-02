@@ -30,9 +30,9 @@ public class GUIConsole {
 		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
 			enterPlayerName(1);
 		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
-			System.out.println("AIMinMax support feature not yet implementet");
+			enterPlayerName(2);
 		} else if (engine.mode == PlayingMode.AIRandomSupport) {
-			System.out.println("AIRandom support feature not yet implementet");
+			enterPlayerName(2);
 		} else {
 			System.err.println("GUIConsole line 33 - State of mode in engiene: " + engine.mode);
 			System.out.println("  Game runs on default (Abgabe 1)");
@@ -48,14 +48,12 @@ public class GUIConsole {
 		Integer counter = 0;
 
 		if (engine.mode == PlayingMode.AgainstAIRandom) {
-			String name = police.getString(" Please enter your Name ");
+			String name = police.getString(" Please enter your name ");
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
 
 			engine.storePlayerName(0, playerOne);
 			engine.storePlayerName(1, artificialIntelligence);
-
-			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 
 		}
 
@@ -66,20 +64,41 @@ public class GUIConsole {
 
 			engine.storePlayerName(0, playerOne);
 			engine.storePlayerName(1, artificialIntelligence);
-			
 
-		} else {
+		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
+			String nameOfFirstPlayer = police.getString("Player 1: Please enter your name");
+			Player playerOne = new Player(nameOfFirstPlayer, 0);
+			engine.storePlayerName(0, playerOne);
+
+			String nameOfSecondPlayer = police.getString("Player 2: Please enter your name");
+			Player playerTwo = new Player(nameOfSecondPlayer, 0);
+			engine.storePlayerName(1, playerTwo);
+
+		} else if (engine.mode == PlayingMode.AIRandomSupport) {
+
+			String nameOfFirstPlayer = police.getString("Player 1: Please enter your name");
+			Player playerOne = new Player(nameOfFirstPlayer, 0);
+			engine.storePlayerName(0, playerOne);
+
+			String nameOfSecondPlayer = police.getString("Player 2: Please enter your name");
+			Player playerTwo = new Player(nameOfSecondPlayer, 0);
+			engine.storePlayerName(1, playerTwo);
+
+		} else
+
+		{
 
 			while (counter < numberOfPlayers) {
 
-
-				String name = police.getString("Player " + counter + " please enter your Name");
+				String name = police.getString("Player " + counter + " please enter your name");
 				Player currentP = new Player(name, 0);
 				engine.storePlayerName(counter, currentP);
 				counter++;
 			}
 		}
+
 		enterMapDimension();
+
 	}
 
 	/**
@@ -96,7 +115,28 @@ public class GUIConsole {
 			AI currentAI = (AI) currentPlayer;
 			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
 			input = currentAI.getNextMove();
-		} else {
+		}
+
+		else {
+
+			if (engine.mode == PlayingMode.AIRandomSupport) {
+
+				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
+
+				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
+				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
+						+ currentPlayer.supportingAI.getNextMove());
+			}
+
+			if (engine.mode == PlayingMode.AIMinMaxSupport) {
+				currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
+
+				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
+				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
+						+ currentPlayer.supportingAI.getNextMove());
+
+			}
+
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber(
 					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",

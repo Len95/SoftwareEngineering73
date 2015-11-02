@@ -11,18 +11,18 @@ public class Menu {
 	public void promptForTheMenueSettings() {
 		System.out.println();
 		System.out.println("---------------------------------------------");
-		System.out.println("------------------->MENUE<-------------------");
+		System.out.println("------------------->MENU<-------------------");
 		System.out.println("---------------------------------------------");
 		System.out.println();
-		System.out.println("Plese choose between: ");
+		System.out.println("Please choose between: ");
 		System.out.println();
 		System.out.println("Hint: the AIMinMax is more difficult than AIRandom. ");
 		System.out.println();
 		System.out.println("\tMode 1: Game against at least one human");
-		System.out.println("\tMode 2: Game against one human and an AIRandom support");
-		System.out.println("\tMode 3: Game against AIMinMax support");
-		System.out.println("\tMode 4: Game against AIRandom");
-		System.out.println("\tMode 5: Game against AIMinMax");
+		System.out.println("\tMode 2: Player vs Player with AIRandom support");
+		System.out.println("\tMode 3: Player vs Player with AIMinMax support");
+		System.out.println("\tMode 4: Player vs AIRandom (Easy Mode)");
+		System.out.println("\tMode 5: Player vs AIMinMax (Hard Mode)");
 		System.out.println();
 		int input = -1;
 
