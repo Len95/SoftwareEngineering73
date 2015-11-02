@@ -54,7 +54,6 @@ public class GUIConsole {
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
 
-			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 		}
 
 		else if (engine.mode == PlayingMode.AgainstAIMinMax) {
@@ -90,6 +89,7 @@ public class GUIConsole {
 
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
+			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
 			input = currentAI.getNextMove();
 		} else {
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
@@ -100,7 +100,7 @@ public class GUIConsole {
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
 		// input
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
-		int xCoord = coords[1]; 
+		int xCoord = coords[1];
 		int yCoord = coords[0];
 
 		// If the input is correct replace the field with the correct sign and

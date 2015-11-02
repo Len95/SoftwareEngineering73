@@ -16,7 +16,6 @@ public class AIRandom extends AI {
 	public int getNextMove() {
 		int randomPosition = (int) (Math.random() * (remainingNumbers.size()-1));
 		int chosenNumber = remainingNumbers.get(randomPosition);
-		remainingNumbers.remove(chosenNumber);
 		return chosenNumber;
 	}
 
