@@ -100,7 +100,7 @@ public class GUIConsole {
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
 		// input
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
-		int xCoord = coords[1];
+		int xCoord = coords[1]; 
 		int yCoord = coords[0];
 
 		// If the input is correct replace the field with the correct sign and
@@ -127,9 +127,7 @@ public class GUIConsole {
 				engine.increasePlayerIdByOne();
 				displayMap();
 			}
-		} else
-			// Else, enter a correct wall number
-			move();
+		}
 	}
 
 	/**
