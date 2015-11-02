@@ -7,7 +7,6 @@ public class AIRandom extends AI {
 
 	public AIRandom(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
-		// TODO Auto-generated constructor stub
 	}
 
 	

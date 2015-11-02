@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class AI extends Player {
 
-	public final boolean isAI = true;
+	
 
 	protected DotsNBoxesEngine engine;
 
@@ -20,6 +20,7 @@ public abstract class AI extends Player {
 
 	public AI(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score);
+		super.isAI = true;
 		this.engine = engine;
 	}
 

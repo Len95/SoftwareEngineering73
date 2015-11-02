@@ -41,8 +41,8 @@ public class AIMinMaxAlgo extends AI {
 			return;
 		}
 		// Got a: * (or) - (or) |
-		if (map[startHeight][startWidth].equals("*") || map[startHeight][startWidth].equals("*")
-				|| map[startHeight][startWidth].equals("*") || map[startHeight][startWidth].equals(" ")) {
+		if (map[startHeight][startWidth].equals("*") || map[startHeight][startWidth].equals("-")
+				|| map[startHeight][startWidth].equals("|") || map[startHeight][startWidth].equals(" ")) {
 			// Reached the right border of the field and it is not the last line
 			if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
 				// Start at the beginning of the next row

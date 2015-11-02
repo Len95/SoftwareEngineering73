@@ -31,7 +31,6 @@ public class DotsNBoxesEngine {
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
-	Player player = new Player("default", 0);
 	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 
 
@@ -101,8 +100,7 @@ public class DotsNBoxesEngine {
 	 */
 	// TODO Do the checking in the Engine and add a boolean return statement so
 	// the GUIConsole can work with this method
-	public void storePlayerName(Integer counter, Player player) {
-	
+	public void storePlayerName(Integer counter,Player player) {
 		playerList.put(counter, player);
 	}
 

@@ -26,7 +26,7 @@ public class GUIConsole {
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
-			System.out.println("Against AIMinMax feature not yet implementet");
+			enterPlayerName();
 		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
 			enterPlayerName();
 		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
@@ -48,16 +48,20 @@ public class GUIConsole {
 		Integer counter = 1;
 
 		if (engine.mode == PlayingMode.AgainstAIRandom) {
-			String name = police.getString(" Please enter your Name");
+			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
 			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
-		
-		}
-
-		else {
+		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
+			String name = police.getString(" Please enter your Name ");
+			Player playerOne = new Player(name, 0);
+			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
+			engine.setNumberOfPlayers(2);
+			engine.storePlayerName(1, playerOne);
+			engine.storePlayerName(2, artificialIntelligence);
+		} else {
 			while (counter <= engine.numberOfPlayers) {
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
@@ -88,7 +92,7 @@ public class GUIConsole {
 		}
 
 		else {
-			// if currentPlayer.isKI --> input = currentPlayer.getNextMove;
+			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber(
 					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",
 					"\tPlease enter a positive whole number.");

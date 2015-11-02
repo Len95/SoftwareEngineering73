@@ -4,7 +4,7 @@ package se_ex01;
 public class Player {
 	public String name;
 	public int score;
-	public final boolean isAI = false;
+	public boolean isAI = false;
 
 	/**
 	 * Player who plays the game
