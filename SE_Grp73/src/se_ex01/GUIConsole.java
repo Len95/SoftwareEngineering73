@@ -22,6 +22,7 @@ public class GUIConsole {
 
 	public void launch() {
 		menu.promptForTheMenueSettings();
+
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
@@ -52,8 +53,11 @@ public class GUIConsole {
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
-			
-		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
+
+			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
+		}
+
+		 else if (engine.mode == PlayingMode.AgainstAIMinMax) {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
@@ -62,6 +66,7 @@ public class GUIConsole {
 			
 		} else {
 			while (counter <= numberOfPlayers) {
+
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
 				engine.storePlayerName(counter, currentP);
@@ -79,6 +84,10 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 		int input = -1;
 		engine.getGameStats();
+
+		System.out.println("isAI : " + currentPlayer.isAI);
+		// TODO: isAI : is always false.
+
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
 			input = currentAI.getNextMove();
