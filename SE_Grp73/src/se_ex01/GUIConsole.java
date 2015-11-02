@@ -57,13 +57,13 @@ public class GUIConsole {
 			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 		}
 
-		 else if (engine.mode == PlayingMode.AgainstAIMinMax) {
+		else if (engine.mode == PlayingMode.AgainstAIMinMax) {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
-			
+
 		} else {
 			while (counter <= numberOfPlayers) {
 
