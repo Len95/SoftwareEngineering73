@@ -45,14 +45,14 @@ public class GUIConsole {
 	 * dimension needs to be determined
 	 */
 	public void enterPlayerName(int numberOfPlayers) {
-		Integer counter = 1;
+		Integer counter = 0;
 
 		if (engine.mode == PlayingMode.AgainstAIRandom) {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
-			engine.storePlayerName(1, playerOne);
-			engine.storePlayerName(2, artificialIntelligence);
+			engine.storePlayerName(0, playerOne);
+			engine.storePlayerName(1, artificialIntelligence);
 
 			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 		}
@@ -61,11 +61,11 @@ public class GUIConsole {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
-			engine.storePlayerName(1, playerOne);
-			engine.storePlayerName(2, artificialIntelligence);
+			engine.storePlayerName(0, playerOne);
+			engine.storePlayerName(1, artificialIntelligence);
 			
 		} else {
-			while (counter <= numberOfPlayers) {
+			while (counter < numberOfPlayers) {
 
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
@@ -84,10 +84,6 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 		int input = -1;
 		engine.getGameStats();
-
-		System.out.println("isAI : " + currentPlayer.isAI);
-		// TODO: isAI : is always false.
-
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
 			input = currentAI.getNextMove();
