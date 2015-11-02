@@ -80,15 +80,9 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 		int input = -1;
 		engine.getGameStats();
-		System.out.println(currentPlayer.isAI);
 		if (currentPlayer.isAI) {
-			// System.out.println("i am an AI");
-			// input = currentPlayer.getNextMove();
-
 			AI currentAI = (AI) currentPlayer;
-
 			input = currentAI.getNextMove();
-
 		}
 
 		else {
@@ -178,27 +172,20 @@ public class GUIConsole {
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfDigits(map[height][width]) == 1) { // format for
-																// one-digit
-																// number
+				if (amountOfDigits(map[height][width]) == 1) { // format
+																// _for_one-digit_number
 					if (width < this.width - 1) { // one line
 						System.out.print("  " + map[height][width] + "  ");
 					} else // begin the next line
 						System.out.println("  " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 2) { // format
-																		// for
-																		// two-digit
-																		// number
+				} else if (amountOfDigits(map[height][width]) == 2) { // format_for_two-digit_number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + "  ");
 					} else
 						System.out.println(" " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 3) { // format
-																		// for
-																		// three-digit
-																		// number
+				} else if (amountOfDigits(map[height][width]) == 3) { // format_for_three-digit_number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + " ");
 					} else

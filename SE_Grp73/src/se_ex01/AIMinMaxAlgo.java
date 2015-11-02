@@ -14,7 +14,7 @@ public class AIMinMaxAlgo extends AI {
 	public AIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 	}
-	
+
 	@Override
 	public int getNextMove() {
 		minMaxAlgo(0, 0, engine.getMap());
@@ -40,60 +40,31 @@ public class AIMinMaxAlgo extends AI {
 		if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
 			return;
 		}
-		// Got a: * (or) - (or) |
-		if (map[startHeight][startWidth].equals("*") || map[startHeight][startWidth].equals("-")
-				|| map[startHeight][startWidth].equals("|") || map[startHeight][startWidth].equals(" ")) {
-			// Reached the right border of the field and it is not the last line
-			if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
-				// Start at the beginning of the next row
-				minMaxAlgo(startHeight++, 0, map);
-			} else if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
-				// did we reach the bottom?
-				return;
-			} else
-				// okay we can one more field right
-				minMaxAlgo(startHeight, startWidth++, map);
+
+		if (isNumeric(map[startHeight][startWidth])) {
+			// Found a wall number -> update options
+			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
+			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
+			options.add(canidate);
 		}
-
-		// Found a wall number -> update options
-		canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
-		canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
-		options.add(canidate);
-
-		// Recursive call
-		// Reached the right border of the field and it is not the last line
 		if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
 			// Start at the beginning of the next row
-			minMaxAlgo(startHeight++, 0, map);
+			minMaxAlgo(++startHeight, 0, map);
 		} else if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
 			// did we reach the bottom?
 			return;
-		} else
-			// okay we can one more field right
-			minMaxAlgo(startHeight, startWidth++, map);
+		} else {
+			// okay we can go one more field right
+			minMaxAlgo(startHeight, ++startWidth, map);
+		}
 	}
 
 	private int calculatePossiblePoints(int height, int width, String[][] map) {
-		int points = -1;
-
 		// Option one it is a position where we set |
-		if (width == 0 || width == engine.getWidth()) {
-			return points = calculateOption1(height, width, map);
-		}
-		if (map[height][width--].equals(" ")) {
-			return points = calculateOption2(height, width, map);
-		}
-
-		// Option two it is a position where we set -
-		if (height == 0 || height == engine.getHeight()) {
-			return points = calculateOption2(height, width, map);
-		}
-		if (map[height--][width].equals(" ")) {
-			return points = calculateOption2(height, width, map);
-		}
-
-		System.err.println("Non of the if cases in AiMinMaxAlgo.calculatePossiblePoints was used, returned -1 ");
-		return points;
+		if ((width % 2) == 0) {
+			return calculatePointsOption1(height, width, map);
+		} else // Option two it is a position where we set -
+			return calculatePointsOption2(height, width, map);
 	}
 
 	/**
@@ -104,48 +75,23 @@ public class AIMinMaxAlgo extends AI {
 	 * @param map
 	 * @return
 	 */
-	private int calculateOption1(int height, int width, String[][] map) {
-		int points = -1;
+	private int calculatePointsOption1(int height, int width, String[][] map) {
+		int points = 0;
 
-		// Check right field on right border
-		if (width == 0) {
-			if (map[height--][width++].equals("-") && map[height][width += 2].equals("|")
-					&& map[height++][width++].equals("-")) {
-				return points = 1;
-			} else
-				return points = 0;
-		}
-
-		// Check left field on left border
-		if (width == engine.getWidth()) {
+		if (width != 0) { // we can check left field
 			if (map[height--][width--].equals("-") && map[height][width -= 2].equals("|")
 					&& map[height++][width--].equals("-")) {
-				return points = 1;
+				points += 1;
 			} else
-				return points = 0;
-		}
+				points += 0;
 
-		// Check if we can gain 2 points if we set |
-		if (map[height--][width++].equals("-") && map[height][width += 2].equals("|")
-				&& map[height++][width++].equals("-") && map[height--][width--].equals("-")
-				&& map[height][width -= 2].equals("|") && map[height++][width--].equals("-")) {
-			return points = 2;
-		}
-
-		if (width != 0 && width != engine.getWidth()) {
-			// Check right field
+		} else if (width != engine.getWidth()) { // we can check right field
 			if (map[height--][width++].equals("-") && map[height][width += 2].equals("|")
 					&& map[height++][width++].equals("-")) {
-				return points = 1;
-			} else if (map[height--][width--].equals("-") && map[height][width -= 2].equals("|")
-					&& map[height++][width--].equals("-")) {
-				// Check left field
-				return points = 1;
+				points += 1;
 			} else
-				return points = 0;
+				points += 0;
 		}
-
-		System.err.println("Non of the if cases in AiMinMaxAlgo.calculateOption1 was used, returned -1 ");
 		return points;
 	}
 
@@ -157,49 +103,40 @@ public class AIMinMaxAlgo extends AI {
 	 * @param map
 	 * @return
 	 */
-	private int calculateOption2(int height, int width, String[][] map) {
-		int points = -1;
+	private int calculatePointsOption2(int height, int width, String[][] map) {
+		int points = 0;
 
-		// Check top on upper border
-		if (height == 0) {
-			if (map[height++][width--].equals("|") && map[height += 2][width].equals("-")
-					&& map[height++][width++].equals("|")) {
-				return points = 1;
-			} else
-				return points = 0;
-		}
-
-		// Check bottom on lower border
-		if (height == engine.getHeight()) {
+		if (height != 0) { // we can check upper field
 			if (map[height--][width--].equals("|") && map[height -= 2][width].equals("-")
 					&& map[height--][width++].equals("|")) {
-				return points = 1;
+				points += 1;
 			} else
-				return points = 0;
-		}
+				points += 0;
 
-		// Check if we can gain 2 points if we set -
-		if (map[height++][width--].equals("|") && map[height += 2][width].equals("-")
-				&& map[height++][width++].equals("|") && map[height--][width--].equals("|")
-				&& map[height -= 2][width].equals("-") && map[height--][width++].equals("|")) {
-			return points = 2;
-		}
-
-		if (width != 0 && width != engine.getWidth()) {
-			// Check lower field
+		} else if (height != engine.getHeight()) { // we can check lower field
 			if (map[height++][width--].equals("|") && map[height += 2][width].equals("-")
 					&& map[height++][width++].equals("|")) {
-				return points = 1;
-			} else if (map[height--][width--].equals("|") && map[height -= 2][width].equals("-")
-					&& map[height--][width++].equals("|")) {
-				// Check upper field
-				return points = 1;
+				points += 1;
 			} else
-				return points = 0;
+				points += 0;
 		}
-
-		System.err.println("Non of the if cases in AiMinMaxAlgo.calculateOption2 was used, returned -1 ");
 		return points;
+	}
+
+	/**
+	 * http://stackoverflow.com/questions/14206768/how-to-check-if-a-string-is-
+	 * numeric
+	 * 
+	 * @param string
+	 * @return
+	 */
+	private boolean isNumeric(String string) {
+		try {
+			Integer i = Integer.parseInt(string);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 }
