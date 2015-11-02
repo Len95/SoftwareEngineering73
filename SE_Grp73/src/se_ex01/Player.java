@@ -3,6 +3,7 @@ package se_ex01;
 public class Player {
 	public String name;
 	public int score;
+	public int ID;
 	public boolean isAI = false;
 	public AI supportingAI;
 
@@ -43,7 +44,10 @@ public class Player {
 	 */
 	public void increaseScoreBy(int pointsToIncreaseBy) {
 		this.score += pointsToIncreaseBy;
-
+	}
+	
+	public String toString() {
+		return "Name: " + this.name + "\tScore: " + this.score + "\n";
 	}
 
 }
