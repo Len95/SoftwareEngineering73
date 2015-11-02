@@ -25,9 +25,9 @@ public class GUIConsole {
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
-			enterPlayerName();
+			enterPlayerName(1);
 		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
-			enterPlayerName();
+			enterPlayerName(1);
 		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 			System.out.println("AIMinMax support feature not yet implementet");
 		} else if (engine.mode == PlayingMode.AIRandomSupport) {
@@ -43,14 +43,13 @@ public class GUIConsole {
 	 * Prompt for entering a player name, after all names are entered the map
 	 * dimension needs to be determined
 	 */
-	public void enterPlayerName() {
+	public void enterPlayerName(int numberOfPlayers) {
 		Integer counter = 1;
 
 		if (engine.mode == PlayingMode.AgainstAIRandom) {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
-			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
 			
@@ -58,12 +57,11 @@ public class GUIConsole {
 			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
-			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
 			
 		} else {
-			while (counter <= engine.numberOfPlayers) {
+			while (counter <= numberOfPlayers) {
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
 				engine.storePlayerName(counter, currentP);
@@ -135,8 +133,7 @@ public class GUIConsole {
 			input = police.getNumber("Please enter a number (>= 2) of player",
 					"\tPlease enter a positive whole number.");
 		}
-		engine.setNumberOfPlayers(input);
-		enterPlayerName();
+		enterPlayerName(input);
 	}
 
 	/**

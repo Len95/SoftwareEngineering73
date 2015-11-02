@@ -30,7 +30,7 @@ public class DotsNBoxesEngine {
 	PlayingMode mode;
 	int turnsPlayed = 0;
 	int playerID = 1;
-	int numberOfPlayers = 0;
+	
 	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
 
 
@@ -114,7 +114,7 @@ public class DotsNBoxesEngine {
 	protected Integer calculatePlayerID(int ID) {
 		Integer currentPlayer = -1;
 
-		if (playerID > numberOfPlayers) {
+		if (playerID > getNumberOfPlayers()) {
 			playerID = 1;
 
 			currentPlayer = playerID;
@@ -122,8 +122,8 @@ public class DotsNBoxesEngine {
 		}
 
 		else {
-			for (int i = 1; i <= numberOfPlayers; i++) {
-				if ((ID % (numberOfPlayers + 1)) == i) {
+			for (int i = 1; i <= getNumberOfPlayers(); i++) {
+				if ((ID % (getNumberOfPlayers() + 1)) == i) {
 					currentPlayer = Integer.valueOf(i);
 					break;
 				} else
@@ -397,7 +397,7 @@ public class DotsNBoxesEngine {
 	 */
 	public LinkedList<Player> returnWinnerList() {
 		Player bestPlayer = new Player("default", 0);
-		for (int i = 1; i <= numberOfPlayers; i++) {
+		for (int i = 1; i <= getNumberOfPlayers(); i++) {
 			Player currentP = playerList.get(i);
 			if (bestPlayer.getScore() < currentP.getScore()) {
 				bestPlayer = currentP;
@@ -411,7 +411,7 @@ public class DotsNBoxesEngine {
 	 */
 	public void getGameStats() {
 		System.out.println("This is round no. : " + turnsPlayed);
-		for (int i = 1; i <= numberOfPlayers; i++) {
+		for (int i = 1; i <= getNumberOfPlayers(); i++) {
 			Player currentP = playerList.get(i);
 			System.out.println(currentP.getName() + ", your current score is: " + currentP.getScore());
 		}
@@ -426,7 +426,7 @@ public class DotsNBoxesEngine {
 	 */
 	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {
 		LinkedList<Player> winnerList = new LinkedList<Player>();
-		for (int i = 1; i <= numberOfPlayers; i++) {
+		for (int i = 1; i <= getNumberOfPlayers(); i++) {
 			Player currentP = playerList.get(i);
 			if (bestPlayer.getScore() == currentP.getScore()) {
 				winnerList.add(currentP);
@@ -490,11 +490,7 @@ public class DotsNBoxesEngine {
 	}
 
 	public int getNumberOfPlayers() {
-		return numberOfPlayers;
-	}
-
-	public void setNumberOfPlayers(int numberOfPlayers) {
-		this.numberOfPlayers = numberOfPlayers;
+		return playerList.size();
 	}
 
 }
