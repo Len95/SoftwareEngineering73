@@ -118,9 +118,7 @@ public class GUIConsole {
 				engine.increasePlayerIdByOne();
 				displayMap();
 			}
-		} else
-			// Else, enter a correct wall number
-			move();
+		}
 	}
 
 	/**
