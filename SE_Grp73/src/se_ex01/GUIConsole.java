@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Scanner;
 
@@ -18,6 +19,13 @@ public class GUIConsole {
 		sc = new Scanner(System.in);
 		engine = new DotsNBoxesEngine();
 		menu = new Menu(engine);
+	}
+	
+	private void displayGameStatistics() {
+		System.out.println("This is round no. : " + engine.turnsPlayed);
+		for(Player p : engine.playerlist.asArraylist()) {
+			System.out.println(p);
+		}
 	}
 
 	public void launch() {
@@ -52,8 +60,8 @@ public class GUIConsole {
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
 
-			engine.storePlayerName(0, playerOne);
-			engine.storePlayerName(1, artificialIntelligence);
+			engine.playerlist.addPlayer(playerOne);
+			engine.playerlist.addPlayer(artificialIntelligence);
 
 			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 
@@ -64,8 +72,8 @@ public class GUIConsole {
 			Player playerOne = new Player(name, 0);
 			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
 
-			engine.storePlayerName(0, playerOne);
-			engine.storePlayerName(1, artificialIntelligence);
+			engine.playerlist.addPlayer(playerOne);
+			engine.playerlist.addPlayer(artificialIntelligence);
 			
 
 		} else {
@@ -75,7 +83,7 @@ public class GUIConsole {
 
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
-				engine.storePlayerName(counter, currentP);
+				engine.playerlist.addPlayer(currentP);
 				counter++;
 			}
 		}
@@ -86,12 +94,10 @@ public class GUIConsole {
 	 * Prompt for entering a wall number to make a move
 	 */
 	public void move() {
-		Player currentPlayer = engine.getCurrentPlayer();
-		Integer id = engine.getCurrentPlayerID();
+		Player currentPlayer = engine.playerlist.getCurrentPlayer();
 		int input = -1;
 
-		engine.getGameStats();
-
+		displayGameStatistics();
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
 			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
@@ -99,7 +105,7 @@ public class GUIConsole {
 		} else {
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber(
-					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",
+					"Player: " + currentPlayer.getName() + " please enter a wall number",
 					"\tPlease enter a positive whole number.");
 		}
 		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
@@ -129,7 +135,7 @@ public class GUIConsole {
 
 				displayMap();
 			} else {
-				engine.increasePlayerIdByOne();
+				engine.playerlist.nextPlayer();
 				displayMap();
 			}
 		}
@@ -229,8 +235,8 @@ public class GUIConsole {
 	 */
 	public void endOfGame() {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
-		LinkedList<Player> winners = engine.returnWinnerList();
-		engine.getGameStats();
+		ArrayList<Player> winners = engine.playerlist.getHighscore();
+		displayGameStatistics();
 
 		if (engine.draw()) {
 			engine.printDrawMessage();

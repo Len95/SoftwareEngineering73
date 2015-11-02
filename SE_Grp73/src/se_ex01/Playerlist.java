@@ -1,11 +1,29 @@
 package se_ex01;
 
+import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
 public class Playerlist {
 	// FIFO-Queue - to archive the right sequence of players
 	Queue<Player> queue;
+	
+	/**
+	 * Compares players by score. score=10 > score=1
+	 */
+	private Comparator<Player> scoreComparator = new Comparator<Player>() {
+		@Override
+		public int compare(Player p1, Player p2) {
+			if(p1.getScore() < p2.getScore()) {
+				return 1;
+			} else if (p1.getScore() > p2.getScore()) {
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	};
 
 	/**
 	 * Constructor
@@ -20,6 +38,7 @@ public class Playerlist {
 	 * @return true, if addition was successful
 	 */
 	public boolean addPlayer(Player p) {
+		p.ID = queue.size() + 1;
 		return queue.add(p);
 	}
 	
@@ -58,4 +77,24 @@ public class Playerlist {
 		return null;
 	}
 
+	/**
+	 * Returns the highscore
+	 * 
+	 * @return Sorted ArrayList
+	 */
+	public ArrayList<Player> getHighscore() {
+		ArrayList<Player> highscore = new ArrayList<Player>(queue);
+		
+		highscore.sort(scoreComparator);
+		
+		return highscore;
+	}
+	
+	/**
+	 * Returns the playerlist as ArrayList
+	 * @return the ArrayList
+	 */
+	public ArrayList<Player> asArraylist() {
+		return new ArrayList<Player>(queue);
+	}
 }

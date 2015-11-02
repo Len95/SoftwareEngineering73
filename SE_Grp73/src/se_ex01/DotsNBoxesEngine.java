@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -29,39 +30,12 @@ public class DotsNBoxesEngine {
 	int turnsPlayed = 0;
 	int playerID = 0;
 	
-	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
+	public Playerlist playerlist = new Playerlist();
 
 	/**
 	 * constructor : might be of value later when the code is extended.
 	 */
 	public DotsNBoxesEngine() {
-	}
-
-	/**
-	 * Returns the current player
-	 * 
-	 * @return Current player
-	 */
-	public Player getCurrentPlayer() {
-		Player currentPlayer = playerList.get(getCurrentPlayerID());
-		return currentPlayer;
-	}
-
-	/**
-	 * Increases the player ID by one
-	 */
-	public void increasePlayerIdByOne() {
-		playerID++;
-
-	}
-
-	/**
-	 * Calculates the current player ID
-	 * 
-	 * @return current player ID
-	 */
-	public Integer getCurrentPlayerID() {
-		return calculatePlayerID(playerID);
 	}
 
 	/**
@@ -85,33 +59,6 @@ public class DotsNBoxesEngine {
 	 */
 	public int calculateArrayWidth(int width) {
 		return 3 * width - (width - 1);
-	}
-
-	/**
-	 * stores the player(s) in a hashmap
-	 * 
-	 * @param counter:
-	 *            counter to assign a unique number to each player
-	 * @param name:
-	 *            name of the player
-	 */
-	// TODO Do the checking in the Engine and add a boolean return statement so
-	// the GUIConsole can work with this method
-
-	public void storePlayerName(Integer counter,Player player) {
-
-		playerList.put(counter, player);
-	}
-
-	/**
-	 * Calculates the playerID of whose turn it is
-	 * 
-	 * @param moveNumber
-	 *            The total number of moves that are played
-	 * @return playerID
-	 */
-	protected Integer calculatePlayerID(int ID) {
-		return playerID % getNumberOfPlayers();
 	}
 
 	/**
@@ -344,7 +291,7 @@ public class DotsNBoxesEngine {
 	public void updateBoxWithName(Player currentPlayer, int yCoordinateOfCompletedBox, int xCoordinateOfCompletedBox) {
 
 		if (completedBox()) {
-			map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = "p" + calculatePlayerID(playerID);
+			map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = "p" + currentPlayer.ID;
 			// assign a "p" + the ID of the current player to the completed box
 			// and increase the score of the current player by 1
 			currentPlayer.increaseScoreBy(1);
@@ -370,73 +317,22 @@ public class DotsNBoxesEngine {
 	}
 
 	/**
-	 * Returns the winner list with the best players
-	 * 
-	 * @return The list with the best players (winner list)
-	 */
-	public LinkedList<Player> returnWinnerList() {
-		Player bestPlayer = new Player("default", 0);
-		for (int i = 0; i < getNumberOfPlayers(); i++) {
-			Player currentP = playerList.get(i);
-			if (bestPlayer.getScore() < currentP.getScore()) {
-				bestPlayer = currentP;
-			}
-		}
-		return getBestPlayerList(bestPlayer);
-	}
-
-	/**
-	 * Prints the statistics of the game to the console.
-	 */
-	public void getGameStats() {
-		System.out.println("This is round no. : " + turnsPlayed);
-		for (int i = 0; i < getNumberOfPlayers(); i++) {
-			Player currentP = playerList.get(i);
-			System.out.println(currentP.getName() + ", your current score is: " + currentP.getScore());
-		}
-	}
-
-	/**
-	 * Puts the best player in a list, the list contains at least one player
-	 * 
-	 * @param player
-	 *            A random player of this game
-	 * @return The winner list with the best players
-	 */
-	private LinkedList<Player> getBestPlayerList(Player bestPlayer) {
-		LinkedList<Player> winnerList = new LinkedList<Player>();
-		for (int i = 0; i < getNumberOfPlayers(); i++) {
-			Player currentP = playerList.get(i);
-			if (bestPlayer.getScore() == currentP.getScore()) {
-				winnerList.add(currentP);
-			}
-		}
-		return winnerList;
-	}
-
-	/**
 	 * checks if there is a draw between the players or not
 	 * 
 	 * @return True if there is a draw. Else false.
 	 */
 	public boolean draw() {
-		LinkedList<Player> drawedPlayers = returnWinnerList();
-
-		if (drawedPlayers.size() > 1) {
-			return true;
-		} else {
-			return false;
-		}
+		return playerlist.getHighscore().size() > 1;
 	}
 
 	/**
 	 * prints a message to the console when there is a draw
 	 */
 	public void printDrawMessage() {
-		LinkedList<Player> drawedPlayers = returnWinnerList();
+		ArrayList<Player> drawedPlayers = playerlist.getHighscore();
 
 		System.out.println("\n" + "There is a draw between the following players: ");
-		for (Player currentP : returnWinnerList()) {
+		for (Player currentP : playerlist.getHighscore()) {
 			System.out.println(currentP.getName());
 		}
 
@@ -466,10 +362,6 @@ public class DotsNBoxesEngine {
 
 	public void setMap(String[][] map) {
 		this.map = map;
-	}
-
-	public int getNumberOfPlayers() {
-		return playerList.size();
 	}
 
 }
