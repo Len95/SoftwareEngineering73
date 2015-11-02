@@ -5,7 +5,7 @@ import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class Playerlist {
+public class PlayerList {
 	// FIFO-Queue - to archive the right sequence of players
 	Queue<Player> queue;
 	
@@ -28,7 +28,7 @@ public class Playerlist {
 	/**
 	 * Constructor
 	 */
-	public Playerlist() {
+	public PlayerList() {
 		queue = new LinkedList<Player>();
 	}
 	

@@ -1,8 +1,6 @@
 package se_ex01;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
 
 public class DotsNBoxesEngine {
 
@@ -30,7 +28,7 @@ public class DotsNBoxesEngine {
 	int turnsPlayed = 0;
 	int playerID = 0;
 	
-	public Playerlist playerlist = new Playerlist();
+	public PlayerList playerlist = new PlayerList();
 
 	/**
 	 * constructor : might be of value later when the code is extended.

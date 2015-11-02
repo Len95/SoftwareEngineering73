@@ -7,7 +7,7 @@ public abstract class AI extends Player {
 	
 
 	protected DotsNBoxesEngine engine;
-
+	protected ControlInputs police = new ControlInputs();
 	protected ArrayList<Integer> remainingNumbers = new ArrayList<Integer>();
 
 	/**
@@ -24,21 +24,12 @@ public abstract class AI extends Player {
 		this.engine = engine;
 	}
 
-	public static boolean isNumber(String str) {
-		try {
-			double d = Double.parseDouble(str);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
-	}
-
 	public void calculateRemainingNumbers(String[][] map, int width, int height) {
 
 		for (int i = 0; i < height; i++) {
 			for (int j = 0; j < width; j++) {
 
-				if (isNumber(map[i][j])) {
+				if (police.isNumeric(map[i][j])) {
 					remainingNumbers.add(Integer.valueOf(map[i][j]));
 				}
 			}

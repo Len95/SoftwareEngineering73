@@ -41,7 +41,7 @@ public class AIMinMaxAlgo extends AI {
 			return;
 		}
 
-		if (isNumeric(map[startHeight][startWidth])) {
+		if (super.police.isNumeric(map[startHeight][startWidth])) {
 			// Found a wall number -> update options
 			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
 			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
@@ -121,22 +121,6 @@ public class AIMinMaxAlgo extends AI {
 				points += 0;
 		}
 		return points;
-	}
-
-	/**
-	 * http://stackoverflow.com/questions/14206768/how-to-check-if-a-string-is-
-	 * numeric
-	 * 
-	 * @param string
-	 * @return
-	 */
-	private boolean isNumeric(String string) {
-		try {
-			Integer i = Integer.parseInt(string);
-		} catch (NumberFormatException nfe) {
-			return false;
-		}
-		return true;
 	}
 
 }

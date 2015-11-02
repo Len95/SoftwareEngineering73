@@ -1,7 +1,7 @@
 package se_ex01;
 
 public class Menu {
-	private ControlUserInputs police = new ControlUserInputs();
+	private ControlInputs police = new ControlInputs();
 	private DotsNBoxesEngine engine;
 
 	public Menu(DotsNBoxesEngine engine) {

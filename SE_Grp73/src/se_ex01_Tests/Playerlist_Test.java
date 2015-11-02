@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import se_ex01.Playerlist;
+import se_ex01.PlayerList;
 
 public class Playerlist_Test {
-	private Playerlist plist;
+	private PlayerList plist;
 	private Player p1, p2;
 	
 	@Before
 	public void init() {
-		plist = new Playerlist();
+		plist = new PlayerList();
 		p1 = new Player("p1", 0);
 		p2 = new Player("p2", 100);
 	}

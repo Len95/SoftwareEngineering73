@@ -2,13 +2,13 @@ package se_ex01;
 
 import java.util.Scanner;
 
-public class ControlUserInputs {
-	Scanner sc; 
-	
-	public ControlUserInputs() {
+public class ControlInputs {
+	Scanner sc;
+
+	public ControlInputs() {
 		sc = new Scanner(System.in);
 	}
-	
+
 	/**
 	 * 
 	 * Prompts the user with message to enter a integer
@@ -31,7 +31,7 @@ public class ControlUserInputs {
 			}
 		}
 	}
-	
+
 	/**
 	 * 
 	 * Prompts the user with message to enter a string
@@ -55,5 +55,21 @@ public class ControlUserInputs {
 				return input;
 			}
 		}
+	}
+
+	/**
+	 * http://stackoverflow.com/questions/14206768/how-to-check-if-a-string-is-
+	 * numeric
+	 * 
+	 * @param string
+	 * @return
+	 */
+	public boolean isNumeric(String string) {
+		try {
+			Integer.parseInt(string);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 }

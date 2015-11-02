@@ -1,13 +1,12 @@
 package se_ex01;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 public class GUIConsole {
 
 	Menu menu;
-	ControlUserInputs police = new ControlUserInputs();
+	ControlInputs police = new ControlInputs();
 	DotsNBoxesEngine engine;
 
 	String wall;
