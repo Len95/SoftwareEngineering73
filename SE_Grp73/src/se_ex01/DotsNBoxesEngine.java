@@ -8,7 +8,6 @@ public class DotsNBoxesEngine {
 	private int height;
 	private int width;
 	private String[][] map;
-	
 
 	public int getHeight() {
 		return height;
@@ -26,14 +25,12 @@ public class DotsNBoxesEngine {
 		this.width = width;
 	}
 
-	
 	PlayingMode mode;
 	int turnsPlayed = 0;
 	int playerID = 1;
 	int numberOfPlayers = 0;
 	Player player = new Player("default", 0);
 	HashMap<Integer, Player> playerList = new HashMap<Integer, Player>();
-
 
 	/**
 	 * constructor : might be of value later when the code is extended.
@@ -102,7 +99,7 @@ public class DotsNBoxesEngine {
 	// TODO Do the checking in the Engine and add a boolean return statement so
 	// the GUIConsole can work with this method
 	public void storePlayerName(Integer counter, Player player) {
-	
+
 		playerList.put(counter, player);
 	}
 
@@ -219,8 +216,8 @@ public class DotsNBoxesEngine {
 	 * @return: returns true if the map is changed at the given position. Else
 	 *          false
 	 */
-	public boolean replaceNumber(Player currentPlayer, int fieldNumber,
-			int yCoordinateOfFoundNumber, int xCoordinateOfFoundNumber) {
+	public boolean replaceNumber(Player currentPlayer, int fieldNumber, int yCoordinateOfFoundNumber,
+			int xCoordinateOfFoundNumber) {
 
 		if (validMove(fieldNumber, map, width, height)) {
 			if ((fieldNumber % width) == 0) {
@@ -311,7 +308,7 @@ public class DotsNBoxesEngine {
 		}
 		return coordinatesOfCompletedBox;
 	}
-	
+
 	/**
 	 * Initializes an empty two dimensional string array with correct wall
 	 * numbers, and *
@@ -346,7 +343,6 @@ public class DotsNBoxesEngine {
 		}
 	}
 
-
 	/**
 	 * Enters the ID of the current player in the completed Box. e.g. "p1"
 	 * 
@@ -363,8 +359,7 @@ public class DotsNBoxesEngine {
 	 * @param height:
 	 *            height of the map
 	 */
-	public void updateBoxWithName(Player currentPlayer, int yCoordinateOfCompletedBox,
-			int xCoordinateOfCompletedBox) {
+	public void updateBoxWithName(Player currentPlayer, int yCoordinateOfCompletedBox, int xCoordinateOfCompletedBox) {
 
 		if (completedBox()) {
 			map[yCoordinateOfCompletedBox][xCoordinateOfCompletedBox] = "p" + calculatePlayerID(playerID);

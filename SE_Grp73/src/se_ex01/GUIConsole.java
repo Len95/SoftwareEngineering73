@@ -22,7 +22,7 @@ public class GUIConsole {
 
 	public void launch() {
 		menu.promptForTheMenueSettings();
-		// TODO: Finde den Fehler der nullpointer exception nicht..
+
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
@@ -54,7 +54,7 @@ public class GUIConsole {
 			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
-		
+			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 		}
 
 		else {
@@ -76,7 +76,8 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 		int input = -1;
 		engine.getGameStats();
-		System.out.println(currentPlayer.isAI);
+		System.out.println("isAI : " + currentPlayer.isAI);
+		// TODO: isAI : is always false.
 		if (currentPlayer.isAI) {
 			// System.out.println("i am an AI");
 			// input = currentPlayer.getNextMove();
