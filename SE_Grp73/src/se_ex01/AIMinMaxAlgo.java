@@ -1,16 +1,142 @@
 package se_ex01;
 
+import java.util.LinkedList;
+
 public class AIMinMaxAlgo extends AI {
+
+	/**
+	 * A LinkedList with all options for the next move, int[0] contains the wall
+	 * number and int[1] contains the maximal points by choosing this wall
+	 * number for the next move
+	 */
+	private LinkedList<int[]> options = new LinkedList<int[]>();
 
 	public AIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
 	public int getNextMove() {
-		// TODO Auto-generated method stub
-		return 0;
+		minMaxAlgo(0, 0, engine.getMap());
+		int[] bestChoice = options.get(0);
+		for (int[] option : options) {
+			if (option[1] > bestChoice[1]) {
+				bestChoice = option;
+			}
+		}
+		return bestChoice[0];
+	}
+
+	/**
+	 * Fills up options recursively
+	 * 
+	 * @param startWidth
+	 * @param startHeight
+	 * @param map
+	 */
+	private void minMaxAlgo(int startHeight, int startWidth, String[][] map) {
+		int[] canidate = new int[2];
+		// Break condition we reached the bottom
+		if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
+			return;
+		}
+
+		if (isNumeric(map[startHeight][startWidth])) {
+			// Found a wall number -> update options
+			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
+			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
+			options.add(canidate);
+		}
+		if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
+			// Start at the beginning of the next row
+			minMaxAlgo(++startHeight, 0, map);
+		} else if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
+			// did we reach the bottom?
+			return;
+		} else {
+			// okay we can go one more field right
+			minMaxAlgo(startHeight, ++startWidth, map);
+		}
+	}
+
+	private int calculatePossiblePoints(int height, int width, String[][] map) {
+		// Option one it is a position where we set |
+		if ((width % 2) == 0) {
+			return calculatePointsOption1(height, width, map);
+		} else // Option two it is a position where we set -
+			return calculatePointsOption2(height, width, map);
+	}
+
+	/**
+	 * Set |
+	 * 
+	 * @param height
+	 * @param width
+	 * @param map
+	 * @return
+	 */
+	private int calculatePointsOption1(int height, int width, String[][] map) {
+		int points = 0;
+
+		if (width != 0) { // we can check left field
+			if (map[height--][width--].equals("-") && map[height][width -= 2].equals("|")
+					&& map[height++][width--].equals("-")) {
+				points += 1;
+			} else
+				points += 0;
+
+		} else if (width != engine.getWidth()) { // we can check right field
+			if (map[height--][width++].equals("-") && map[height][width += 2].equals("|")
+					&& map[height++][width++].equals("-")) {
+				points += 1;
+			} else
+				points += 0;
+		}
+		return points;
+	}
+
+	/**
+	 * Set -
+	 * 
+	 * @param height
+	 * @param width
+	 * @param map
+	 * @return
+	 */
+	private int calculatePointsOption2(int height, int width, String[][] map) {
+		int points = 0;
+
+		if (height != 0) { // we can check upper field
+			if (map[height--][width--].equals("|") && map[height -= 2][width].equals("-")
+					&& map[height--][width++].equals("|")) {
+				points += 1;
+			} else
+				points += 0;
+
+		} else if (height != engine.getHeight()) { // we can check lower field
+			if (map[height++][width--].equals("|") && map[height += 2][width].equals("-")
+					&& map[height++][width++].equals("|")) {
+				points += 1;
+			} else
+				points += 0;
+		}
+		return points;
+	}
+
+	/**
+	 * http://stackoverflow.com/questions/14206768/how-to-check-if-a-string-is-
+	 * numeric
+	 * 
+	 * @param string
+	 * @return
+	 */
+	private boolean isNumeric(String string) {
+		try {
+			Integer i = Integer.parseInt(string);
+		} catch (NumberFormatException nfe) {
+			return false;
+		}
+		return true;
 	}
 
 }

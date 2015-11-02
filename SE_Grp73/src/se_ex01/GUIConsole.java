@@ -26,9 +26,9 @@ public class GUIConsole {
 		if (engine.mode == PlayingMode.AgainstHumans) {
 			enterNumberOfPlayers();
 		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
-			System.out.println("Against AIMinMax feature not yet implementet");
+			enterPlayerName(1);
 		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
-			enterPlayerName();
+			enterPlayerName(1);
 		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 			System.out.println("AIMinMax support feature not yet implementet");
 		} else if (engine.mode == PlayingMode.AIRandomSupport) {
@@ -44,21 +44,29 @@ public class GUIConsole {
 	 * Prompt for entering a player name, after all names are entered the map
 	 * dimension needs to be determined
 	 */
-	public void enterPlayerName() {
+	public void enterPlayerName(int numberOfPlayers) {
 		Integer counter = 1;
 
 		if (engine.mode == PlayingMode.AgainstAIRandom) {
-			String name = police.getString(" Please enter your Name");
+			String name = police.getString(" Please enter your Name ");
 			Player playerOne = new Player(name, 0);
 			AIRandom artificialIntelligence = new AIRandom("AIRandom", 0, engine);
-			engine.setNumberOfPlayers(2);
 			engine.storePlayerName(1, playerOne);
 			engine.storePlayerName(2, artificialIntelligence);
+
 			artificialIntelligence.calculateRemainingNumbers(engine.getMap(), width, height);
 		}
 
-		else {
-			while (counter <= engine.numberOfPlayers) {
+		 else if (engine.mode == PlayingMode.AgainstAIMinMax) {
+			String name = police.getString(" Please enter your Name ");
+			Player playerOne = new Player(name, 0);
+			AIMinMaxAlgo artificialIntelligence = new AIMinMaxAlgo("AIMinMax", 0, engine);
+			engine.storePlayerName(1, playerOne);
+			engine.storePlayerName(2, artificialIntelligence);
+			
+		} else {
+			while (counter <= numberOfPlayers) {
+
 				String name = police.getString("Player " + counter + " please enter your Name");
 				Player currentP = new Player(name, 0);
 				engine.storePlayerName(counter, currentP);
@@ -76,20 +84,15 @@ public class GUIConsole {
 		Integer id = engine.getCurrentPlayerID();
 		int input = -1;
 		engine.getGameStats();
+
 		System.out.println("isAI : " + currentPlayer.isAI);
 		// TODO: isAI : is always false.
+
 		if (currentPlayer.isAI) {
-			// System.out.println("i am an AI");
-			// input = currentPlayer.getNextMove();
-
 			AI currentAI = (AI) currentPlayer;
-
 			input = currentAI.getNextMove();
-
-		}
-
-		else {
-			// if currentPlayer.isKI --> input = currentPlayer.getNextMove;
+		} else {
+			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber(
 					"Player " + "(" + id + "): " + currentPlayer.getName() + " please enter a wall number",
 					"\tPlease enter a positive whole number.");
@@ -139,8 +142,7 @@ public class GUIConsole {
 			input = police.getNumber("Please enter a number (>= 2) of player",
 					"\tPlease enter a positive whole number.");
 		}
-		engine.setNumberOfPlayers(input);
-		enterPlayerName();
+		enterPlayerName(input);
 	}
 
 	/**
@@ -175,27 +177,20 @@ public class GUIConsole {
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfDigits(map[height][width]) == 1) { // format for
-																// one-digit
-																// number
+				if (amountOfDigits(map[height][width]) == 1) { // format
+																// _for_one-digit_number
 					if (width < this.width - 1) { // one line
 						System.out.print("  " + map[height][width] + "  ");
 					} else // begin the next line
 						System.out.println("  " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 2) { // format
-																		// for
-																		// two-digit
-																		// number
+				} else if (amountOfDigits(map[height][width]) == 2) { // format_for_two-digit_number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + "  ");
 					} else
 						System.out.println(" " + map[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 3) { // format
-																		// for
-																		// three-digit
-																		// number
+				} else if (amountOfDigits(map[height][width]) == 3) { // format_for_three-digit_number
 					if (width < this.width - 1) {
 						System.out.print(" " + map[height][width] + " ");
 					} else
