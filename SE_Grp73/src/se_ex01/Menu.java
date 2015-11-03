@@ -18,7 +18,7 @@ public class Menu {
 		System.out.println();
 		System.out.println("Hint: the AIMinMax is more difficult than AIRandom. ");
 		System.out.println();
-		System.out.println("\tMode 1: Game against at least one human");
+		System.out.println("\tMode 1: Game against at least one human (With optional KIMinMaxSupport)");
 		System.out.println("\tMode 2: Player vs Player with AIRandom support");
 		System.out.println("\tMode 3: Player vs Player with AIMinMax support");
 		System.out.println("\tMode 4: Player vs AIRandom (Easy Mode)");

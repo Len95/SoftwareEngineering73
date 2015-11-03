@@ -19,9 +19,9 @@ public class AIMinMaxAlgo extends AI {
 	public int getNextMove() {
 		minMaxAlgo(0, 0, engine.getMap());
 		int[] bestChoice = options.get(0);
-		System.out.println("options.size: " + options.size());
+	//	System.out.println("options.size: " + options.size());
 		for (int[] option : options) {
-			System.out.println("Optioin[0]: " + option[0] + " Option[1]: " + option[1]);
+		//	System.out.println("Optioin[0]: " + option[0] + " Option[1]: " + option[1]);
 
 			if (option[1] >= bestChoice[1]) {
 				bestChoice = option;
@@ -47,7 +47,7 @@ public class AIMinMaxAlgo extends AI {
 
 		if (super.police.isNumeric(map[startHeight][startWidth])) {
 			// Found a wall number -> update options
-			System.out.println("WallNo.: " + map[startHeight][startWidth] + " h|w " + startHeight + "|"+ startWidth);
+		//	System.out.println("WallNo.: " + map[startHeight][startWidth] + " h|w " + startHeight + "|"+ startWidth);
 			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
 			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
 			options.add(canidate);
@@ -89,8 +89,8 @@ public class AIMinMaxAlgo extends AI {
 		// we can check left field
 		if (width != 0) {
 			
-			System.out.println("Height LeftField: " + height);
-			System.out.println("Width LeftField: " + width);
+		//	System.out.println("Height LeftField: " + height);
+		//	System.out.println("Width LeftField: " + width);
 			
 			if (map[height--][width--].equals("-") && map[height][width -= 2].equals("|")
 					&& map[height++][width--].equals("-")) {
@@ -102,8 +102,8 @@ public class AIMinMaxAlgo extends AI {
 		// we can check right field
 		if (width != (engine.getWidth() - 1)) {
 			
-			System.out.println("Height RightField: " + height);
-			System.out.println("Width RightField: " + width);
+		//	System.out.println("Height RightField: " + height);
+		//	System.out.println("Width RightField: " + width);
 			
 			if (map[height--][width++].equals("-") && map[height][width += 2].equals("|")
 					&& map[height++][width++].equals("-")) {

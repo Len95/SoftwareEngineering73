@@ -112,6 +112,7 @@ public class GUIConsole {
 	public void move() {
 		Player currentPlayer = engine.playerlist.getCurrentPlayer();
 		int input = -1;
+		String needHelp = "Empty";
 
 		// engine.getGameStats();
 
@@ -122,6 +123,32 @@ public class GUIConsole {
 			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
 			input = currentAI.getNextMove();
 		} else {
+
+			if (engine.playerlist.size() == 2 && engine.mode == PlayingMode.AgainstHumans) {
+
+				while (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
+					needHelp = police.getString("Would you like to receive help from the AI? (Type 'YES' or 'NO')");
+
+					if (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
+						System.out.println(
+								"Please enter a valid command : 'YES' if you would like to receive help and 'NO' if you don't.");
+
+					}
+				}
+				if (needHelp.toUpperCase().equals("YES")) {
+
+					currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
+
+					engine.playerlist.getCurrentPlayer().supportingAI = new AIMinMaxAlgo(
+							engine.playerlist.getCurrentPlayer().getName(),
+							engine.playerlist.getCurrentPlayer().getScore(), engine);
+
+					System.out.println(engine.playerlist.getCurrentPlayer().getName()
+							+ ", the MinMaxAI advises you to play the number "
+							+ engine.playerlist.getCurrentPlayer().supportingAI.getNextMove() + "\n");
+				}
+
+			}
 			if (engine.mode == PlayingMode.AIRandomSupport) {
 
 				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
@@ -132,10 +159,9 @@ public class GUIConsole {
 			} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 				currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
 
-				
 				System.out.println(currentPlayer.getName() + ", the MinMaxAI advises you to play the number "
-						+ currentPlayer.supportingAI.getNextMove() +"\n");
-			} 
+						+ currentPlayer.supportingAI.getNextMove() + "\n");
+			}
 
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
