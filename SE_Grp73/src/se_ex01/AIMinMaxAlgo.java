@@ -24,7 +24,8 @@ public class AIMinMaxAlgo extends AI {
 				bestChoice = option;
 			}
 		}
-
+		System.out.println("bestChoice[0]: " + bestChoice[0]);
+		options.clear();
 		return bestChoice[0];
 	}
 
@@ -46,6 +47,8 @@ public class AIMinMaxAlgo extends AI {
 			// Found a wall number -> update options
 			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
 			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
+			System.out.println("canidate[0]: " +  canidate[0]);
+			System.out.println("canidate[1]: " +  canidate[1]);
 			options.add(canidate);
 			if (startWidth % 2 == 0 && startWidth == (engine.getWidth() - 1)) {
 				minMaxAlgo(startHeight + 1, 0, map);

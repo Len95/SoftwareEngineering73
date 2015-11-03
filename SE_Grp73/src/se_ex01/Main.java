@@ -17,3 +17,5 @@ public class Main {
 		launch.newGame();
 	}
 }
+
+// TODO Unentschieden, AI macht Wand zu -> klickt man die Wand an bricht das Spiel ab

@@ -125,14 +125,11 @@ public class GUIConsole {
 		} else {
 
 			if (engine.playerlist.size() == 2 && engine.mode == PlayingMode.AgainstHumans) {
-
 				while (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
 					needHelp = police.getString("Would you like to receive help from the AI? (Type 'YES' or 'NO')");
-
 					if (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
 						System.out.println(
 								"Please enter a valid command : 'YES' if you would like to receive help and 'NO' if you don't.");
-
 					}
 				}
 				if (needHelp.toUpperCase().equals("YES")) {
@@ -148,8 +145,7 @@ public class GUIConsole {
 							+ engine.playerlist.getCurrentPlayer().supportingAI.getNextMove() + "\n");
 				}
 
-			}
-			if (engine.mode == PlayingMode.AIRandomSupport) {
+			} else if (engine.mode == PlayingMode.AIRandomSupport) {
 
 				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
 
@@ -161,13 +157,12 @@ public class GUIConsole {
 
 				System.out.println(currentPlayer.getName() + ", the MinMaxAI advises you to play the number "
 						+ currentPlayer.supportingAI.getNextMove() + "\n");
-			}
 
-			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
-			input = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
-					"\tPlease enter a positive whole number.");
+			} else // if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
+				input = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
+						"\tPlease enter a positive whole number.");
 		}
-		// The DotsNBoxesEngine calculates the Coords of the Arrayfield with the
+		// The DotsNBoxesEngine calculates the Coords of the array field with the
 		// input
 		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
 		int xCoord = coords[1];
