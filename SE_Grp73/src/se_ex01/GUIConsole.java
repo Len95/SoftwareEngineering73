@@ -121,10 +121,7 @@ public class GUIConsole {
 			AI currentAI = (AI) currentPlayer;
 			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
 			input = currentAI.getNextMove();
-		}
-
-		else {
-
+		} else {
 			if (engine.mode == PlayingMode.AIRandomSupport) {
 
 				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
@@ -132,16 +129,13 @@ public class GUIConsole {
 				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
 				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
 						+ currentPlayer.supportingAI.getNextMove() + "\n");
-			}
-
-			if (engine.mode == PlayingMode.AIMinMaxSupport) {
+			} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 				currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
 
 				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
 				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
 						+ currentPlayer.supportingAI.getNextMove() +"\n");
-
-			}
+			} 
 
 			// if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
 			input = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
@@ -171,7 +165,6 @@ public class GUIConsole {
 					int yComplete2 = coordsComplete2[0];
 					engine.updateBoxWithName(currentPlayer, yComplete2, xComplete2);
 				}
-
 				displayMap();
 			} else {
 				engine.playerlist.nextPlayer();

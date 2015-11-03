@@ -20,7 +20,7 @@ public class AIMinMaxAlgo extends AI {
 		minMaxAlgo(0, 0, engine.getMap());
 		int[] bestChoice = options.get(0);
 		for (int[] option : options) {
-			if (option[1] > bestChoice[1]) {
+			if (option[1] >= bestChoice[1]) {
 				bestChoice = option;
 			}
 		}
@@ -46,8 +46,7 @@ public class AIMinMaxAlgo extends AI {
 			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
 			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
 			options.add(canidate);
-		}
-		if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
+		} else if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
 			// Start at the beginning of the next row
 			minMaxAlgo(++startHeight, 0, map);
 		} else if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
