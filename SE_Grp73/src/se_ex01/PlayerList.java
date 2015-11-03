@@ -97,4 +97,9 @@ public class PlayerList {
 	public ArrayList<Player> asArraylist() {
 		return new ArrayList<Player>(queue);
 	}
+
+	public Player getPlayerByID(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

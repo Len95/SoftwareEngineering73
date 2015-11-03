@@ -50,4 +50,16 @@ public class Player {
 		return "Name: " + this.name + "\tScore: " + this.score + "\n";
 	}
 
+	public int getID() {
+		return ID;
+	}
+
+	public void setID(int iD) {
+		ID = iD;
+	}
+	
+	public String getShortName() {
+		return "P" + ID;
+	}
+
 }
