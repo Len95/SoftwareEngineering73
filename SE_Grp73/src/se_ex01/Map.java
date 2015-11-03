@@ -6,10 +6,11 @@ public class Map {
 
 	private int[][] map;
 	private int numberOfBoxesX, numberOfBoxesY;
-	private int arrayWidth, arrayHeight;
+	public int arrayWidth, arrayHeight;
 	private DotsNBoxesEngine engine;
 	private PlayerList playerlist;
 	public final int lastChooseableWall;
+	public boolean justClosedAField = false;;
 
 	private class Wall {
 		public int wallNumber;
@@ -71,8 +72,8 @@ public class Map {
 	}
 
 	private void initializeMap() {
-		for (int y = 0; y < arrayHeight; y++) {
-			for (int x = 0; x < arrayWidth; x++) {
+		for (int x = 0; x < arrayWidth; x++) {
+			for (int y = 0; y < arrayHeight; y++) {
 
 				// Node?
 				if (x % 2 == 0 && y % 2 == 0) {
@@ -108,8 +109,9 @@ public class Map {
 	 */
 	private void addNewWall(int x, int y, int type) {
 		numberOfWalls++;
-		System.out
-				.println("New Wall:\tx=" + x + "\ty=" + y + "\twallnumber=" + numberOfWalls + "\tsize=" + walls.length);
+		// System.out
+		// .println("New Wall:\tx=" + x + "\ty=" + y + "\twallnumber=" +
+		// numberOfWalls + "\tsize=" + walls.length);
 		walls[numberOfWalls] = new Wall(x, y, numberOfWalls, type);
 	}
 
@@ -142,7 +144,28 @@ public class Map {
 	 * @return true if wall is open open
 	 */
 	public boolean isWallOpen(int x, int y) {
-		return walls[xyToWallNumber(x, y)].isOpen;
+		int wallnumber = xyToWallNumber(x, y);
+		if(wallnumber < 0) {
+			return false;
+		}
+		return walls[wallnumber].isOpen;
+	}
+
+	/**
+	 * Checks whether the field size in boxes is okay (both values > 1)
+	 * 
+	 * @param widthInBoxes
+	 *            The width in boxes
+	 * @param heightInBoxes
+	 *            The height in boxes
+	 * @return true if okay, false if not
+	 */
+	public static boolean isMapDimensionOkay(int widthInBoxes, int heightInBoxes) {
+		if (widthInBoxes > 1 && heightInBoxes > 1) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	/**
@@ -170,6 +193,7 @@ public class Map {
 	 */
 	public boolean takeWall(Player p, int wallnumber) {
 		if (isWallOpen(wallnumber)) {
+			this.justClosedAField = false;
 			closeWall(wallnumber);
 			processClosedWall(p, wallnumber);
 			return true;
@@ -195,7 +219,7 @@ public class Map {
 				hasWallClosedField(p, wall.x, wall.y - 1);
 			}
 			// Field below (if existing)
-			if (wall.y != arrayHeight) {
+			if (wall.y != arrayHeight - 1) {
 				hasWallClosedField(p, wall.x, wall.y + 1);
 			}
 		}
@@ -206,7 +230,7 @@ public class Map {
 				hasWallClosedField(p, wall.x - 1, wall.y);
 			}
 			// Right field (if existing)
-			if (wall.y != arrayWidth) {
+			if (wall.x != arrayWidth - 1) {
 				hasWallClosedField(p, wall.x + 1, wall.y);
 			}
 		}
@@ -227,10 +251,11 @@ public class Map {
 		rightWallClosed = !isWallOpen(x + 1, y);
 		upperWallClosed = !isWallOpen(x, y - 1);
 		lowerWallClosed = !isWallOpen(x, y + 1);
-
+		//System.out.println("Checking field at " + x + " | " + y );
 		fieldClosed = leftWallClosed && rightWallClosed && upperWallClosed && lowerWallClosed;
 
 		if (fieldClosed) {
+			this.justClosedAField = true;
 			map[x][y] = p.ID;
 			p.increaseScoreBy(1);
 		}
@@ -281,10 +306,14 @@ public class Map {
 	}
 
 	public int xyToWallNumber(int x_Wall, int y_Wall) {
-		for (int i = 0; i < walls.length; i++) {
+		//System.out.println("Looking for wall at x=" + x_Wall + "\ty=" + y_Wall);
+		//System.out.println("Walls size=" + walls.length);
+		for (int i = 1; i < walls.length; i++) {
+			//System.out.println("i=" + i + "\t" + walls[i]);
 			if (walls[i] != null && walls[i].x == x_Wall && walls[i].y == y_Wall) {
-				System.out.println("Found wall (" + x_Wall + "|" + y_Wall + "):\t" + walls[i]);
-				System.out.println("Return " + walls[i].wallNumber);
+				// System.out.println("Found wall (" + x_Wall + "|" + y_Wall +
+				// "):\t" + walls[i]);
+				// System.out.println("Return " + walls[i].wallNumber);
 				return walls[i].wallNumber;
 			}
 		}
@@ -337,5 +366,30 @@ public class Map {
 			sb.append("\n");
 		}
 		return sb.toString();
+	}
+
+	/**
+	 * Checks whether at least one wall is still open
+	 * 
+	 * @return true, if a wall is still open
+	 */
+	public boolean isAWallOpen() {
+		ArrayList<Integer> openWalls = getOpenWallnumbers();
+		return openWalls.size() > 0;
+	}
+
+	public int getLargestWallNumber() {
+		return walls.length - 1;
+	}
+
+	public String[][] getMapAsStringArray() {
+		String[][] stringArray = new String[arrayWidth][arrayHeight];
+		int[][] intArray = getMapAsIntArray();
+		for (int x = 0; x < arrayWidth; x++) {
+			for (int y = 0; y < arrayHeight; y++) {
+				stringArray[x][y] = String.valueOf(intArray[x][y]);
+			}
+		}
+		return stringArray;
 	}
 }

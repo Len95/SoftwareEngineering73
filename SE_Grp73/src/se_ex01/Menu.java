@@ -2,13 +2,11 @@ package se_ex01;
 
 public class Menu {
 	private ControlInputs police = new ControlInputs();
-	private DotsNBoxesEngine engine;
 
-	public Menu(DotsNBoxesEngine engine) {
-		this.engine = engine; 
+	public Menu() {
 	}
 
-	public void promptForTheMenueSettings() {
+	public PlayingMode promptForTheMenueSettings() {
 		System.out.println();
 		System.out.println("---------------------------------------------");
 		System.out.println("------------------->MENU<-------------------");
@@ -31,21 +29,13 @@ public class Menu {
 					"Please enter a number between 1 - 5");
 		}
 		switch (input) {
-		case 1:
-			engine.mode = PlayingMode.AgainstHumans;
-			break;
-		case 2:
-			engine.mode = PlayingMode.AIRandomSupport;
-			break;
-		case 3:
-			engine.mode = PlayingMode.AIMinMaxSupport;
-			break;
-		case 4: 
-			engine.mode = PlayingMode.AgainstAIRandom;
-			break;
-		case 5:
-			engine.mode = PlayingMode.AgainstAIMinMax;
-			break;
+		case 1:return PlayingMode.AgainstHumans;
+		case 2:return PlayingMode.AIRandomSupport;
+		case 3:return PlayingMode.AIMinMaxSupport;
+		case 4:return PlayingMode.AgainstAIRandom;
+		case 5:return PlayingMode.AgainstAIMinMax;
 		}
+		// Kann eigentlich nicht passieren, da Wert oben geprueft wird
+		return PlayingMode.AgainstHumans;
 	}
 }

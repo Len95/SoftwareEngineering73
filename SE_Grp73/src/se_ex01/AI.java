@@ -24,16 +24,8 @@ public abstract class AI extends Player {
 		this.engine = engine;
 	}
 
-	public void calculateRemainingNumbers(String[][] map, int width, int height) {
-
-		for (int i = 0; i < height; i++) {
-			for (int j = 0; j < width; j++) {
-
-				if (police.isNumeric(map[i][j])) {
-					remainingNumbers.add(Integer.valueOf(map[i][j]));
-				}
-			}
-		}
+	public void getRemainingNumbers() {
+		remainingNumbers = engine.getMap().getOpenWallnumbers();
 	}
 
 	public abstract int getNextMove();

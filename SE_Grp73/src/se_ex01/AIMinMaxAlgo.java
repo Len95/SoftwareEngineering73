@@ -17,7 +17,7 @@ public class AIMinMaxAlgo extends AI {
 
 	@Override
 	public int getNextMove() {
-		minMaxAlgo(0, 0, engine.getMap());
+		minMaxAlgo(0, 0, engine.getMap().getMapAsStringArray());
 		int[] bestChoice = options.get(0);
 		for (int[] option : options) {
 			if (option[1] >= bestChoice[1]) {

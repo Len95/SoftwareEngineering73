@@ -13,11 +13,12 @@ public class GUIConsole {
 	int width;
 	int height;
 	Scanner sc;
+	
+	private Map map;
 
 	public GUIConsole() {
 		sc = new Scanner(System.in);
-		engine = new DotsNBoxesEngine();
-		menu = new Menu(engine);
+		menu = new Menu();
 	}
 
 	private void displayGameStatistics() {
@@ -28,23 +29,35 @@ public class GUIConsole {
 	}
 
 	public void launch() {
-		menu.promptForTheMenueSettings();
+		PlayingMode mode = menu.promptForTheMenueSettings();
+		
+		enterMapDimension();
 
-		if (engine.mode == PlayingMode.AgainstHumans) {
-			enterNumberOfPlayers();
-		} else if (engine.mode == PlayingMode.AgainstAIMinMax) {
-			enterPlayerName(1);
-		} else if (engine.mode == PlayingMode.AgainstAIRandom) {
-			enterPlayerName(1);
-		} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
-			enterPlayerName(2);
-		} else if (engine.mode == PlayingMode.AIRandomSupport) {
-			enterPlayerName(2);
+		engine = new DotsNBoxesEngine(width, height);
+		engine.mode = mode;
+		map = engine.getMap();
+		
+		int numberOfPlayers = 0;
+		
+		if(mode == PlayingMode.AgainstAIMinMax || mode == PlayingMode.AgainstAIRandom) {
+			numberOfPlayers = 1;
+		} else if(mode == PlayingMode.AIMinMaxSupport || mode == PlayingMode.AIRandomSupport) {
+			numberOfPlayers = 2;
 		} else {
-			System.err.println("GUIConsole line 33 - State of mode in engiene: " + engine.mode);
-			System.out.println("  Game runs on default (Abgabe 1)");
-			enterNumberOfPlayers();
+			numberOfPlayers = enterNumberOfPlayers();
 		}
+		enterPlayerName(numberOfPlayers);
+		
+		
+		System.out.println("Nun while Schleife");
+		while(engine.getMap().isAWallOpen()) {
+			
+			displayMap();
+			System.out.println("Nun move");
+			move();
+		}
+		System.out.println("Ende while");
+		endOfGame();
 	}
 
 	/**
@@ -92,18 +105,13 @@ public class GUIConsole {
 			engine.playerlist.addPlayer(playerTwo);
 
 		} else {
-
-			while (counter < numberOfPlayers) {
-
-				String name = police.getString("Player " + counter + " please enter your name");
+			for (int i = 1; i <= numberOfPlayers; i++) {
+				System.out.println("Number of players: " + numberOfPlayers);
+				String name = police.getString("Player " + i + " please enter your name");
 				Player currentP = new Player(name, 0);
 				engine.playerlist.addPlayer(currentP);
-				counter++;
 			}
 		}
-
-		enterMapDimension();
-
 	}
 
 	/**
@@ -111,7 +119,7 @@ public class GUIConsole {
 	 */
 	public void move() {
 		Player currentPlayer = engine.playerlist.getCurrentPlayer();
-		int input = -1;
+		int wallnumber = -1;
 		String needHelp = "Empty";
 
 		// engine.getGameStats();
@@ -120,10 +128,12 @@ public class GUIConsole {
 
 		if (currentPlayer.isAI) {
 			AI currentAI = (AI) currentPlayer;
-			currentAI.calculateRemainingNumbers(engine.getMap(), width, height);
-			input = currentAI.getNextMove();
+			currentAI.getRemainingNumbers();
+			wallnumber = currentAI.getNextMove();
 		} else {
-
+			wallnumber = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
+					"\tPlease enter a positive whole number.");
+			/*
 			if (engine.playerlist.size() == 2 && engine.mode == PlayingMode.AgainstHumans) {
 				while (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
 					needHelp = police.getString("Would you like to receive help from the AI? (Type 'YES' or 'NO')");
@@ -149,7 +159,7 @@ public class GUIConsole {
 
 				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
 
-				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
+				currentPlayer.supportingAI.getRemainingNumbers();
 				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
 						+ currentPlayer.supportingAI.getNextMove() + "\n");
 			} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
@@ -159,52 +169,29 @@ public class GUIConsole {
 						+ currentPlayer.supportingAI.getNextMove() + "\n");
 
 			} else // if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
-				input = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
+				wallnumber = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
 						"\tPlease enter a positive whole number.");
+						*/
 		}
-		// The DotsNBoxesEngine calculates the Coords of the array field with the
-		// input
-		int[] coords = engine.getCoordinatesOfNumberInMap(input, width, height);
-		int xCoord = coords[1];
-		int yCoord = coords[0];
-
-		// If the input is correct replace the field with the correct sign and
-		// check if a box is complete
-		if (engine.replaceNumber(currentPlayer, input, yCoord, xCoord)) {
-			if (engine.completedBox()) {
-				int[] coordsComplete = engine.getCoordinatesOfCompletedBox();
-				int xComplete = coordsComplete[1];
-				int yComplete = coordsComplete[0];
-				engine.updateBoxWithName(currentPlayer, yComplete, xComplete);
-
-				// check for another completed Box..since one move can complete
-				// 2 boxes at the same time and update the map again
-
-				if (engine.completedBox()) {
-					int[] coordsComplete2 = engine.getCoordinatesOfCompletedBox();
-					int xComplete2 = coordsComplete2[1];
-					int yComplete2 = coordsComplete2[0];
-					engine.updateBoxWithName(currentPlayer, yComplete2, xComplete2);
-				}
-				displayMap();
-			} else {
-				engine.playerlist.nextPlayer();
-				displayMap();
-			}
-		}
+		
+		map.takeWall(currentPlayer, wallnumber);
+		
+		if(!map.justClosedAField) {
+			engine.playerlist.nextPlayer();
+		}		
 	}
 
 	/**
 	 * Prompt to enter the number of players for this gaming round
 	 */
-	public void enterNumberOfPlayers() {
+	public int enterNumberOfPlayers() {
 		int input = -1;
 
 		while (input < 2) {
 			input = police.getNumber("Please enter a number (>= 2) of player",
 					"\tPlease enter a positive whole number.");
 		}
-		enterPlayerName(input);
+		return input;
 	}
 
 	/**
@@ -213,19 +200,12 @@ public class GUIConsole {
 	public void enterMapDimension() {
 		width = -1;
 		height = -1;
-		int ArrayWidth, ArrayHeight;
 
-		while (!engine.checkFieldDimension(width, height)) {
+		while (!Map.isMapDimensionOkay(width, height)) {
 			System.out.println("\twidth * height <= 450");
-			ArrayWidth = police.getNumber("Please enter the width ", "\tPlease enter a positive whole number.");
-			ArrayHeight = police.getNumber("Please enter the height ", "\tPlease enter a positive whole number.");
-			width = engine.calculateArrayWidth(ArrayWidth);
-			height = engine.calculateArrayHeight(ArrayHeight);
+			width = police.getNumber("Please enter the width ", "\tPlease enter a positive whole number.");
+			height = police.getNumber("Please enter the height ", "\tPlease enter a positive whole number.");
 		}
-		engine.setHeight(height);
-		engine.setWidth(width);
-		engine.initializeMap();
-		displayMap();
 	}
 
 	/**
@@ -235,51 +215,97 @@ public class GUIConsole {
 	 *            the new map that should be updated
 	 */
 	public void displayMap() {
-		String map[][] = engine.getMap();
+		int mapArray[][] = map.getMapAsIntArray();
+		
+		int[] maxSizes = new int[map.arrayWidth];
+		for (int i = 0; i < map.arrayWidth; i++) {
+			maxSizes[i] = getMaxDisplayWidthOfColumn(i);
+		}
+		StringBuilder sb = new StringBuilder();
+		String value;
+		String number;
+		for (int x = 0; x < map.arrayWidth; x++) {
+			for (int y = 0; y < map.arrayHeight; y++) {
+				int me = mapArray[x][y];
+				
+				if(me == MapElement.FIELD.getValue()) {
+					// empty field
+					sb.append(repeatString(" ", maxSizes[x]));
+				} else if (me > 0) {
+					number = String.valueOf(me);
+					value = fillStringUpToSize(number, maxSizes[x], " ");
+					sb.append(value);
+				} else if (me == MapElement.FILLED_WALL_HORIZONTAL.getValue()) {
+					sb.append(repeatString("=", maxSizes[x]));										
+				} else if (me == MapElement.FILLED_WALL_VERT.getValue()) {
+					sb.append(repeatString("|", maxSizes[x]));	
+				} else if (me == MapElement.OPEN_WALL_HORIZONTAL.getValue() || me == MapElement.OPEN_WALL_VERITICAL.getValue()) {
+					number = String.valueOf(map.xyToWallNumber(x, y));
+					value = fillStringUpToSize(number, maxSizes[x], "-");
+					sb.append(value);
+				} else if (me == MapElement.POINT.getValue()) {
+					sb.append(repeatString("*", maxSizes[x]));	
+				}
+			}
+			sb.append("\n");
+		}
+		System.out.print(sb.toString());
+		/*
 		for (int height = 0; height < this.height; height++) {
 			System.out.println();
 			for (int width = 0; width < this.width; width++) {
-				if (amountOfDigits(map[height][width]) == 1) { // format
+				if (amountOfDigits((mapArray[height][width])) == 1) { // format
 																// _for_one-digit_number
 					if (width < this.width - 1) { // one line
-						System.out.print("  " + map[height][width] + "  ");
+						System.out.print("  " + mapArray[height][width] + "  ");
 					} else // begin the next line
-						System.out.println("  " + map[height][width] + "  ");
+						System.out.println("  " + mapArray[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 2) { // format_for_two-digit_number
+				} else if (amountOfDigits(mapArray[height][width]) == 2) { // format_for_two-digit_number
 					if (width < this.width - 1) {
-						System.out.print(" " + map[height][width] + "  ");
+						System.out.print(" " + mapArray[height][width] + "  ");
 					} else
-						System.out.println(" " + map[height][width] + "  ");
+						System.out.println(" " + mapArray[height][width] + "  ");
 
-				} else if (amountOfDigits(map[height][width]) == 3) { // format_for_three-digit_number
+				} else if (amountOfDigits(mapArray[height][width]) == 3) { // format_for_three-digit_number
 					if (width < this.width - 1) {
-						System.out.print(" " + map[height][width] + " ");
+						System.out.print(" " + mapArray[height][width] + " ");
 					} else
-						System.out.println(" " + map[height][width] + " ");
+						System.out.println(" " + mapArray[height][width] + " ");
 				}
 			}
 		}
-		// width, height
-		if (engine.gameEnded()) {
-			endOfGame();
-		} else
-			move();
+		*/
 	}
-
-	/**
-	 * Checks the amount of digits in any string
-	 * 
-	 * @param string
-	 *            The string that should be checked
-	 * @return the amount of digits in a string
-	 */
-	private int amountOfDigits(String string) {
-		int digits = 0;
-		for (int i = 0; i < string.length(); i++) {
-			digits++;
+	
+	private String fillStringUpToSize(String s, int max, String filler) {
+		String result = s;
+		while(result.length() < max) {
+			result = filler + result;
 		}
-		return digits;
+		return result;
+	}
+	
+	private int getMaxDisplayWidthOfColumn(int col) {
+		String[][] array = map.getMapAsStringArray();
+		
+		int max = 0;
+		for (int y = 0; y < map.arrayHeight; y++) {
+			if(array[col][y].length() > max) {
+				max = array[col][y].length();
+			}
+		}
+		return max;
+	}
+	
+	/**
+	 * Repeats n times the string s
+	 * @param s the string to repeat
+	 * @param n the times to repeat
+	 * @return the repeated string
+	 */
+	public String repeatString(String s, int n) {
+		return String.format(String.format("%%%ds", n), " ").replace(" ",s);
 	}
 
 	/**
