@@ -132,8 +132,8 @@ public class GUIConsole {
 			} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
 				currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
 
-				currentPlayer.supportingAI.calculateRemainingNumbers(engine.getMap(), width, height);
-				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
+				
+				System.out.println(currentPlayer.getName() + ", the MinMaxAI advises you to play the number "
 						+ currentPlayer.supportingAI.getNextMove() +"\n");
 			} 
 

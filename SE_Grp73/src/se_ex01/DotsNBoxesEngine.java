@@ -320,6 +320,7 @@ public class DotsNBoxesEngine {
 	 * @return True if there is a draw. Else false.
 	 */
 	public boolean draw() {
+		System.out.println("length of highscore list : " + playerlist.getHighscore().size());
 		return playerlist.getHighscore().size() > 1;
 	}
 
