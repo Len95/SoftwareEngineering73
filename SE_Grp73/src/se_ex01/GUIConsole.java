@@ -209,9 +209,9 @@ public class GUIConsole {
 		height = -1;
 
 		while (!Map.isMapDimensionOkay(width, height)) {
-			System.out.println("\twidth * height <= 450");
-			width = police.getNumber("Please enter the width ", "\tPlease enter a positive whole number.");
-			height = police.getNumber("Please enter the height ", "\tPlease enter a positive whole number.");
+			System.out.println("\twidth * height < 1000");
+			width = police.getNumber("Please enter the height ", "\tPlease enter a positive whole number.");
+			height = police.getNumber("Please enter the width ", "\tPlease enter a positive whole number.");
 		}
 	}
 
