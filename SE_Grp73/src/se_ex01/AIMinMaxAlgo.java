@@ -42,10 +42,10 @@ public class AIMinMaxAlgo extends AI {
 			return;
 		}
 
-		if (super.police.isNumeric(map[startHeight][startWidth])) {
+		if (super.police.isNumeric(map[startWidth][startHeight])) {
 			// Found a wall number -> update options
-			canidate[0] = Integer.valueOf(map[startHeight][startWidth]); // Wall-number
-			canidate[1] = calculatePossiblePoints(startHeight, startWidth, map); // Possible-points
+			canidate[0] = Integer.valueOf(map[startWidth][startHeight]); // Wall-number
+			canidate[1] = calculatePossiblePoints(startWidth, startHeight, map); // Possible-points
 			options.add(canidate);
 			if (startWidth % 2 == 0 && startWidth == (engine.getWidth() - 1)) {
 				minMaxAlgo(startHeight + 1, 0, map);
@@ -65,7 +65,7 @@ public class AIMinMaxAlgo extends AI {
 
 	private int calculatePossiblePoints(int height, int width, String[][] map) {
 		// Option one it is a position where we set |
-		if ((width % 2) == 0) {
+		if ((height % 2) == 0) {
 			return calculatePointsOption1(height, width, map);
 		} else // Option two it is a position where we set -
 			return calculatePointsOption2(height, width, map);
@@ -83,18 +83,18 @@ public class AIMinMaxAlgo extends AI {
 		int points = 0;
 
 		// we can check left field
-		if (width != 0) {
-			if (map[height - 1][width - 1].equals("-") && map[height][width - 2].equals("|")
-					&& map[height + 1][width - 1].equals("-")) {
+		if (height != 0) {
+			if (map[width - 1][height - 1].equals("-") && map[width][height - 2].equals("|")
+					&& map[width + 1][height - 1].equals("-")) {
 				points += 1;
 			} else
 				points += 0;
 		}
 
 		// we can check right field
-		if (width != (engine.getWidth() - 1)) {
-			if (map[height - 1][width + 1].equals("-") && map[height][width + 2].equals("|")
-					&& map[height + 1][width + 1].equals("-")) {
+		if (height != (engine.getHeight() - 1)) {
+			if (map[width - 1][height + 1].equals("-") && map[width][height + 2].equals("|")
+					&& map[width + 1][height + 1].equals("-")) {
 				points += 1;
 			} else
 				points += 0;
@@ -114,18 +114,18 @@ public class AIMinMaxAlgo extends AI {
 		int points = 0;
 
 		// we can check upper field
-		if (height != 0) {
-			if (map[height - 1][width - 1].equals("|") && map[height - 2][width].equals("-")
-					&& map[height - 1][width + 1].equals("|")) {
+		if (width != 0) {
+			if (map[width - 1][height - 1].equals("|") && map[width - 2][height].equals("-")
+					&& map[width - 1][height + 1].equals("|")) {
 				points += 1;
 			} else
 				points += 0;
 		}
 
 		// we can check lower field
-		if (height != (engine.getHeight() - 1)) {
-			if (map[height + 1][width - 1].equals("|") && map[height + 2][width].equals("-")
-					&& map[height + 1][width + 1].equals("|")) {
+		if (width != (engine.getWidth() - 1)) {
+			if (map[width + 1][height - 1].equals("|") && map[width + 2][height].equals("-")
+					&& map[width + 1][height + 1].equals("|")) {
 				points += 1;
 			} else
 				points += 0;
