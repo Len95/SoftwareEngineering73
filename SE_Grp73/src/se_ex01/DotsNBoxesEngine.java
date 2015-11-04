@@ -7,20 +7,17 @@ public class DotsNBoxesEngine {
 	private int height;
 	private int width;
 	private Map map;
-	
 
 	PlayingMode mode;
 	int turnsPlayed = 0;
 	int playerID = 0;
-	
-	public PlayerList playerlist = new PlayerList();
 
+	public PlayerList playerlist = new PlayerList();
 
 	public DotsNBoxesEngine(int width, int height) {
 		map = new Map(width, height, this, playerlist);
 	}
 
-	
 	/**
 	 * 
 	 * 
@@ -37,27 +34,18 @@ public class DotsNBoxesEngine {
 	 *          X coordinate is at the second position
 	 */
 	/*
-	public int[] getCoordinatesOfNumberInMap(int fieldNumber, int width, int height) {
-
-		int[] coordinatesOfFieldNumber = new int[2];
-		if (validMove(fieldNumber, map, width, height)) {
-			// the entered number exists on the map
-			for (int j = 0; j < height; j++) {
-				for (int i = 0; i < width; i++) {
-					if (map[j][i].equals(Integer.toString(fieldNumber))) {
-						// when the entered number is found on the map save its
-						// position in an array and return it
-						coordinatesOfFieldNumber[0] = j;
-						coordinatesOfFieldNumber[1] = i;
-						return coordinatesOfFieldNumber;
-					}
-				}
-			}
-		}
-		return coordinatesOfFieldNumber;
-	}
-
-*/
+	 * public int[] getCoordinatesOfNumberInMap(int fieldNumber, int width, int
+	 * height) {
+	 * 
+	 * int[] coordinatesOfFieldNumber = new int[2]; if (validMove(fieldNumber,
+	 * map, width, height)) { // the entered number exists on the map for (int j
+	 * = 0; j < height; j++) { for (int i = 0; i < width; i++) { if
+	 * (map[j][i].equals(Integer.toString(fieldNumber))) { // when the entered
+	 * number is found on the map save its // position in an array and return it
+	 * coordinatesOfFieldNumber[0] = j; coordinatesOfFieldNumber[1] = i; return
+	 * coordinatesOfFieldNumber; } } } } return coordinatesOfFieldNumber; }
+	 * 
+	 */
 
 	/**
 	 * 
@@ -80,25 +68,16 @@ public class DotsNBoxesEngine {
 	 *         Y-Coordinate the second position is the X-Coordinate.
 	 */
 	/*
-	public int[] getCoordinatesOfCompletedBox() {
-
-		int[] coordinatesOfCompletedBox = new int[2];
-		for (int j = 0; j < height; j++) {
-			for (int i = 0; i < width; i++) {
-				if (map[j][i] == " ") {
-					if ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] == "|")
-							&& (map[j][i - 1] == "|")) {
-						// if there is a completed box --> store its position on
-						// the map in an array and return it
-						coordinatesOfCompletedBox[0] = j;
-						coordinatesOfCompletedBox[1] = i;
-					}
-				}
-			}
-		}
-		return coordinatesOfCompletedBox;
-	}
-	*/
+	 * public int[] getCoordinatesOfCompletedBox() {
+	 * 
+	 * int[] coordinatesOfCompletedBox = new int[2]; for (int j = 0; j < height;
+	 * j++) { for (int i = 0; i < width; i++) { if (map[j][i] == " ") { if
+	 * ((map[j - 1][i] == "-") && (map[j + 1][i] == "-") && (map[j][i + 1] ==
+	 * "|") && (map[j][i - 1] == "|")) { // if there is a completed box -->
+	 * store its position on // the map in an array and return it
+	 * coordinatesOfCompletedBox[0] = j; coordinatesOfCompletedBox[1] = i; } } }
+	 * } return coordinatesOfCompletedBox; }
+	 */
 
 	/**
 	 * Determines if the entered width and height are correct values to open up
@@ -124,18 +103,17 @@ public class DotsNBoxesEngine {
 	 * @return True if there is a draw. Else false.
 	 */
 	public boolean draw() {
-		System.out.println("length of highscore list : " + playerlist.getHighscore().size());
-		return playerlist.getHighscore().size() > 1;
+		return playerlist.returnDrawedPlayers().size() > 1;
 	}
 
 	/**
 	 * prints a message to the console when there is a draw
 	 */
 	public void printDrawMessage() {
-		ArrayList<Player> drawedPlayers = playerlist.getHighscore();
+		ArrayList<Player> drawedPlayers = playerlist.returnDrawedPlayers();
 
 		System.out.println("\n" + "There is a draw between the following players: ");
-		for (Player currentP : playerlist.getHighscore()) {
+		for (Player currentP : playerlist.returnDrawedPlayers()) {
 			System.out.println(currentP.getName());
 		}
 
@@ -163,7 +141,6 @@ public class DotsNBoxesEngine {
 		return map;
 	}
 
-
 	public int getHeight() {
 		return height;
 	}
@@ -179,7 +156,6 @@ public class DotsNBoxesEngine {
 	public void setWidth(int width) {
 		this.width = width;
 	}
-
 
 	public void setMap(Map map) {
 		this.map = map;

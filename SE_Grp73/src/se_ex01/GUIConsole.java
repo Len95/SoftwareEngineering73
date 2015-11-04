@@ -13,7 +13,7 @@ public class GUIConsole {
 	int width;
 	int height;
 	Scanner sc;
-	
+
 	private Map map;
 
 	public GUIConsole() {
@@ -30,28 +30,28 @@ public class GUIConsole {
 
 	public void launch() {
 		PlayingMode mode = menu.promptForTheMenueSettings();
-		
+
 		enterMapDimension();
 
 		engine = new DotsNBoxesEngine(width, height);
 		engine.mode = mode;
 		map = engine.getMap();
-		
+
 		int numberOfPlayers = 0;
-		
-		if(mode == PlayingMode.AgainstAIMinMax || mode == PlayingMode.AgainstAIRandom) {
+
+		if (mode == PlayingMode.AgainstAIMinMax || mode == PlayingMode.AgainstAIRandom) {
 			numberOfPlayers = 1;
-		} else if(mode == PlayingMode.AIMinMaxSupport || mode == PlayingMode.AIRandomSupport) {
+		} else if (mode == PlayingMode.AIMinMaxSupport || mode == PlayingMode.AIRandomSupport) {
 			numberOfPlayers = 2;
 		} else {
 			numberOfPlayers = enterNumberOfPlayers();
 		}
 		enterPlayerName(numberOfPlayers);
-		
-		
+
 		System.out.println("Nun while Schleife");
-		while(engine.getMap().isAWallOpen()) {
-			
+
+		while (engine.getMap().isAWallOpen()) {
+
 			displayMap();
 			System.out.println("Nun move");
 			move();
@@ -134,51 +134,59 @@ public class GUIConsole {
 			wallnumber = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
 					"\tPlease enter a positive whole number.");
 			/*
-			if (engine.playerlist.size() == 2 && engine.mode == PlayingMode.AgainstHumans) {
-				while (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
-					needHelp = police.getString("Would you like to receive help from the AI? (Type 'YES' or 'NO')");
-					if (!needHelp.toUpperCase().equals("YES") && !needHelp.toUpperCase().equals("NO")) {
-						System.out.println(
-								"Please enter a valid command : 'YES' if you would like to receive help and 'NO' if you don't.");
-					}
-				}
-				if (needHelp.toUpperCase().equals("YES")) {
-
-					currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
-
-					engine.playerlist.getCurrentPlayer().supportingAI = new AIMinMaxAlgo(
-							engine.playerlist.getCurrentPlayer().getName(),
-							engine.playerlist.getCurrentPlayer().getScore(), engine);
-
-					System.out.println(engine.playerlist.getCurrentPlayer().getName()
-							+ ", the MinMaxAI advises you to play the number "
-							+ engine.playerlist.getCurrentPlayer().supportingAI.getNextMove() + "\n");
-				}
-
-			} else if (engine.mode == PlayingMode.AIRandomSupport) {
-
-				currentPlayer.supportingAI = new AIRandom(currentPlayer.name, currentPlayer.getScore(), engine);
-
-				currentPlayer.supportingAI.getRemainingNumbers();
-				System.out.println(currentPlayer.getName() + ", the RandomAI advises you to play the number "
-						+ currentPlayer.supportingAI.getNextMove() + "\n");
-			} else if (engine.mode == PlayingMode.AIMinMaxSupport) {
-				currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name, currentPlayer.getScore(), engine);
-
-				System.out.println(currentPlayer.getName() + ", the MinMaxAI advises you to play the number "
-						+ currentPlayer.supportingAI.getNextMove() + "\n");
-
-			} else // if !currentPlayer.isAI --> input = currentPlayer.getNextMove;
-				wallnumber = police.getNumber("Player: " + currentPlayer.getName() + " please enter a wall number",
-						"\tPlease enter a positive whole number.");
-						*/
+			 * if (engine.playerlist.size() == 2 && engine.mode ==
+			 * PlayingMode.AgainstHumans) { while
+			 * (!needHelp.toUpperCase().equals("YES") &&
+			 * !needHelp.toUpperCase().equals("NO")) { needHelp =
+			 * police.getString(
+			 * "Would you like to receive help from the AI? (Type 'YES' or 'NO')"
+			 * ); if (!needHelp.toUpperCase().equals("YES") &&
+			 * !needHelp.toUpperCase().equals("NO")) { System.out.println(
+			 * "Please enter a valid command : 'YES' if you would like to receive help and 'NO' if you don't."
+			 * ); } } if (needHelp.toUpperCase().equals("YES")) {
+			 * 
+			 * currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name,
+			 * currentPlayer.getScore(), engine);
+			 * 
+			 * engine.playerlist.getCurrentPlayer().supportingAI = new
+			 * AIMinMaxAlgo( engine.playerlist.getCurrentPlayer().getName(),
+			 * engine.playerlist.getCurrentPlayer().getScore(), engine);
+			 * 
+			 * System.out.println(engine.playerlist.getCurrentPlayer().getName()
+			 * + ", the MinMaxAI advises you to play the number " +
+			 * engine.playerlist.getCurrentPlayer().supportingAI.getNextMove() +
+			 * "\n"); }
+			 * 
+			 * } else if (engine.mode == PlayingMode.AIRandomSupport) {
+			 * 
+			 * currentPlayer.supportingAI = new AIRandom(currentPlayer.name,
+			 * currentPlayer.getScore(), engine);
+			 * 
+			 * currentPlayer.supportingAI.getRemainingNumbers();
+			 * System.out.println(currentPlayer.getName() +
+			 * ", the RandomAI advises you to play the number " +
+			 * currentPlayer.supportingAI.getNextMove() + "\n"); } else if
+			 * (engine.mode == PlayingMode.AIMinMaxSupport) {
+			 * currentPlayer.supportingAI = new AIMinMaxAlgo(currentPlayer.name,
+			 * currentPlayer.getScore(), engine);
+			 * 
+			 * System.out.println(currentPlayer.getName() +
+			 * ", the MinMaxAI advises you to play the number " +
+			 * currentPlayer.supportingAI.getNextMove() + "\n");
+			 * 
+			 * } else // if !currentPlayer.isAI --> input =
+			 * currentPlayer.getNextMove; wallnumber =
+			 * police.getNumber("Player: " + currentPlayer.getName() +
+			 * " please enter a wall number",
+			 * "\tPlease enter a positive whole number.");
+			 */
 		}
-		
+
 		map.takeWall(currentPlayer, wallnumber);
-		
-		if(!map.justClosedAField) {
+
+		if (!map.justClosedAField) {
 			engine.playerlist.nextPlayer();
-		}		
+		}
 	}
 
 	/**
@@ -216,7 +224,7 @@ public class GUIConsole {
 	 */
 	public void displayMap() {
 		int mapArray[][] = map.getMapAsIntArray();
-		
+
 		int[] maxSizes = new int[map.arrayWidth];
 		for (int i = 0; i < map.arrayWidth; i++) {
 			maxSizes[i] = getMaxDisplayWidthOfColumn(i);
@@ -227,8 +235,8 @@ public class GUIConsole {
 		for (int x = 0; x < map.arrayWidth; x++) {
 			for (int y = 0; y < map.arrayHeight; y++) {
 				int me = mapArray[x][y];
-				
-				if(me == MapElement.FIELD.getValue()) {
+
+				if (me == MapElement.FIELD.getValue()) {
 					// empty field
 					sb.append(repeatString(" ", maxSizes[x]));
 				} else if (me > 0) {
@@ -236,76 +244,73 @@ public class GUIConsole {
 					value = fillStringUpToSize(number, maxSizes[x], " ");
 					sb.append(value);
 				} else if (me == MapElement.FILLED_WALL_HORIZONTAL.getValue()) {
-					sb.append(repeatString("=", maxSizes[x]));										
+					sb.append(repeatString("=", maxSizes[x]));
 				} else if (me == MapElement.FILLED_WALL_VERT.getValue()) {
-					sb.append(repeatString("|", maxSizes[x]));	
-				} else if (me == MapElement.OPEN_WALL_HORIZONTAL.getValue() || me == MapElement.OPEN_WALL_VERITICAL.getValue()) {
+					sb.append(repeatString("|", maxSizes[x]));
+				} else if (me == MapElement.OPEN_WALL_HORIZONTAL.getValue()
+						|| me == MapElement.OPEN_WALL_VERITICAL.getValue()) {
 					number = String.valueOf(map.xyToWallNumber(x, y));
 					value = fillStringUpToSize(number, maxSizes[x], "-");
 					sb.append(value);
 				} else if (me == MapElement.POINT.getValue()) {
-					sb.append(repeatString("*", maxSizes[x]));	
+					sb.append(repeatString("*", maxSizes[x]));
 				}
 			}
 			sb.append("\n");
 		}
 		System.out.print(sb.toString());
 		/*
-		for (int height = 0; height < this.height; height++) {
-			System.out.println();
-			for (int width = 0; width < this.width; width++) {
-				if (amountOfDigits((mapArray[height][width])) == 1) { // format
-																// _for_one-digit_number
-					if (width < this.width - 1) { // one line
-						System.out.print("  " + mapArray[height][width] + "  ");
-					} else // begin the next line
-						System.out.println("  " + mapArray[height][width] + "  ");
-
-				} else if (amountOfDigits(mapArray[height][width]) == 2) { // format_for_two-digit_number
-					if (width < this.width - 1) {
-						System.out.print(" " + mapArray[height][width] + "  ");
-					} else
-						System.out.println(" " + mapArray[height][width] + "  ");
-
-				} else if (amountOfDigits(mapArray[height][width]) == 3) { // format_for_three-digit_number
-					if (width < this.width - 1) {
-						System.out.print(" " + mapArray[height][width] + " ");
-					} else
-						System.out.println(" " + mapArray[height][width] + " ");
-				}
-			}
-		}
-		*/
+		 * for (int height = 0; height < this.height; height++) {
+		 * System.out.println(); for (int width = 0; width < this.width;
+		 * width++) { if (amountOfDigits((mapArray[height][width])) == 1) { //
+		 * format // _for_one-digit_number if (width < this.width - 1) { // one
+		 * line System.out.print("  " + mapArray[height][width] + "  "); } else
+		 * // begin the next line System.out.println("  " +
+		 * mapArray[height][width] + "  ");
+		 * 
+		 * } else if (amountOfDigits(mapArray[height][width]) == 2) { //
+		 * format_for_two-digit_number if (width < this.width - 1) {
+		 * System.out.print(" " + mapArray[height][width] + "  "); } else
+		 * System.out.println(" " + mapArray[height][width] + "  ");
+		 * 
+		 * } else if (amountOfDigits(mapArray[height][width]) == 3) { //
+		 * format_for_three-digit_number if (width < this.width - 1) {
+		 * System.out.print(" " + mapArray[height][width] + " "); } else
+		 * System.out.println(" " + mapArray[height][width] + " "); } } }
+		 */
 	}
-	
+
 	private String fillStringUpToSize(String s, int max, String filler) {
 		String result = s;
-		while(result.length() < max) {
+		while (result.length() < max) {
 			result = filler + result;
 		}
 		return result;
 	}
-	
+
 	private int getMaxDisplayWidthOfColumn(int col) {
 		String[][] array = map.getMapAsStringArray();
-		
+
 		int max = 0;
 		for (int y = 0; y < map.arrayHeight; y++) {
-			if(array[col][y].length() > max) {
+			if (array[col][y].length() > max) {
 				max = array[col][y].length();
 			}
 		}
 		return max;
 	}
-	
+
 	/**
 	 * Repeats n times the string s
-	 * @param s the string to repeat
-	 * @param n the times to repeat
+	 * 
+	 * @param s
+	 *            the string to repeat
+	 * @param n
+	 *            the times to repeat
 	 * @return the repeated string
 	 */
 	public String repeatString(String s, int n) {
-		return String.format(String.format("%%%ds", n), " ").replace(" ",s);
+		return String.format(String.format("%%%ds", n), " ").replace(" ", s);
 	}
 
 	/**
@@ -314,7 +319,7 @@ public class GUIConsole {
 	 */
 	public void endOfGame() {
 		System.out.println("GAME ENDED ------------------------------- GAME ENDED");
-		ArrayList<Player> winners = engine.playerlist.getHighscore();
+		Player winner = engine.playerlist.getBestPlayer();
 		displayGameStatistics();
 
 		if (engine.draw()) {
@@ -322,10 +327,9 @@ public class GUIConsole {
 		}
 
 		else {
-			for (Player p : winners) {
-				System.out.println("\n" + "The Winner is " + p.getName() + " - Your Score: " + p.getScore() + "\n"
-						+ "CONGRATUUUUUU....WAIT FOR IT.....UULATIONS!!! :)");
-			}
+			System.out.println("\n" + "The Winner is " + winner.getName() + " - Your Score: " + winner.getScore() + "\n"
+					+ "CONGRATUUUUUU....WAIT FOR IT.....UULATIONS!!! :)");
+
 		}
 	}
 

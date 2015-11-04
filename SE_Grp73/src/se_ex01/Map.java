@@ -77,6 +77,7 @@ public class Map {
 
 				// Node?
 				if (x % 2 == 0 && y % 2 == 0) {
+					
 					map[x][y] = MapElement.POINT.getValue();
 					// Horizontal Wall?
 				} else if ((x + 1) % 2 == 0 && y % 2 == 0) {
