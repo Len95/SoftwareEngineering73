@@ -21,13 +21,14 @@ public class Map_Test {
 	
 	@Before
 	public void init() {
-		engine = new DotsNBoxesEngine();
+		engine = new DotsNBoxesEngine(2, 2);
 		playerlist = engine.playerlist;
 		p1 = new Player("Steffen", 0);
 		p2 = new Player("Gott", 0);
 		playerlist.addPlayer(p1);
 		playerlist.addPlayer(p2);
-		map = new Map(2, 2, engine, playerlist);
+		
+		map = engine.getMap();
 	}
 
 	@Test
@@ -137,6 +138,15 @@ public class Map_Test {
 
 	@Test
 	public void testToString() {
+	}
+	
+	@Test
+	public void isAWallOpenTest() {
+		assertTrue(map.isAWallOpen());
+		for (int i = 1; i <= 12; i++) {
+			assertTrue(map.takeWall(p1, i));
+		}
+		assertFalse(map.isAWallOpen());
 	}
 
 }
