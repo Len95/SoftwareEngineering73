@@ -243,9 +243,9 @@ public class GUIConsole {
 					value = fillStringUpToSize(number, maxSizes[x], " ");
 					sb.append(value);
 				} else if (me == MapElement.FILLED_WALL_HORIZONTAL.getValue()) {
-					sb.append(repeatString("=", maxSizes[x]));
-				} else if (me == MapElement.FILLED_WALL_VERT.getValue()) {
 					sb.append(repeatString("|", maxSizes[x]));
+				} else if (me == MapElement.FILLED_WALL_VERT.getValue()) {
+					sb.append(repeatString("=", maxSizes[x]));
 				} else if (me == MapElement.OPEN_WALL_HORIZONTAL.getValue()
 						|| me == MapElement.OPEN_WALL_VERITICAL.getValue()) {
 					number = String.valueOf(map.xyToWallNumber(x, y));
@@ -288,28 +288,23 @@ public class GUIConsole {
 	}
 
 	private int getMaxDisplayWidthOfColumn(int col) {
+		int max = 3;
 		/*
-		int[][] array = map.getMapAsIntArray();
-		int max = 0;
-		int vl;
-		String buffer;
-		for (int x = 0; x < map.arrayHeight; x++) {
-			vl = array[x][col];
-			buffer = String.valueOf(vl);
-			if (buffer.length() > max) {
-				max = buffer.length();
-			}
-		}
-		return max;
-		*/
-		int max = 0;
-		
 		String[][] array = map.getMapAsStringArray();
-		
-		for (int x = 0; x < array.length; x++) {
+		/*
+		for (int x = 0; x < map.arrayWidth; x++) {
 			int length = String.valueOf(array[x][col]).length();
 			max = length > max ? length : max;
 		}
+		*/
+		/*
+		for (int y = 0; y < map.arrayHeight; y++) {
+			int length = String.valueOf(array[col][y]).length();
+			if(length > max) {
+				max = length;
+			}
+		}
+		*/
 		return max;
 	}
 
