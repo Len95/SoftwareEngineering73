@@ -2,6 +2,7 @@ package se_ex01;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -123,7 +124,11 @@ public class PlayerList {
 	}
 
 	public Player getPlayerByID(int id) {
-		// TODO Auto-generated method stub
+		for (Player player : asArraylist()) {
+			if(player.ID == id) {
+				return player;
+			}
+		}
 		return null;
 	}
 }
