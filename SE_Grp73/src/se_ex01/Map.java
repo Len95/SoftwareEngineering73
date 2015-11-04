@@ -175,7 +175,7 @@ public class Map {
 	 * @param wall
 	 * @return true if wall is on the map
 	 */
-	private boolean isWallOnTheMap(int wall) {
+	public boolean isWallOnTheMap(int wall) {
 		if (wall >= 1 && wall <= lastChooseableWall) {
 			return true;
 		} else {
