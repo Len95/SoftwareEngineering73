@@ -4,8 +4,8 @@ import java.util.ArrayList;
 
 public class DotsNBoxesEngine {
 
-	private int height;
-	private int width;
+//	private int height;
+//	private int width;
 	private Map map;
 
 	PlayingMode mode;
@@ -130,7 +130,7 @@ public class DotsNBoxesEngine {
 	 * @return True if there are no numeric walls -> game ended |// else false
 	 */
 	public boolean gameEnded() {
-		if (turnsPlayed == ((width * height) / 2)) {
+		if (turnsPlayed == ((map.arrayHeight * map.arrayWidth) / 2)) {
 			return true;
 		}
 		turnsPlayed++;
@@ -141,21 +141,21 @@ public class DotsNBoxesEngine {
 		return map;
 	}
 
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
+//	public int getHeight() {
+//		return height;
+//	}
+//
+//	public void setHeight(int height) {
+//		this.height = height;
+//	}
+//
+//	public int getWidth() {
+//		return width;
+//	}
+//
+//	public void setWidth(int width) {
+//		this.width = width;
+//	}
 
 	public void setMap(Map map) {
 		this.map = map;
