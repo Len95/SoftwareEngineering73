@@ -249,7 +249,7 @@ public class GUIConsole {
 				} else if (me == MapElement.OPEN_WALL_HORIZONTAL.getValue()
 						|| me == MapElement.OPEN_WALL_VERITICAL.getValue()) {
 					number = String.valueOf(map.xyToWallNumber(x, y));
-					value = fillStringUpToSize(number, maxSizes[x], "-");
+					value = fillStringUpToSize(number, maxSizes[x], " ");
 					sb.append(value);
 				} else if (me == MapElement.POINT.getValue()) {
 					sb.append(repeatString("*", maxSizes[x]));
