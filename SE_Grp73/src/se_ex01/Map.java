@@ -386,9 +386,28 @@ public class Map {
 	public String[][] getMapAsStringArray() {
 		String[][] stringArray = new String[arrayWidth][arrayHeight];
 		int[][] intArray = getMapAsIntArray();
+		int vl = 0;
+		String buffer;
 		for (int x = 0; x < arrayWidth; x++) {
 			for (int y = 0; y < arrayHeight; y++) {
-				stringArray[x][y] = String.valueOf(intArray[x][y]);
+				
+				//stringArray[x][y] = String.valueOf(intArray[x][y]);
+				vl = intArray[x][y];
+				buffer = "";
+				if(vl == MapElement.POINT.getValue()) {
+					buffer = "*";
+				} else if (vl == MapElement.OPEN_WALL_HORIZONTAL.getValue() || vl == MapElement.OPEN_WALL_VERITICAL.getValue()) {
+					buffer = String.valueOf(xyToWallNumber(x, y));
+				} else if (vl == MapElement.FILLED_WALL_HORIZONTAL.getValue()) {
+					buffer = "-";
+				} else if (vl == MapElement.FILLED_WALL_VERT.getValue()) {
+					buffer = "|";
+				} else if (vl > 0) {
+					System.out.println("VL=" + vl);
+					buffer = playerlist.getPlayerByID(vl).getShortName();
+				}
+				// Kürzel
+				stringArray[x][y] = buffer;
 			}
 		}
 		return stringArray;
