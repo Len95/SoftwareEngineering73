@@ -38,10 +38,7 @@ public class Map_Test {
 
 	@Test
 	public void xyToWallNumberTest() {
-		int expected = 1;
-		int actual = map.xyToWallNumber(1, 0);
-		System.out.println("Actual: " + actual);
-		assertEquals(expected, actual);
+		assertEquals(1, map.xyToWallNumber(1, 0));
 		assertEquals(2, map.xyToWallNumber(3, 0));
 
 		assertEquals(3, map.xyToWallNumber(0, 1));
