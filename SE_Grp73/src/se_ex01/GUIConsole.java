@@ -289,13 +289,27 @@ public class GUIConsole {
 	}
 
 	private int getMaxDisplayWidthOfColumn(int col) {
-		String[][] array = map.getMapAsStringArray();
-
+		/*
+		int[][] array = map.getMapAsIntArray();
 		int max = 0;
-		for (int y = 0; y < map.arrayHeight; y++) {
-			if (array[col][y].length() > max) {
-				max = array[col][y].length();
+		int vl;
+		String buffer;
+		for (int x = 0; x < map.arrayHeight; x++) {
+			vl = array[x][col];
+			buffer = String.valueOf(vl);
+			if (buffer.length() > max) {
+				max = buffer.length();
 			}
+		}
+		return max;
+		*/
+		int max = 0;
+		
+		String[][] array = map.getMapAsStringArray();
+		
+		for (int x = 0; x < array.length; x++) {
+			int length = String.valueOf(array[x][col]).length();
+			max = length > max ? length : max;
 		}
 		return max;
 	}
