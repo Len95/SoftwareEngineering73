@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 
 public class AIMinMaxAlgo extends AI {
@@ -11,14 +12,16 @@ public class AIMinMaxAlgo extends AI {
 	 */
 	private LinkedList<int[]> options = new LinkedList<int[]>();
 	private Map map;
-	private int /*height,*/ width, dNL, dNR, dNV;
+	private int /* height, */ width, dNL, dNR, dNV;
 	private LinkedList<Integer> horizontalNo = new LinkedList<Integer>();
 	private LinkedList<Integer> verticalNo = new LinkedList<Integer>();
+	LinkedList<Integer> rightCollum = new LinkedList<Integer>();
+	LinkedList<Integer> leftCollum = new LinkedList<Integer>();
 
 	public AIMinMaxAlgo(String name, int score, DotsNBoxesEngine engine) {
 		super(name, score, engine);
 		map = engine.getMap();
-//		height = map.arrayHeight;
+		// height = map.arrayHeight;
 		width = map.arrayWidth;
 	}
 
@@ -28,6 +31,8 @@ public class AIMinMaxAlgo extends AI {
 		minMaxAlgo();
 		int[] bestChoice = options.get(0);
 		for (int[] option : options) {
+			System.out.println("option[0] = wall:   " + option[0]);
+			System.out.println("option[1] = points: " + option[1]);
 			if (option[1] >= bestChoice[1]) {
 				bestChoice = option;
 			}
@@ -38,28 +43,39 @@ public class AIMinMaxAlgo extends AI {
 
 	private void minMaxAlgo() {
 		setDimensionNumber();
+		criticalWallsLeft();
+		criticalWallsRight();
 		filterWallsHorizontalVertical();
-		int[] canidate = new int[2];
-		for (Integer wall : map.getOpenWallnumbers()) {
-			if (criticalWallsLeft().contains(wall)) {
-				if (!map.isWallOpen(wall - dNR) && !map.isWallOpen(wall + 1) && !map.isWallOpen(wall + dNL)) {
+		// int[] canidate = new int[2];
+		ArrayList<Integer> walls = map.getOpenWallnumbers();
+		for (Integer wall : walls) {
+			System.out.println("for(..) - WallNo. " + wall);
+			if (leftCollum.contains(wall)) {
+				if (!map.isWallOpen(wall - dNR) && !map.isWallOpen(wall + 1) && !map.isWallOpen(wall + dNL)
+						&& map.isWallOnTheMap(wall - dNR) && map.isWallOnTheMap(wall + 1)
+						&& map.isWallOnTheMap(wall + dNL)) {
+					int[] canidate = new int[2];
 					canidate[0] = wall;
 					canidate[1] = 1;
 					options.add(canidate);
-					continue;
+					// continue;
 				}
-			} else if (criticalWallsRight().contains(wall)) {
+			} else if (rightCollum.contains(wall)) {
 				if (!map.isWallOpen(wall - 1) && !map.isWallOpen(wall + dNR) && !map.isWallOpen(wall - dNL)) {
+					int[] canidate = new int[2];
 					canidate[0] = wall;
 					canidate[1] = 1;
 					options.add(canidate);
-					continue;
+					// continue;
 				}
 			} else {
 				int points = 0;
+				int[] canidate = new int[2];
 				if (verticalNo.contains(wall)) {
 					// left field
+					System.err.println("----------------------");
 					if (!map.isWallOpen(wall - 1) && !map.isWallOpen(wall - dNL) && !map.isWallOpen(wall + dNR)) {
+
 						canidate[0] = wall;
 						points = points + 1;
 						canidate[1] = points;
@@ -72,19 +88,22 @@ public class AIMinMaxAlgo extends AI {
 					}
 					options.add(canidate);
 				} else {
-					int score = 0;
 					// upper field
-					if (!map.isWallOpen(wall - dNV) && !map.isWallOpen(wall - dNL) && !map.isWallOpen(wall - dNR)) {
+					if (!map.isWallOpen(wall - dNV) && !map.isWallOpen(wall - dNL) && !map.isWallOpen(wall - dNR)
+							&& map.isWallOnTheMap(wall - dNR) && map.isWallOnTheMap(wall - dNV)
+							&& map.isWallOnTheMap(wall - dNL)) {
 						canidate[0] = wall;
-						score = score + 1;
-						canidate[1] = score;
+						points = points + 1;
+						canidate[1] = points;
 					}
 
 					// lower field
-					if (!map.isWallOpen(wall + dNV) && !map.isWallOpen(wall + dNR) && !map.isWallOpen(wall + dNL)) {
+					if (!map.isWallOpen(wall + dNV) && !map.isWallOpen(wall + dNR) && !map.isWallOpen(wall + dNL)
+							&& map.isWallOnTheMap(wall + dNR) && map.isWallOnTheMap(wall + dNV)
+							&& map.isWallOnTheMap(wall - dNL)) {
 						canidate[0] = wall;
-						score = score + 1;
-						canidate[1] = score;
+						points = points + 1;
+						canidate[1] = points;
 					}
 					options.add(canidate);
 				}
@@ -93,15 +112,18 @@ public class AIMinMaxAlgo extends AI {
 	}
 
 	private void filterWallsHorizontalVertical() {
-		int[][] field = map.getMapAsIntArray();
+		String[][] field = map.getMapAsStringArray();
 		for (int h = 0; h < map.arrayHeight; h++) {
 			for (int w = 0; w < map.arrayWidth; w++) {
-				if (h % 2 == 0) {
-					horizontalNo.add(field[w][h]);
-				} else
-					verticalNo.add(field[w][h]);
+				if (h % 2 == 0 && w % 2 != 0 && super.police.isNumeric(field[w][h])) {
+					verticalNo.add(Integer.valueOf(field[w][h]));
+				} else if (h % 2 != 0 && w % 2 == 0 && super.police.isNumeric(field[w][h])) {
+					horizontalNo.add(Integer.valueOf(field[w][h]));
+				}
 			}
 		}
+		System.out.println(horizontalNo.toString());
+		System.out.println(verticalNo.toString());
 	}
 
 	private void setDimensionNumber() {
@@ -112,24 +134,29 @@ public class AIMinMaxAlgo extends AI {
 	}
 
 	private LinkedList<Integer> criticalWallsLeft() {
-		int[][] field = map.getMapAsIntArray();
-		LinkedList<Integer> leftCollum = new LinkedList<Integer>();
-		for (int i = 0; i < map.arrayHeight; i++) {
+		String[][] field = map.getMapAsStringArray();
+		for (int i = 0; i < map.arrayWidth; i++) {
 			if (i % 2 != 0) {
-				leftCollum.add(field[0][i]);
+				if (super.police.isNumeric(field[i][0])) {
+					leftCollum.add(Integer.valueOf(field[i][0]));
+				}
 			}
 		}
+		System.out.println("LeftC" + leftCollum.toString());
 		return leftCollum;
 	}
 
+	// TODO Map wird nicht richtig geupdated 
 	private LinkedList<Integer> criticalWallsRight() {
-		int[][] field = map.getMapAsIntArray();
-		LinkedList<Integer> rightCollum = new LinkedList<Integer>();
-		for (int i = 0; i < map.arrayHeight; i++) {
+		String[][] field = map.getMapAsStringArray();
+		for (int i = 0; i < map.arrayWidth; i++) {
 			if (i % 2 != 0) {
-				rightCollum.add(field[map.arrayWidth - 1][i]);
+				if (super.police.isNumeric(field[i][map.arrayHeight - 1])) {
+					rightCollum.add(Integer.valueOf(field[i][map.arrayHeight - 1]));
+				}
 			}
 		}
+		System.out.println("RightC" + rightCollum.toString());
 		return rightCollum;
 	}
 
