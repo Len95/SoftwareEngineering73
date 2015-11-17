@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 public class DotsNBoxesEngine {
 
-//	private int height;
-//	private int width;
 	private Map map;
 
 	PlayingMode mode;
