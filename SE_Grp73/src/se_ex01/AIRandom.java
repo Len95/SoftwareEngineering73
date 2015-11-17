@@ -1,5 +1,6 @@
 package se_ex01;
 
+import java.util.ArrayList;
 
 public class AIRandom extends AI {
 
@@ -14,9 +15,9 @@ public class AIRandom extends AI {
 
 	@Override
 	public int getNextMove() {
-		int randomPosition = (int) (Math.random() * (remainingNumbers.size()-1));
-		int chosenNumber = remainingNumbers.get(randomPosition);
-		return chosenNumber;
+		ArrayList<Integer> openWalls = engine.getMap().getOpenWallnumbers();
+		int randomPosition = (int) (Math.random() * (openWalls.size()-1));
+		return openWalls.get(randomPosition);
 	}
 
 }

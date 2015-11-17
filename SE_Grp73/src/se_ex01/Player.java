@@ -47,7 +47,7 @@ public class Player {
 	}
 	
 	public String toString() {
-		return "Name: " + this.name + "\tScore: " + this.score + "\n";
+		return "Name: " + this.name + "\tScore: " + this.score;
 	}
 
 	public int getID() {
