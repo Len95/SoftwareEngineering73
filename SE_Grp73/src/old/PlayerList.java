@@ -1,0 +1,130 @@
+package old;
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.Queue;
+
+public class PlayerList {
+	// FIFO-Queue - to archive the right sequence of players
+	Queue<Player> queue;
+
+	/**
+	 * Compares players by score. score=10 > score=1
+	 */
+	private Comparator<Player> scoreComparator = new Comparator<Player>() {
+		@Override
+		public int compare(Player p1, Player p2) {
+			if (p1.getScore() < p2.getScore()) {
+				return 1;
+			} else if (p1.getScore() > p2.getScore()) {
+				return -1;
+			} else {
+				return 0;
+			}
+		}
+	};
+
+	/**
+	 * Constructor
+	 */
+	public PlayerList() {
+		queue = new LinkedList<Player>();
+	}
+
+	/**
+	 * Adds a player p to list
+	 * 
+	 * @param p
+	 *            The player to add
+	 * @return true, if addition was successful
+	 */
+	public boolean addPlayer(Player p) {
+		p.ID = queue.size() + 1;
+		return queue.add(p);
+	}
+
+	/**
+	 * Get current player
+	 * 
+	 * @return the current player
+	 */
+	public Player getCurrentPlayer() {
+		return queue.peek();
+	}
+
+	/**
+	 * Adjusts the list to point to the next player in sequence
+	 * 
+	 * @return true, if successful
+	 */
+	public boolean nextPlayer() {
+		return queue.add(queue.poll());
+	}
+
+	/**
+	 * Returns the number of players
+	 * 
+	 * @return an int with the value of the number of players
+	 */
+	public int size() {
+		return queue.size();
+	}
+
+	/**
+	 * Returns the best player by score
+	 * 
+	 * @return the Player with the highest score
+	 */
+	public Player getBestPlayer() {
+		Player bestPlayer = queue.peek();
+
+		for (Player currentPlayer : queue) {
+			if (currentPlayer.score > bestPlayer.score) {
+				bestPlayer = currentPlayer;
+			}
+		}
+		return bestPlayer;
+	}
+
+	/**
+	 * returns the players that are drawed with each other
+	 * 
+	 * @return an Arraylist with the drawed players
+	 */
+
+	public ArrayList<Player> returnDrawedPlayers() {
+		ArrayList<Player> drawedPlayers = new ArrayList<Player>();
+		Player bestPlayer = getBestPlayer();
+
+		for (Player currentPlayer : queue) {
+			if (currentPlayer.score == bestPlayer.score) {
+				drawedPlayers.add(currentPlayer);
+			}
+		}
+
+		return drawedPlayers;
+	}
+
+	/**
+	 * Returns the highscore
+	 * 
+	 * @return Sorted ArrayList
+	 */
+	public ArrayList<Player> getHighscore() {
+		ArrayList<Player> highscore = new ArrayList<Player>(queue);
+
+		highscore.sort(scoreComparator);
+
+		return highscore;
+	}
+
+	/**
+	 * Returns the playerlist as ArrayList
+	 * 
+	 * @return the ArrayList
+	 */
+	public ArrayList<Player> asArraylist() {
+		return new ArrayList<Player>(queue);
+	}
+}

@@ -146,7 +146,7 @@ public class AIMinMaxAlgo extends AI {
 		return leftCollum;
 	}
 
-	// TODO Map wird nicht richtig geupdated 
+	// TODO Map wird nicht richtig geupdated
 	private LinkedList<Integer> criticalWallsRight() {
 		String[][] field = map.getMapAsStringArray();
 		for (int i = 0; i < map.arrayWidth; i++) {

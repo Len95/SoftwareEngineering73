@@ -1,5 +1,6 @@
 package se_ex01_Tests;
 
+import se_ex01.Player;
 import static org.junit.Assert.*;
 
 import java.util.ArrayList;
@@ -7,7 +8,6 @@ import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 
-import se_ex01.Player;
 import se_ex01.PlayerList;
 
 public class Playerlist_Test {
