@@ -60,16 +60,6 @@ public class AIMinMaxTests {
 		assertEquals(8, ai.getNextMove());
 	}
 
-//	@Test
-//	public void do2ndMove() {
-//		int[] wallsPlayer = { 1, 4, 5 };
-//		closeWalls(wallsPlayer, player);
-//		int[] wallsAi = { 1 };
-//		closeWalls(wallsAi, ai);
-//		// TODO Wieso Fehler?
-//		assertEquals(22, ai.getNextMove());
-//	}
-
 	@Test
 	public void closeLastWall() {
 		int[] walls = new int[21];
@@ -103,7 +93,7 @@ public class AIMinMaxTests {
 		closeWalls(walls, player);
 		assertEquals(k + 1, ai.getNextMove());
 	}
-	
+
 	@Test
 	public void checkRightBorder() {
 		int[] walls = new int[24];
@@ -113,8 +103,8 @@ public class AIMinMaxTests {
 			walls[i] = c;
 			c++;
 		}
-		// 2. Open right wall 
-		walls[15] = -1;
+		// 2. Open right wall
+		walls[13] = -1;
 		closeWalls(walls, player);
 		assertEquals(14, ai.getNextMove());
 	}
@@ -129,11 +119,11 @@ public class AIMinMaxTests {
 			c++;
 		}
 		// 2. Open right wall
-		walls[12] = -1;
+		walls[10] = -1;
 		closeWalls(walls, player);
 		assertEquals(11, ai.getNextMove());
 	}
-	
+
 	@Test
 	public void checkTopRightBorder() {
 		int[] walls = new int[24];
@@ -146,7 +136,7 @@ public class AIMinMaxTests {
 		closeWalls(walls, player);
 		assertEquals(3, ai.getNextMove());
 	}
-	
+
 	@Test
 	public void checkBottomLeftBorder() {
 		int[] walls = new int[24];
@@ -158,9 +148,52 @@ public class AIMinMaxTests {
 		}
 		// 2. Open bottom left wall
 		walls[21] = -1;
-		
+
 		closeWalls(walls, player);
 		assertEquals(22, ai.getNextMove());
+	}
+
+	@Test
+	public void closeFieldInTheMiddle() {
+		int[] walls = new int[24];
+		int c = 1;
+		// 1. Store all wall numbers
+		for (int i = 0; i < walls.length; i++) {
+			walls[i] = c;
+			c++;
+		}
+		// 2. Open bottom left wall
+		walls[21] = -1;
+
+		closeWalls(walls, player);
+		assertEquals(22, ai.getNextMove());
+	}
+
+	@Test
+	public void allFieldsClosed() {
+		int[] walls = new int[24];
+		int c = 1;
+		// 1. Store all wall numbers
+		for (int i = 0; i < walls.length; i++) {
+			walls[i] = c;
+			c++;
+		}
+		closeWalls(walls, player);
+		assertEquals(-1, ai.getNextMove());
+	}
+
+	@Test
+	public void foo() {
+		int[] walls = new int[24];
+		int c = 1;
+		// 1. Store all wall numbers
+		for (int i = 0; i < walls.length; i++) {
+			walls[i] = c;
+			c++;
+		}
+		walls[10] = -1;
+		closeWalls(walls, player);
+		assertEquals(11, ai.getNextMove());
 	}
 
 }

@@ -17,13 +17,19 @@ public class AIMinMaxAlgo extends AI {
 
 	/**
 	 * calculates the next move of the AI
-	 * 
+	 *
 	 * return: returns an int which represents the "input"(move) of the AI
 	 */
 	@Override
 	public int getNextMove() {
 		minMaxAlgo(0, 0, engine.getMap());
-		int[] bestChoice = options.get(0);
+		int[] bestChoice;
+		try {
+			bestChoice = options.get(0);
+		} catch (IndexOutOfBoundsException ioobe) {
+			return -1;
+		}
+
 		for (int[] option : options) {
 			if (option[1] >= bestChoice[1]) {
 				bestChoice = option;
@@ -35,7 +41,7 @@ public class AIMinMaxAlgo extends AI {
 
 	/**
 	 * Fills up options recursively
-	 * 
+	 *
 	 * @param startWidth
 	 * @param startHeight
 	 * @param map
@@ -59,9 +65,6 @@ public class AIMinMaxAlgo extends AI {
 		} else if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
 			// Start at the beginning of the next row
 			minMaxAlgo(startHeight + 1, 0, map);
-		} else if (startHeight >= (engine.getHeight() - 1) && startWidth >= (engine.getWidth() - 1)) {
-			// did we reach the bottom?
-			return;
 		} else {
 			// okay we can go one more field right
 			minMaxAlgo(startHeight, startWidth + 1, map);
@@ -78,10 +81,13 @@ public class AIMinMaxAlgo extends AI {
 
 	/**
 	 * Set |
-	 * 
-	 * @param height: height of the map
-	 * @param width: width of the map
-	 * @param map: map of the game
+	 *
+	 * @param height:
+	 *            height of the map
+	 * @param width:
+	 *            width of the map
+	 * @param map:
+	 *            map of the game
 	 * @return
 	 */
 	private int calculatePointsOption1(int height, int width, String[][] map) {
@@ -109,10 +115,13 @@ public class AIMinMaxAlgo extends AI {
 
 	/**
 	 * Set -
-	 * 
-	 * @param height: height of the map
-	 * @param width: width of the map
-	 * @param map: map of the game
+	 *
+	 * @param height:
+	 *            height of the map
+	 * @param width:
+	 *            width of the map
+	 * @param map:
+	 *            map of the game
 	 * @return
 	 */
 	private int calculatePointsOption2(int height, int width, String[][] map) {
