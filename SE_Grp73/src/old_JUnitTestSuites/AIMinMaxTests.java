@@ -195,5 +195,54 @@ public class AIMinMaxTests {
 		closeWalls(walls, player);
 		assertEquals(11, ai.getNextMove());
 	}
+	@Test
+	public void foo2() {
+		int[] walls = new int[5];
+		int c = 1;
+		int i = 0;
+		// 1. Store all wall numbers
+		while (i <= 4) {
+			walls[i] = c;
+			i++;
+			c++;
+		}
+		closeWalls(walls, ai);
+		assertEquals(8, ai.getNextMove());
+	}
+	@Test
+	public void foo3() {
+		int[] walls = new int[9];
+		int c = 1;
+		int i = 0;
+		// 1. Store all wall numbers
+		while (i <= 5) {
+			walls[i] = c;
+			c++; i++;
+		}
+		walls[6] = 10;
+		walls[7] = 8;
+		walls[8] = 9;
+		closeWalls(walls, ai);
+		assertEquals(7, ai.getNextMove());
+	}
+
+	@Test
+	public void foo4() {
+		int[] walls = new int[8];
+		int c = 1;
+		int i = 0;
+		// 1. Store all wall numbers
+		while (i <= 3) {
+			walls[i] = c;
+			c++; i++;
+		}
+		walls[3] = 6;
+		walls[4] = 7;
+		walls[5] = 10;
+		walls[6] = 8;
+		walls[7] = 9;
+		closeWalls(walls, ai);
+		assertEquals(5, ai.getNextMove());
+	}
 
 }

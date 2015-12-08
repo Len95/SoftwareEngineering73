@@ -62,7 +62,7 @@ public class AIMinMaxAlgo extends AI {
 				minMaxAlgo(startHeight + 1, 0, map);
 			} else
 				minMaxAlgo(startHeight, startWidth + 1, map);
-		} else if (startWidth >= (engine.getWidth() - 1) && !(startHeight >= (engine.getHeight() - 1))) {
+		} else if (!(startHeight >= (engine.getHeight() - 1))&&startWidth >= (engine.getWidth() - 1)) {
 			// Start at the beginning of the next row
 			minMaxAlgo(startHeight + 1, 0, map);
 		} else {
@@ -104,8 +104,8 @@ public class AIMinMaxAlgo extends AI {
 
 		// we can check right field
 		if (width != (engine.getWidth() - 1)) {
-			if (map[height - 1][width + 1].equals("-") && map[height][width + 2].equals("|")
-					&& map[height + 1][width + 1].equals("-")) {
+			if (map[height - 1][width + 1].equals("-") && map[height + 1][width + 1].equals("-") && map[height][width + 2].equals("|")
+					) {
 				points += 1;
 			} else
 				points += 0;
