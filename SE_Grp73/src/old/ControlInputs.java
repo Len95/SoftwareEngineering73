@@ -10,13 +10,13 @@ public class ControlInputs {
 	}
 
 	/**
-	 * 
+	 *
 	 * Prompts the user with message to enter a integer
-	 * 
+	 *
 	 * Stolen from
 	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
 	 * inputs-correct-type
-	 * 
+	 *
 	 * @param prompt
 	 *            The message the user is prompted with
 	 * @return The number, the user entered
@@ -33,13 +33,13 @@ public class ControlInputs {
 	}
 
 	/**
-	 * 
+	 *
 	 * Prompts the user with message to enter a string
-	 * 
+	 *
 	 * Stolen from
 	 * http://codereview.stackexchange.com/questions/58800/making-sure-user-
 	 * inputs-correct-type
-	 * 
+	 *
 	 * @param prompt
 	 *            The message the user is prompted with
 	 * @return The string, the user entered
@@ -60,7 +60,7 @@ public class ControlInputs {
 	/**
 	 * http://stackoverflow.com/questions/14206768/how-to-check-if-a-string-is-
 	 * numeric
-	 * 
+	 *
 	 * @param string
 	 * @return
 	 */
